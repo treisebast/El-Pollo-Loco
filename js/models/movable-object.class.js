@@ -38,4 +38,12 @@ class MovableObject {
             this.x -= this.speed;
         }, 1000 / 60);
     }
+
+
+    playAnimation(images){
+        let i = this.currentImage % this.IMAGES_WALKING.length; // % bedeutet Modulo => mit Rest wird gerechnet
+        let path = images[i];
+        this.img = this.imageCache[path];
+        this.currentImage++;
+    }
 }

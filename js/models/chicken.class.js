@@ -15,7 +15,7 @@ class Chicken extends MovableObject{
 
         this.x = 200 + Math.random() * 500;
         this.speed = 0.15 + Math.random() * 0.4;
-        console.log(this.speed);
+        
         this.animate();
     }
 
@@ -24,11 +24,7 @@ class Chicken extends MovableObject{
         this.moveLeft();
 
         setInterval(() =>{
-            let i = this.currentImage % this.IMAGES_WALKING.length;
-            // % bedeutet Modulo => mit Rest wird gerechnet
-            let path = this.IMAGES_WALKING[i];
-            this.img = this.imageCache[path];
-            this.currentImage++;
+            this.playAnimation(this.IMAGES_WALKING);
         }, 200);
     }
 }
