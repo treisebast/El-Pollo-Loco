@@ -1,0 +1,25 @@
+const level1 = new Level(
+    [new Chicken(), new Chicken(), new Chicken()],
+    [new Cloud()],
+    backgroundObjects = [],
+    createBackgroundObjects()
+);
+
+
+function createBackgroundObjects() {
+    let repetitions = 10;
+    let offset = 719;
+    let start_x = 719;
+    for (let i = 0; i < repetitions; i += 2) {
+        this.backgroundObjects.push(
+            new BackgroundObject("img/5_background/layers/air.png", i * offset - start_x),
+            new BackgroundObject("img/5_background/layers/3_third_layer/1.png", i * offset - start_x),
+            new BackgroundObject("img/5_background/layers/2_second_layer/1.png", i * offset - start_x),
+            new BackgroundObject("img/5_background/layers/1_first_layer/1.png", i * offset - start_x),
+            new BackgroundObject("img/5_background/layers/air.png", (i + 1) * offset - start_x),
+            new BackgroundObject("img/5_background/layers/3_third_layer/2.png", (i + 1) * offset - start_x),
+            new BackgroundObject("img/5_background/layers/2_second_layer/2.png", (i + 1) * offset - start_x),
+            new BackgroundObject("img/5_background/layers/1_first_layer/2.png", (i + 1) * offset - start_x)
+        );
+    }
+}
