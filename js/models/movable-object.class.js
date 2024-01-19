@@ -2,7 +2,7 @@ class MovableObject extends DrawalbleObject {
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
-    acceleration = 1;
+    acceleration = 2;
     energy = 100;
     lastHit = 0;
 
@@ -18,18 +18,11 @@ class MovableObject extends DrawalbleObject {
 
 
     isAboveGround(){
+        if (this instanceof ThrowableObject) { // Throwable object should always fall
+            return true;
+        } else {
         return this.y < 230;
-    }
-
-
-    drawFrame(ctx){
-        if (this instanceof Character || this instanceof Chicken || this instanceof Endboss) {
-            ctx.beginPath();
-            ctx.lineWidth = '3';
-            ctx.strokeStyle = 'blue';
-            ctx.rect(this.x, this.y, this.width, this.height);
-            ctx.stroke();
-        } 
+        }
     }
 
 
