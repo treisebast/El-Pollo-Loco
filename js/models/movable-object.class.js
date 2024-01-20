@@ -76,7 +76,7 @@ class MovableObject extends DrawalbleObject {
 
 
     jump() {
-        this.speedY = 20; //JumpHeight
+        this.speedY = 27; //JumpHeight
     }
 
 

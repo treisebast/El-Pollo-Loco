@@ -1,9 +1,45 @@
-body{
+body {
+    margin: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8)), url('img/10_background_desert/desert.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    font-family: 'Risque', serif;
 }
 
-canvas{
+h1 {
+    font-size: 64px;
+    margin: 16px;
+    letter-spacing: 4px;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+canvas {
     background-color: black;
+    display: block;
+}
+
+
+@media only screen and (max-width: 720px){
+    canvas {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-height: 480px){
+    canvas {
+        height: 100vh;
+    }
 }

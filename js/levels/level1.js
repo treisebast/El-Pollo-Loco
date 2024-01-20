@@ -1,13 +1,26 @@
 const level1 = new Level(
     [new Chicken(), new Chicken(), new Chicken(), new Endboss()],
-    [new Cloud()],
+    cloud = [],
     backgroundObjects = [],
+    createCloudObjects(),
     createBackgroundObjects()
 );
 
 
+function createCloudObjects() {
+    let repetitions = 8;
+    let offset = 420;
+    for (let i = 0; i < repetitions; i += 2) {
+        this.cloud.push(
+            new Cloud("img/5_background/layers/4_clouds/1.png", i * (offset)),
+            new Cloud("img/5_background/layers/4_clouds/2.png", (i + 1) * offset),
+        );
+    }
+}
+
+
 function createBackgroundObjects() {
-    let repetitions = 10;
+    let repetitions = 6;
     let offset = 719;
     let start_x = 719;
     for (let i = 0; i < repetitions; i += 2) {
