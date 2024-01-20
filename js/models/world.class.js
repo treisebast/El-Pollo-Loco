@@ -8,6 +8,9 @@ class World {
     statusBar = new StatusBar();
     throwableObjects = [];
 
+    breakpoint = 300;
+    offset= 450;
+
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
@@ -26,7 +29,7 @@ class World {
 
     run(){
         setInterval(() =>{
-            this.checkCollisions();
+            this.checkCollisions(['endBoss', 'enemies']);
             this.checkThrowObjects();
         }, 150)
     }
@@ -40,13 +43,24 @@ class World {
     }
 
 
-    checkCollisions(){
-        this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
-                this.character.hit();
-                this.statusBar.setPercentage(this.character.energy);
-            }
-        })
+    checkCollisions(enemies){
+        enemies.forEach((e) =>{
+            this.level[e].forEach((enemy) => {
+                if (this.character.isColliding(enemy)) {
+                    this.character.hit();
+                    this.statusBar.setPercentage(this.character.energy);
+                }
+            })
+        }) 
+    }
+
+
+    createNewChickenIfNecessary() {
+        if (this.character.x > this.breakpoint) {
+            this.breakpoint += this.offset;
+            const chicken = new Chicken(this.breakpoint);
+            this.level.enemies.push(chicken);
+        }
     }
 
 
@@ -66,11 +80,13 @@ class World {
 
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.endBoss);
         this.addObjectsToMap(this.throwableObjects);
         this.addToMap(this.character);
 
         this.ctx.translate(-this.camera_x, 0);
 
+        this.createNewChickenIfNecessary();
         setTimeout(() => {
             requestAnimationFrame(() => this.draw());
         }, 20);
