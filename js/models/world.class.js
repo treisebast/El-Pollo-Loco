@@ -8,8 +8,8 @@ class World {
     statusBar = new StatusBar();
     throwableObjects = [];
 
-    breakpoint = 300;
-    offset= 450;
+    breakpoint = 350;
+    offset= 350;
 
 
     constructor(canvas, keyboard) {
@@ -58,8 +58,9 @@ class World {
     createNewChickenIfNecessary() {
         if (this.character.x > this.breakpoint) {
             this.breakpoint += this.offset;
-            const chicken = new Chicken(this.breakpoint);
-            this.level.enemies.push(chicken);
+            let isChicken = Math.random() > 0.33;
+            let newChicken = isChicken ? new Chicken(this.breakpoint) : new SmallChicken(this.breakpoint);
+            this.level.enemies.push(newChicken);
         }
     }
 

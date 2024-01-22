@@ -1,5 +1,5 @@
 const level1 = new Level(
-    enemies= [new Chicken(650), new Chicken(700)],
+    enemies= [new Chicken(500), new SmallChicken(600)],
     [new Endboss()],
     cloud = [],
     backgroundObjects = [],
@@ -9,7 +9,7 @@ const level1 = new Level(
 
 
 function createCloudObjects() {
-    let repetitions = 8;
+    let repetitions = 9;
     let offset = 420;
     for (let i = 0; i < repetitions; i += 2) {
         this.cloud.push(
@@ -21,7 +21,7 @@ function createCloudObjects() {
 
 
 function createBackgroundObjects() {
-    let repetitions = 6;
+    let repetitions = 7;
     let offset = 719;
     let start_x = 719;
     for (let i = 0; i < repetitions; i += 2) {

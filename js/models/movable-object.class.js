@@ -20,8 +20,10 @@ class MovableObject extends DrawalbleObject {
     isAboveGround(){
         if (this instanceof ThrowableObject) { // Throwable object should always fall
             return true;
+        } else if (this instanceof SmallChicken) {
+            return this.y < 370;
         } else {
-        return this.y < 230;
+            return this.y < 230;
         }
     }
 
@@ -76,7 +78,11 @@ class MovableObject extends DrawalbleObject {
 
 
     jump() {
-        this.speedY = 27; //JumpHeight
+        if (this instanceof SmallChicken) {
+            this.speedY = 17;
+        } else {
+            this.speedY = 27; //JumpHeight
+        }  
     }
 
 

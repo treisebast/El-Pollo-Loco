@@ -6,7 +6,7 @@ function init() {
     canvas = document.getElementById("canvas");
     world = new World(canvas, keyboard);
     
-
+    console.log(world.level.enemies);
     console.log('My charakter is', world.character);
 
 }

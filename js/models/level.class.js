@@ -3,11 +3,11 @@ class Level {
     clouds;
     backgroundObjects;
     endBoss;
-    level_end_x = 2900;
+    level_end_x = 3600;
+    world2;
     
 
     constructor(chickens, endBoss, clouds, backgroundObjects){
-        console.log(endBoss);
         this.enemies = chickens;
         this.endBoss = endBoss;
         this.clouds = clouds;
