@@ -7,6 +7,11 @@ class DrawalbleObject {
     imageCache = {};
     currentImage = 0;
 
+    collisionBoxOffsetY; 
+    collisionBoxOffsetX;
+    collisionBoxWidth;
+    collisionBoxHeight;
+
     // loadImage('img/test.png');
     loadImage(path){
         this.img = new Image(); // this.img = document.getElementById('image') <img id="image" src>
@@ -37,7 +42,8 @@ class DrawalbleObject {
             ctx.beginPath();
             ctx.lineWidth = '3';
             ctx.strokeStyle = 'blue';
-            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.rect(this.x + this.collisionBoxOffsetX, this.y + this. collisionBoxOffsetY, 
+                this.collisionBoxWidth, this.collisionBoxHeight);
             ctx.stroke();
         } 
     }

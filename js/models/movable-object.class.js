@@ -13,7 +13,7 @@ class MovableObject extends DrawalbleObject {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration; 
             }
-        }, 25)
+        }, 40)
     }
 
 
@@ -23,26 +23,36 @@ class MovableObject extends DrawalbleObject {
         } else if (this instanceof SmallChicken) {
             return this.y < 370;
         } else {
-            return this.y < 230;
+            return this.y < 220;
+        }
+    }
+
+    
+    isJumpOnEnemie(chicken) {
+        let characterBottom = this.y + this.collisionBoxOffsetY + this.collisionBoxHeight + 5;
+        let chickenTop = chicken.y - 5 + chicken.collisionBoxOffsetY;
+        let horizontalOverlap = this.x + this.collisionBoxOffsetX < chicken.x + chicken.collisionBoxOffsetX + chicken.collisionBoxWidth &&
+            this.x + this.collisionBoxOffsetX + this.collisionBoxWidth > chicken.x + chicken.collisionBoxOffsetX;
+    
+        if (characterBottom >= chickenTop && horizontalOverlap) {
+            return true;
         }
     }
 
 
-    //character.isColligding(chicken);
-    isColliding(mo){
-        return this.x + this.width > mo.x &&
-            this.y + this.height > mo.y &&
-            this.x < mo.x && 
-            this.y < mo.y + mo.height
+    isColliding(obj) {
+        let thisRight = this.x + this.collisionBoxOffsetX + this.collisionBoxWidth;
+        let thisBottom = this.y + this.collisionBoxOffsetY + this.collisionBoxHeight;
+        let objRight = obj.x + obj.collisionBoxOffsetX + obj.collisionBoxWidth;
+        let objBottom = obj.y + obj.collisionBoxOffsetY + obj.collisionBoxHeight;
+    
+        return (
+            thisRight >= obj.x + obj.collisionBoxOffsetX &&
+            this.x + this.collisionBoxOffsetX <= objRight &&
+            thisBottom >= obj.y + obj.collisionBoxOffsetY &&
+            this.y + this.collisionBoxOffsetY <= objBottom
+        );
     }
-
-//     // character.isColligding(chicken); [Bessere Formel zur Kollisionsberechnung]
-//     isColliding (obj) {
-//         return  (this.X + this.width) >= obj.X && this.X <= (obj.X + obj.width) && 
-//                 (this.Y + this.offsetY + this.height) >= obj.Y &&
-//                 (this.Y + this.offsetY) <= (obj.Y + obj.height) && 
-//                 obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
-// }
 
 
     hit(){
@@ -81,7 +91,7 @@ class MovableObject extends DrawalbleObject {
         if (this instanceof SmallChicken) {
             this.speedY = 17;
         } else {
-            this.speedY = 27; //JumpHeight
+            this.speedY = 20; //JumpHeight
         }  
     }
 

@@ -42,6 +42,11 @@ class Character extends MovableObject {
     world;
     walking_sound = new Audio("audio/running.mp3");
 
+    collisionBoxOffsetY = 80;
+    collisionBoxOffsetX = 10;
+    collisionBoxWidth = 80;
+    collisionBoxHeight = (this.height / 1.8);
+
 
     constructor() {
         super().loadImage("img/2_character_pepe/2_walk/W-21.png");

@@ -10,6 +10,8 @@ class World {
 
     breakpoint = 350;
     offset= 350;
+    keyboardSpaceEnter = false;
+
 
 
     constructor(canvas, keyboard) {
@@ -32,6 +34,10 @@ class World {
             this.checkCollisions(['endBoss', 'enemies']);
             this.checkThrowObjects();
         }, 150)
+
+        setInterval(() =>{
+            this.checkJumpOnChicken();
+        }, 20)
     }
 
 
@@ -40,6 +46,28 @@ class World {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObjects.push(bottle);        
         }
+    }
+
+    checkJumpOnChicken(){
+        if (this.keyboard.SPACE) {
+            this.keyboardSpaceEnter = true;
+            this.level.enemies.forEach((enemy) => {
+                if (this.character.isJumpOnEnemie(enemy) && this.keyboardSpaceEnter === true) {
+                    this.character.jump();
+                    setTimeout(() => {
+                        new MovableObject().playAnimation(new SmallChicken().IMAGES_DEAD);
+                      }, 1000);
+                    this.enemyDead(enemy);
+                    this.keyboardSpaceEnter = false;
+                }    
+            })
+        }  
+    }
+
+    
+    enemyDead(e){
+        this.level.enemies.splice(e, 1);
+        console.log(this.level.enemies);
     }
 
 

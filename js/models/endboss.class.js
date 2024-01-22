@@ -16,6 +16,11 @@ class Endboss extends MovableObject{
         'img/4_enemie_boss_chicken/2_alert/G12.png'
     ];
 
+    collisionBoxOffsetY = 60;
+    collisionBoxOffsetX = 10;
+    collisionBoxWidth = this.width - 20;
+    collisionBoxHeight = this.height - 80;
+
 
     constructor(){
         super().loadImage(this.IMAGES_WALKING[0]);
