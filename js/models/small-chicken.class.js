@@ -1,7 +1,8 @@
-class SmallChicken extends Chicken{
+class SmallChicken extends MovableObject{
+    world;
     y = 360;
-    width = this.width * 0.75;
-    height= this.height * 0.75;
+    width = this.width * 0.5;
+    height= this.height * 0.5;
 
     IMAGES_WALKING =[
         'img/3_enemies_chicken/chicken_small/1_walk/1_w.png',
@@ -42,14 +43,14 @@ class SmallChicken extends Chicken{
 
     
     animate() { 
-        setInterval(() => {
+        this.moveInterval = setInterval(() => {
             this.moveWithinZone();
-            this.checkAndPerformJump();
+            // this.checkAndPerformJump();
         }, 1000 / 60);
 
-        setInterval(() => {
+        this.animationInterval = setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING);
-        }, 100);
+        }, 200);
     }
 
 
@@ -76,10 +77,15 @@ class SmallChicken extends Chicken{
     checkAndPerformJump() {
         if (this.lastJump === 'last') {
             this.lastJump = 'now';
-            setTimeout(() => {
+            this.timeoutId = setTimeout(() => {
                 this.jump();
                 this.lastJump = 'last';
               }, 4000);
         }      
+    }
+
+    stopAnimations() {
+        clearInterval(this.moveInterval);
+        clearInterval(this.animationInterval);
     }
 }

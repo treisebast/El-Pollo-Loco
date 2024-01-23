@@ -11,7 +11,8 @@ class World {
     breakpoint = 350;
     offset= 350;
     keyboardSpaceEnter = false;
-
+    IMAGES_DEAD;
+    enemyIsDead = false;
 
 
     constructor(canvas, keyboard) {
@@ -19,14 +20,17 @@ class World {
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.draw();
-        this.setWorld();
+        this.setWorld(this.character);
+        this.level.enemies.forEach((enemy) =>{
+            this.setWorld(enemy);
+        });
         this.run();
     }
 
 
-    setWorld() {
-        this.character.world = this;
-    }
+    setWorld(obj) {
+        obj.world = this;
+     }
 
 
     run(){
@@ -53,10 +57,6 @@ class World {
             this.keyboardSpaceEnter = true;
             this.level.enemies.forEach((enemy) => {
                 if (this.character.isJumpOnEnemie(enemy) && this.keyboardSpaceEnter === true) {
-                    this.character.jump();
-                    setTimeout(() => {
-                        new MovableObject().playAnimation(new SmallChicken().IMAGES_DEAD);
-                      }, 1000);
                     this.enemyDead(enemy);
                     this.keyboardSpaceEnter = false;
                 }    
@@ -64,12 +64,27 @@ class World {
         }  
     }
 
-    
-    enemyDead(e){
-        this.level.enemies.splice(e, 1);
+//TODO: Weiter.....
+    enemyDead(e) {
+        e.stopAnimations();
+        this.character.jump();
+        console.log(e);
+        this.IMAGES_DEAD= e.IMAGES_DEAD;
+        
+        
+        e.playAnimation(this.IMAGES_DEAD);
+        
+
+
         console.log(this.level.enemies);
+        // setTimeout(() => {
+        //     this.level.enemies.splice(e, 1);   
+        // }, 100);
     }
 
+
+    
+    
 
     checkCollisions(enemies){
         enemies.forEach((e) =>{
@@ -88,6 +103,7 @@ class World {
             this.breakpoint += this.offset;
             let isChicken = Math.random() > 0.33;
             let newChicken = isChicken ? new Chicken(this.breakpoint) : new SmallChicken(this.breakpoint);
+            this.setWorld(newChicken);
             this.level.enemies.push(newChicken);
         }
     }

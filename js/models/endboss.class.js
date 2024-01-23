@@ -1,5 +1,5 @@
 class Endboss extends MovableObject{
-
+    world;
     height = this.height * 4.16;
     width = this.width * 4;
     y = 35;

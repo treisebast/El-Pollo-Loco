@@ -23,11 +23,11 @@ class MovableObject extends DrawalbleObject {
         } else if (this instanceof SmallChicken) {
             return this.y < 370;
         } else {
-            return this.y < 220;
+            return this.y < 225;
         }
     }
 
-    
+
     isJumpOnEnemie(chicken) {
         let characterBottom = this.y + this.collisionBoxOffsetY + this.collisionBoxHeight + 5;
         let chickenTop = chicken.y - 5 + chicken.collisionBoxOffsetY;
