@@ -21,6 +21,8 @@ class Endboss extends MovableObject{
     collisionBoxWidth = this.width - 20;
     collisionBoxHeight = this.height - 80;
 
+    enemyIsDead = false;
+
 
     constructor(){
         super().loadImage(this.IMAGES_WALKING[0]);

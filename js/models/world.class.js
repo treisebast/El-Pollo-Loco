@@ -10,9 +10,10 @@ class World {
 
     breakpoint = 350;
     offset= 350;
-    keyboardSpaceEnter = false;
+
     IMAGES_DEAD;
-    enemyIsDead = false;
+
+    
 
 
 
@@ -43,7 +44,7 @@ class World {
 
         setInterval(() =>{
             this.checkJumpOnChicken();
-        }, 20)
+        }, 50)
     }
 
 
@@ -54,49 +55,55 @@ class World {
         }
     }
 
-    checkJumpOnChicken(){
-        if (this.keyboard.SPACE) {
-            this.keyboardSpaceEnter = true;
+
+    checkJumpOnChicken() {
+        if (!this.level.enemies.isJumping && this.character.y < 190 && this.character.speedY < 0) {
+            let maxHorizontalOverlap = 0;
+            let selectedChicken = null; 
             this.level.enemies.forEach((enemy) => {
-                if (this.character.isJumpOnEnemie(enemy) && this.keyboardSpaceEnter === true) {
-                    this.enemyDead(enemy);
-                    this.keyboardSpaceEnter = false;
-                }    
-            })
-        }  
-    }
-
-//TODO: Weiter.....
-    enemyDead(e) {
-        e.stopAnimations();
-        this.character.jump();
-        console.log(e);
-        this.IMAGES_DEAD= e.IMAGES_DEAD;
-        
-        console.log(this.IMAGES_DEAD);
-        e.playAnimation(this.IMAGES_DEAD);
-        
-        
-
-        console.log(this.level.enemies);
-        // setTimeout(() => {
-        //     this.level.enemies.splice(e, 1);   
-        // }, 100);
+                let horizontalOverlap = this.character.isJumpOnEnemie(enemy);
+                if (horizontalOverlap > maxHorizontalOverlap) {
+                    maxHorizontalOverlap = horizontalOverlap;
+                    selectedChicken = enemy;
+                }
+            });
+            if (selectedChicken !== null) {
+                this.isJumping = true;
+                this.enemyDeadAnimation(selectedChicken);
+            }
+        }
     }
 
 
-    
-    
+    enemyDeadAnimation(enemy) {
+        if (!enemy.enemyIsDead && this.character.y > 175) {
+            enemy.stopAnimations();
+            this.character.jump();
+            enemy.enemyIsDead = true;
+            this.IMAGES_DEAD = enemy.IMAGES_DEAD;
+            enemy.playAnimation(this.IMAGES_DEAD);
+            setTimeout(() => {
+                if (enemy.enemyIsDead) {
+                    let index = this.level.enemies.indexOf(enemy);
+                    if (index !== -1) {
+                        this.level.enemies.splice(index, 1);
+                    }
+                }
+            }, 300);
+        }
+    }
+
 
     checkCollisions(enemies){
         enemies.forEach((e) =>{
             this.level[e].forEach((enemy) => {
-                if (this.character.isColliding(enemy)) {
+                if (this.character.isColliding(enemy) && !enemy.enemyIsDead && this.character.y > 190) {
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.energy);
                 }
             })
-        }) 
+        })             
+        
     }
 
 
@@ -181,7 +188,7 @@ class World {
     }
 
 
-    //TODO: Weiter
+    //TODO: Weiter GameOverScreen
     // endscreen(){
     //     document.getElementById('canvas').style = 'display: none';
     //     handleGameEnd();

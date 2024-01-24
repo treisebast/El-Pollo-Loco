@@ -5,6 +5,8 @@ class MovableObject extends DrawalbleObject {
     acceleration = 2;
     energy = 100;
     lastHit = 0;
+    currentImageLastPic = 0;
+
 
 
     applyGravity(){
@@ -32,11 +34,16 @@ class MovableObject extends DrawalbleObject {
         let characterBottom = this.y + this.collisionBoxOffsetY + this.collisionBoxHeight + 5;
         let chickenTop = chicken.y - 5 + chicken.collisionBoxOffsetY;
         let horizontalOverlap = this.x + this.collisionBoxOffsetX < chicken.x + chicken.collisionBoxOffsetX + chicken.collisionBoxWidth &&
-            this.x + this.collisionBoxOffsetX + this.collisionBoxWidth > chicken.x + chicken.collisionBoxOffsetX;
-    
+            this.x + this.collisionBoxOffsetX + this.collisionBoxWidth > chicken.x + chicken.collisionBoxOffsetX;  
+            
         if (characterBottom >= chickenTop && horizontalOverlap) {
-            return true;
+            let horizontalOverlapWidth = Math.min(this.x + this.collisionBoxOffsetX + this.collisionBoxWidth, chicken.x + chicken.collisionBoxOffsetX + chicken.collisionBoxWidth) -
+                                        Math.max(this.x + this.collisionBoxOffsetX, chicken.x + chicken.collisionBoxOffsetX);
+            if (horizontalOverlapWidth > 0) {
+                return horizontalOverlapWidth;
+            }
         }
+        return 0; 
     }
 
 
@@ -104,9 +111,26 @@ class MovableObject extends DrawalbleObject {
     }
 
 
+    playAnimationLastPic(images) {
+        let i = this.currentImageLastPic % images.length;
+        let path = images[i];
+        this.img = this.imageCache[path];
+        this.currentImageLastPic++;
+        if (this.currentImageLastPic === images.length) {
+            this.stopInterval();
+        }
+    }
+
+
+    stopInterval() {
+        clearInterval(this.lastInt);
+    }
+
+
     stopAnimations() {
         clearTimeout(this.timeoutId);
         clearInterval(this.moveInterval);
         clearInterval(this.animationInterval);
+        // this.characterDead = true;
     }
 }

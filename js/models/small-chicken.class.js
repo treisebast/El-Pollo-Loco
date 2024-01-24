@@ -23,6 +23,9 @@ class SmallChicken extends MovableObject{
     collisionBoxWidth = this.width - 10;
     collisionBoxHeight = this.height - 10;
 
+    enemyIsDead = false;
+    isJumping = false;
+
 
 
     constructor(offset){

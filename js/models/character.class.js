@@ -88,6 +88,7 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_HURT);
         this.applyGravity();
         this.animate();
+        // this.characterDeadAnimation();
     }
 
 
@@ -122,8 +123,7 @@ class Character extends MovableObject {
         this.animationInterval = setInterval(() => {
             this.currentTime = new Date().getTime();
             if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
-                // this.characterDeadAnimation();
+                this.characterDeadAnimation();
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {
@@ -135,16 +135,17 @@ class Character extends MovableObject {
             } else {
                 this.playAnimation(this.IMAGES_LONG_IDLE);
             }
+            
         }, 180); // Imageframes
     }
 
-//TODO: Weiter
-    // characterDeadAnimation(){
-    //     let lastImage = this.IMAGES_DEAD[this.IMAGES_DEAD.length - 1];
-    //     console.log(lastImage);
-    //     this.playAnimation(lastImage);
-    //     // console.log(IMAGES_DEADs);
-    // }
+
+    characterDeadAnimation(){
+        this.stopAnimations();
+        this.lastInt = setInterval(() => {
+        this.playAnimationLastPic(this.IMAGES_DEAD);
+        }, 250);   
+    }
     
 
 }
