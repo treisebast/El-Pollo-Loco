@@ -45,7 +45,7 @@ class SmallChicken extends MovableObject{
     animate() { 
         this.moveInterval = setInterval(() => {
             this.moveWithinZone();
-            // this.checkAndPerformJump();
+            this.checkAndPerformJump();
         }, 1000 / 60);
 
         this.animationInterval = setInterval(() => {
@@ -84,8 +84,5 @@ class SmallChicken extends MovableObject{
         }      
     }
 
-    stopAnimations() {
-        clearInterval(this.moveInterval);
-        clearInterval(this.animationInterval);
-    }
+    
 }

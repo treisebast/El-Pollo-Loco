@@ -42,9 +42,5 @@ class Chicken extends MovableObject{
         }, 200);
     }
 
-    stopAnimations() {
-        clearInterval(this.moveInterval);
-        clearInterval(this.animationInterval);
-    }
 }
 

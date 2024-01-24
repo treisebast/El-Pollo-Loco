@@ -13,7 +13,7 @@ class MovableObject extends DrawalbleObject {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration; 
             }
-        }, 40)
+        }, 50)
     }
 
 
@@ -23,7 +23,7 @@ class MovableObject extends DrawalbleObject {
         } else if (this instanceof SmallChicken) {
             return this.y < 370;
         } else {
-            return this.y < 225;
+            return this.y < 220;
         }
     }
 
@@ -101,5 +101,12 @@ class MovableObject extends DrawalbleObject {
         let path = images[i];
         this.img = this.imageCache[path];
         this.currentImage++;
+    }
+
+
+    stopAnimations() {
+        clearTimeout(this.timeoutId);
+        clearInterval(this.moveInterval);
+        clearInterval(this.animationInterval);
     }
 }

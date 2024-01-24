@@ -5,10 +5,16 @@ let keyboard = new Keyboard();
 function init() {
     canvas = document.getElementById("canvas");
     world = new World(canvas, keyboard);
+
+    
     
     console.log(world.level.enemies);
     console.log('My charakter is', world.character);
 
+}
+
+function handleGameEnd() {
+    console.log("Spiel beendet!");
 }
 
 document.addEventListener('keydown', (e) => {

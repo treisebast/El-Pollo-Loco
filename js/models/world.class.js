@@ -15,6 +15,7 @@ class World {
     enemyIsDead = false;
 
 
+
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
@@ -24,10 +25,11 @@ class World {
         this.level.enemies.forEach((enemy) =>{
             this.setWorld(enemy);
         });
+        
         this.run();
     }
 
-
+    
     setWorld(obj) {
         obj.world = this;
      }
@@ -71,10 +73,10 @@ class World {
         console.log(e);
         this.IMAGES_DEAD= e.IMAGES_DEAD;
         
-        
+        console.log(this.IMAGES_DEAD);
         e.playAnimation(this.IMAGES_DEAD);
         
-
+        
 
         console.log(this.level.enemies);
         // setTimeout(() => {
@@ -177,5 +179,12 @@ class World {
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
-    
+
+
+    //TODO: Weiter
+    // endscreen(){
+    //     document.getElementById('canvas').style = 'display: none';
+    //     handleGameEnd();
+    // }
+
 }
