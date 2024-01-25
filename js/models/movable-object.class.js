@@ -24,6 +24,8 @@ class MovableObject extends DrawalbleObject {
             return true;
         } else if (this instanceof SmallChicken) {
             return this.y < 370;
+        } else if (this instanceof Endboss) {
+            return this.y < 35;
         } else {
             return this.y < 220;
         }

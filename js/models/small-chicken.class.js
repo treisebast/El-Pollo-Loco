@@ -58,8 +58,8 @@ class SmallChicken extends MovableObject{
 
 
     moveWithinZone() {
-        const leftBoundary = this.startPositionChicken - 500;
-        const rightBoundary = this.startPositionChicken;
+        let leftBoundary = this.startPositionChicken - 500;
+        let rightBoundary = this.startPositionChicken;
     
         if (this.currentPositionInZone > leftBoundary && !this.otherDirection) {
             this.moveLeft();

@@ -1,6 +1,6 @@
 const level1 = new Level(
-    enemies= [new Chicken(500), new SmallChicken(600)],
-    [new Endboss()],
+    enemies = [new Chicken(500), new SmallChicken(600)],
+    endBoss =[new Endboss()],
     cloud = [],
     backgroundObjects = [],
     createCloudObjects(),

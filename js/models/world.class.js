@@ -26,7 +26,8 @@ class World {
         this.level.enemies.forEach((enemy) =>{
             this.setWorld(enemy);
         });
-        
+        this.setWorld(this.level.endBoss[0]);
+ 
         this.run();
     }
 
