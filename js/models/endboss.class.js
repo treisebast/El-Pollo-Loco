@@ -1,5 +1,4 @@
 class Endboss extends MovableObject{
-    world;
     character;
     height = this.height * 4.16;
     width = this.width * 4;
@@ -31,7 +30,7 @@ class Endboss extends MovableObject{
         'img/4_enemie_boss_chicken/3_attack/G17.png',
         'img/4_enemie_boss_chicken/3_attack/G18.png',
         'img/4_enemie_boss_chicken/3_attack/G19.png',
-        'img/4_enemie_boss_chicken/3_attack/G20.png'
+        'img/4_enemie_boss_chicken/3_attack/G20.png',
     ];
 
     IMAGES_HURT = [
@@ -46,17 +45,22 @@ class Endboss extends MovableObject{
         'img/4_enemie_boss_chicken/5_dead/G26.png'
     ];
 
+    world;
+
     collisionBoxOffsetY = 70;
     collisionBoxOffsetX = 30;
     collisionBoxWidth = this.width - 40;
     collisionBoxHeight = this.height - 90;
 
     startPositionEndboss = 1200;
-    currentPositionInZone = 1200;
     lastJump = 'last';
 
+    moveZoneX = 200;
     enemyIsDead = false;
     hadFirstContact = false;
+    
+    endBossGoAttack = false;
+    animateMathRandomIsRun = false;
 
 
     constructor(){
@@ -67,9 +71,9 @@ class Endboss extends MovableObject{
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
 
-        this.speed = this.speed * 5;
+        this.speed = 2.5; // in startMoveInterval like the same write
         this.x = 1200; //TODO: wieder ändern
-        // this.x = Math.min(offset + 300 + Math.random() * 400, 3700);
+       
         this.applyGravity();
         this.animate();
 
@@ -77,64 +81,97 @@ class Endboss extends MovableObject{
 
 
     animate() { 
-        // this.moveInterval = setInterval(() => {
-        //     this.moveWithinZone();
-        //     this.checkAndPerformJump();
-        // }, 1000 / 60);
-        
-        let i = 0;
         this.animationInterval = setInterval(() => {
-
-            if (i < 10) {
+            if (this.walkAnimate) {
                 this.playAnimation(this.IMAGES_WALK);
-                //TODO: Audio Endboskampf
+            } else if (this.attackAnimate) {
+                this.playAnimation(this.IMAGES_ATTACK);
             } else {
                 this.playAnimation(this.IMAGES_ALERT);
             } 
 
-            i++;
-
-            if (this.world.character.x > 700 && !this.hadFirstContact) {
-                i = 0;
-                this.hadFirstContact = true;
-                Math.random()
-            }
-            
-            
-            // this.playAnimation(this.IMAGES_ATTACK);
             // this.playAnimation(this.IMAGES_HURT);
             // this.playAnimation(this.IMAGES_DEAD);
-        }, 250);
+        }, 150);
+
+        this.startMoveInterval(2.5);
     }
 
 
-    moveWithinZone() {
-        let leftBoundary = this.startPositionEndboss - 300;
-        let rightBoundary = this.startPositionEndboss;
-    
-        if (this.currentPositionInZone > leftBoundary && !this.otherDirection) {
-            this.moveLeft();
-            this.currentPositionInZone -= this.speed;
-            if (this.currentPositionInZone <= leftBoundary) {
-                this.otherDirection = true;
+    startMoveInterval(speed){
+        this.moveInterval = setInterval(() => {
+            console.log('läuft!')
+            if (this.world?.character.x > 800 && this.walkAnimate || this.hadFirstContact) {
+                this.hadFirstContact = true;
+                this.moveWithinZoneEndboss(speed);
+                if (!this.endBossGoAttack) {
+                    this.checkAndPerformJump();  
+                }
             }
-        } else if (this.currentPositionInZone < rightBoundary && this.otherDirection) {
+        }, 50);
+    }
+    
+    walkAnimate = true;
+    attackAnimate = false;
+    moveWithinZoneEndboss(speed) {   
+       if (this.x > this.startPositionEndboss - this.moveZoneX && !this.otherDirection) {
+            this.walkAnimate = true;
+            this.moveLeft();
+            if (this.x <= this.startPositionEndboss - this.moveZoneX + 75 && this.endBossGoAttack) {
+                this.speed = 0.5;
+                this.moveLeftSlow();
+                this.walkAnimate = false;
+                this.attackAnimate = true;
+            }          
+            if (this.x <= this.startPositionEndboss - this.moveZoneX) {
+                this.attackAnimate = false;
+                this.otherDirection = true;
+                this.endBossGoAttack = false;
+                this.walkAnimate = true;
+            }
+
+
+        } else if (this.x < this.startPositionEndboss && this.otherDirection) {
+            this.speed = speed;
             this.moveRight();
-            this.currentPositionInZone += this.speed;
-            if (this.currentPositionInZone >= rightBoundary) {
+            if (this.x >= this.startPositionEndboss) {
                 this.otherDirection = false;
+                this.walkAnimate = false;
+                
+                if (!this.animateMathRandomIsRun) {
+                    this.animateMathRandom();   
+                }  
             }
         }
     }
 
 
     checkAndPerformJump() {
-        if (this.lastJump === 'last') {
+        if (this.lastJump === 'last' && !this.endBossGoAttack) {
             this.lastJump = 'now';
             this.timeoutId = setTimeout(() => {
                 this.jump();
                 this.lastJump = 'last';
-              }, 4000);
+              }, 5000);
         }      
+    }
+
+
+    animateMathRandom(){
+        this.animateMathRandomIsRun = true;
+        this.mathInterval = setInterval(() => {
+            let number = Math.random();
+            if (number < 0.75) {
+                this.endBossGoAttack = true;
+                this.moveZoneX = 325;
+                this.speed = 6.5;
+                this.startMoveInterval(5.5);
+            } else {
+                this.walkAnimate = true;
+                this.moveZoneX = 225;
+                this.speed = 4;
+                this.startMoveInterval(4);
+            } 
+        }, 13000);
     }
 }

@@ -5,6 +5,7 @@ class MovableObject extends DrawalbleObject {
     acceleration = 2;
     energy = 100;
     lastHit = 0;
+    immune = false;
     currentImageLastPic = 0;
 
 
@@ -65,11 +66,18 @@ class MovableObject extends DrawalbleObject {
 
 
     hit(){
-        this.energy -= 5;
-        if (this.energy < 0) {
-            this.energy = 0;
-        } else {
-            this.lastHit = new Date().getTime();
+        if (!this.immune) {
+            this.immune = true;
+            this.energy -= 20;
+            if (this.energy < 0) {
+                this.energy = 0;
+            } else {
+                this.lastHit = new Date().getTime();
+            }
+            setTimeout(() => {
+                this.immune = false;
+            }, 10000);
+            console.log(this.energy);
         }
     }
 
@@ -96,12 +104,19 @@ class MovableObject extends DrawalbleObject {
     }
 
 
+    moveLeftSlow(){
+        this.x -= this.speed;
+    }
+
+
     jump() {
         if (this instanceof SmallChicken) {
             this.speedY = 17;
-        } else {
-            this.speedY = 20; //JumpHeight
-        }  
+        } else if (this instanceof Character) {
+            this.speedY = 20;
+        } else if (this instanceof Endboss) {
+            this.speedY = 15;
+        } 
     }
 
 
