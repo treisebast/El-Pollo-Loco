@@ -141,6 +141,7 @@ class Character extends MovableObject {
 
 
     characterDeadAnimation(){
+        this.world.keyboard = false;
         this.stopAnimations();
         this.lastInt = setInterval(() => {
         this.playAnimationLastPic(this.IMAGES_DEAD);

@@ -12,8 +12,7 @@ class World {
     offset= 350;
 
     IMAGES_DEAD;
-
-    
+      
 
 
 
@@ -38,14 +37,12 @@ class World {
 
 
     run(){
-        setInterval(() =>{
-            this.checkCollisions(['endBoss', 'enemies']);
-            this.checkThrowObjects();
-        }, 150)
-
+        console.log(!this.level.endBoss.endBossIsDead);
         setInterval(() =>{
             this.checkJumpOnChicken();
-        }, 50)
+            this.checkCollisions(['endBoss', 'enemies']);
+            this.checkThrowObjects();
+        }, 25)
     }
 
 
@@ -58,7 +55,7 @@ class World {
 
 
     checkJumpOnChicken() {
-        if (!this.level.enemies.isJumping && this.character.y < 190 && this.character.speedY < 0) {
+        if (!this.level.enemies.isJumping && this.character.y < 200 && this.character.speedY < 0) {
             let maxHorizontalOverlap = 0;
             let selectedChicken = null; 
             this.level.enemies.forEach((enemy) => {
@@ -69,7 +66,7 @@ class World {
                 }
             });
             if (selectedChicken !== null) {
-                this.isJumping = true;
+                selectedChicken.isJumping = true;
                 this.enemyDeadAnimation(selectedChicken);
             }
         }
@@ -77,7 +74,7 @@ class World {
 
 
     enemyDeadAnimation(enemy) {
-        if (!enemy.enemyIsDead && this.character.y > 175) {
+        if (!enemy.enemyIsDead) {
             enemy.stopAnimations();
             this.character.jump();
             enemy.enemyIsDead = true;
@@ -90,7 +87,7 @@ class World {
                         this.level.enemies.splice(index, 1);
                     }
                 }
-            }, 300);
+            }, 350);
         }
     }
 
@@ -98,9 +95,11 @@ class World {
     checkCollisions(enemies){
         enemies.forEach((e) =>{
             this.level[e].forEach((enemy) => {
-                if (this.character.isColliding(enemy) && !enemy.enemyIsDead && this.character.y > 190) {
-                    this.character.hit();
-                    this.statusBar.setPercentage(this.character.energy);
+                if (!enemy.isJumping || !this.level.endBoss.endBossIsDead){
+                    if (this.character.isColliding(enemy) && !enemy.enemyIsDead && this.character.y > 190) {
+                        this.character.hit();
+                        this.statusBar.setPercentage(this.character.energy);
+                    }
                 }
             })
         })             

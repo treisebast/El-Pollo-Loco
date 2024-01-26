@@ -76,7 +76,7 @@ class MovableObject extends DrawalbleObject {
             }
             setTimeout(() => {
                 this.immune = false;
-            }, 10000);
+            }, 1000);
             console.log(this.energy);
         }
     }
@@ -113,7 +113,7 @@ class MovableObject extends DrawalbleObject {
         if (this instanceof SmallChicken) {
             this.speedY = 17;
         } else if (this instanceof Character) {
-            this.speedY = 20;
+            this.speedY = 25;
         } else if (this instanceof Endboss) {
             this.speedY = 15;
         } 
