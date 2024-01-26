@@ -1,4 +1,5 @@
 class Endboss extends MovableObject{
+    world;
     character;
     height = this.height * 4.16;
     width = this.width * 4;
@@ -45,7 +46,6 @@ class Endboss extends MovableObject{
         'img/4_enemie_boss_chicken/5_dead/G26.png'
     ];
 
-    world;
 
     collisionBoxOffsetY = 70;
     collisionBoxOffsetX = 30;
@@ -55,13 +55,10 @@ class Endboss extends MovableObject{
     startPositionEndboss = 1200;
     lastJump = 'last';
 
-    moveZoneX = 200;
+    moveZoneX = 125;
     enemyIsDead = false;
     hadFirstContact = false;
     
-    endBossGoAttack = false;
-    animateMathRandomIsRun = false;
-
 
     constructor(){
         super().loadImage(this.IMAGES_WALK[0]);
@@ -111,23 +108,26 @@ class Endboss extends MovableObject{
         }, 50);
     }
     
+
+    endBossGoAttack = false;
     walkAnimate = true;
     attackAnimate = false;
     moveWithinZoneEndboss(speed) {   
        if (this.x > this.startPositionEndboss - this.moveZoneX && !this.otherDirection) {
             this.walkAnimate = true;
             this.moveLeft();
-            if (this.x <= this.startPositionEndboss - this.moveZoneX + 75 && this.endBossGoAttack) {
-                this.speed = 0.5;
+            if (this.x <= this.startPositionEndboss - this.moveZoneX + 35 && this.endBossGoAttack) {
+                this.speed = 0.2;
                 this.moveLeftSlow();
                 this.walkAnimate = false;
                 this.attackAnimate = true;
             }          
             if (this.x <= this.startPositionEndboss - this.moveZoneX) {
+                this.walkAnimate = true;
                 this.attackAnimate = false;
                 this.otherDirection = true;
                 this.endBossGoAttack = false;
-                this.walkAnimate = true;
+                // this.walkAnimate = true;
             }
 
 
@@ -137,10 +137,15 @@ class Endboss extends MovableObject{
             if (this.x >= this.startPositionEndboss) {
                 this.otherDirection = false;
                 this.walkAnimate = false;
-                
-                if (!this.animateMathRandomIsRun) {
-                    this.animateMathRandom();   
-                }  
+                clearInterval(this.moveInterval);
+                console.log(this.otherDirection);
+                console.log(this.walkAnimate);
+
+                setTimeout(() => {
+                    this.animateMathRandom();
+                    // this.startMoveInterval(2.5);
+                    console.log('es wurde unterbrochen');
+                }, 5000); 
             }
         }
     }
@@ -152,26 +157,28 @@ class Endboss extends MovableObject{
             this.timeoutId = setTimeout(() => {
                 this.jump();
                 this.lastJump = 'last';
-              }, 5000);
+              }, 3000);
         }      
     }
 
 
     animateMathRandom(){
         this.animateMathRandomIsRun = true;
-        this.mathInterval = setInterval(() => {
-            let number = Math.random();
-            if (number < 0.75) {
-                this.endBossGoAttack = true;
-                this.moveZoneX = 325;
-                this.speed = 6.5;
-                this.startMoveInterval(5.5);
-            } else {
-                this.walkAnimate = true;
-                this.moveZoneX = 225;
-                this.speed = 4;
-                this.startMoveInterval(4);
-            } 
-        }, 13000);
+        let number = Math.random();
+        if (number < 0.75) {
+            console.log('erstes animationMathRandomInterval');
+
+            this.endBossGoAttack = true;
+            this.moveZoneX = 325;
+            this.speed = 10;
+            this.startMoveInterval(5.5);
+        } else if (number >= 0.75) {
+            console.log('zweites animationMathRandomInterval');
+
+            this.walkAnimate = true;
+            this.moveZoneX = 225;
+            this.speed = 4;
+            this.startMoveInterval(4);
+        }      
     }
 }
