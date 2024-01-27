@@ -14,17 +14,15 @@ class SmallChicken extends MovableObject{
         'img/3_enemies_chicken/chicken_small/2_dead/dead.png'
     ];
 
-    startPositionChicken;
-    currentPositionInZone;
     lastJump = 'last';
 
-    collisionBoxOffsetY = 3;
+    collisionBoxOffsetY = 10;
     collisionBoxOffsetX = 3;
     collisionBoxWidth = this.width - 10;
     collisionBoxHeight = this.height - 10;
 
     enemyIsDead = false;
-    isJumping = false;
+    isJumped = false;
 
 
 
@@ -34,10 +32,7 @@ class SmallChicken extends MovableObject{
         this.loadImages(this.IMAGES_DEAD);
 
         this.x = Math.min(offset + 300 + Math.random() * 400, 3700);
-        this.speed;
-
-        this.startPositionChicken = offset;
-        this.currentPositionInZone = offset;
+        this.speed = 0.25 + Math.random() * 0.4;
 
         this.applyGravity();
         this.animate();
@@ -47,33 +42,13 @@ class SmallChicken extends MovableObject{
     
     animate() { 
         this.moveInterval = setInterval(() => {
-            this.moveWithinZone();
+            this.moveLeft();
             this.checkAndPerformJump();
         }, 1000 / 60);
 
         this.animationInterval = setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING);
         }, 200);
-    }
-
-
-    moveWithinZone() {
-        let leftBoundary = this.startPositionChicken - 500;
-        let rightBoundary = this.startPositionChicken;
-    
-        if (this.currentPositionInZone > leftBoundary && !this.otherDirection) {
-            this.moveLeft();
-            this.currentPositionInZone -= this.speed;
-            if (this.currentPositionInZone <= leftBoundary) {
-                this.otherDirection = true;
-            }
-        } else if (this.currentPositionInZone < rightBoundary && this.otherDirection) {
-            this.moveRight();
-            this.currentPositionInZone += this.speed;
-            if (this.currentPositionInZone >= rightBoundary) {
-                this.otherDirection = false;
-            }
-        }
     }
 
 

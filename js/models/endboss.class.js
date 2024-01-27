@@ -136,9 +136,6 @@ class Endboss extends MovableObject{
                 this.otherDirection = false;
                 this.walkAnimate = false;
                 clearInterval(this.moveInterval);
-                console.log(this.otherDirection);
-                console.log(this.walkAnimate);
-
                 setTimeout(() => {
                     this.animateMathRandom();
                 }, 5000); 
@@ -163,8 +160,8 @@ class Endboss extends MovableObject{
         let number = Math.random();
         if (number < 0.85) {
             this.endBossGoAttack = true;
-            this.moveZoneX = 325;
-            this.speed = 20;
+            this.moveZoneX = 250;
+            this.speed = 18;
             this.startMoveInterval(5);
         } else if (number >= 0.85) {
             this.walkAnimate = true;

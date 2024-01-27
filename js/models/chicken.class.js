@@ -13,13 +13,13 @@ class Chicken extends MovableObject{
         'img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
     ];
 
-    collisionBoxOffsetY = 3;
+    collisionBoxOffsetY = 25;
     collisionBoxOffsetX = 3;
     collisionBoxWidth = this.width - 10;
-    collisionBoxHeight = this.height - 10;
+    collisionBoxHeight = this.height - 20;
 
     enemyIsDead = false;
-    isJumping = false;
+    isJumped = false;
     
 
     constructor(offset){

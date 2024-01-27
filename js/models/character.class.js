@@ -1,5 +1,5 @@
 class Character extends MovableObject {
-    y = 225;
+    y = 230;
     speed = 7;
     height = this.height * 2;
 
@@ -73,9 +73,11 @@ class Character extends MovableObject {
     currentTime;
 
     collisionBoxOffsetY = 80;
-    collisionBoxOffsetX = 10;
-    collisionBoxWidth = 80;
+    collisionBoxOffsetX = 15;
+    collisionBoxWidth = 60;
     collisionBoxHeight = (this.height / 1.8);
+
+    isHurtCharacter = false;
 
 
     constructor() {
@@ -115,7 +117,6 @@ class Character extends MovableObject {
             }
             
             this.world.camera_x = -this.x + 100;
-            // console.log(this.y + this.collisionBoxOffsetY +this.collisionBoxHeight);
             this.world.createNewChickenIfNecessary();
         }, 25); //Speed character
 
@@ -125,12 +126,12 @@ class Character extends MovableObject {
             if (this.isDead()) {
                 this.characterDeadAnimation();
             } else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
+                this.isHurtBounce();
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING);
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {    
                 this.playAnimation(this.IMAGES_WALKING); 
-            } else if (4000 > this.currentTime - this.startTime){
+            } else if (10000 > this.currentTime - this.startTime){
                 this.playAnimation(this.IMAGES_IDLE);
             } else {
                 this.playAnimation(this.IMAGES_LONG_IDLE);
@@ -148,5 +149,17 @@ class Character extends MovableObject {
         }, 250);   
     }
     
+
+    isHurtBounce(){
+        if (!this.isHurtCharacter) {
+            this.isHurtCharacter = true;
+            this.x = (this.x - 200);
+            setTimeout(() => {
+                this.isHurtCharacter = false;
+            }, 1000);
+        }
+        this.playAnimation(this.IMAGES_HURT);
+    }
+
 
 }

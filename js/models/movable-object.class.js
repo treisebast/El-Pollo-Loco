@@ -1,4 +1,4 @@
-class MovableObject extends DrawalbleObject {
+class MovableObject extends DrawableObject {
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
@@ -34,8 +34,8 @@ class MovableObject extends DrawalbleObject {
 
 
     isJumpOnEnemie(chicken) {
-        let characterBottom = this.y + this.collisionBoxOffsetY + this.collisionBoxHeight + 5;
-        let chickenTop = chicken.y - 5 + chicken.collisionBoxOffsetY;
+        let characterBottom = this.y + this.collisionBoxOffsetY + this.collisionBoxHeight + 10;
+        let chickenTop = chicken.y - 8 + chicken.collisionBoxOffsetY;
         let horizontalOverlap = this.x + this.collisionBoxOffsetX < chicken.x + chicken.collisionBoxOffsetX + chicken.collisionBoxWidth &&
             this.x + this.collisionBoxOffsetX + this.collisionBoxWidth > chicken.x + chicken.collisionBoxOffsetX;  
             
@@ -76,8 +76,7 @@ class MovableObject extends DrawalbleObject {
             }
             setTimeout(() => {
                 this.immune = false;
-            }, 1000);
-            console.log(this.energy);
+            }, 500);
         }
     }
 

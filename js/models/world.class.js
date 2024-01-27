@@ -6,6 +6,10 @@ class World {
     keyboard;
     camera_x = 0;
     statusBar = new StatusBar();
+    coinBar = new CoinBar();
+    bottleBar = new BottleBar();
+    collectableObjects = new CollectableObjects();
+    endBossStatusBar = new EndbossStatusBar();
     throwableObjects = [];
 
     breakpoint = 350;
@@ -21,6 +25,7 @@ class World {
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.draw();
+
         this.setWorld(this.character);
         this.level.enemies.forEach((enemy) =>{
             this.setWorld(enemy);
@@ -37,7 +42,6 @@ class World {
 
 
     run(){
-        console.log(!this.level.endBoss.endBossIsDead);
         setInterval(() =>{
             this.checkJumpOnChicken();
             this.checkCollisions(['endBoss', 'enemies']);
@@ -55,7 +59,7 @@ class World {
 
 
     checkJumpOnChicken() {
-        if (!this.level.enemies.isJumping && this.character.y < 200 && this.character.speedY < 0) {
+        if (!this.level.enemies.isJumped && this.character.y < 200 && this.character.speedY < 0) {
             let maxHorizontalOverlap = 0;
             let selectedChicken = null; 
             this.level.enemies.forEach((enemy) => {
@@ -66,7 +70,7 @@ class World {
                 }
             });
             if (selectedChicken !== null) {
-                selectedChicken.isJumping = true;
+                selectedChicken.isJumped = true;
                 this.enemyDeadAnimation(selectedChicken);
             }
         }
@@ -95,15 +99,19 @@ class World {
     checkCollisions(enemies){
         enemies.forEach((e) =>{
             this.level[e].forEach((enemy) => {
-                if (!enemy.isJumping || !this.level.endBoss.endBossIsDead){
-                    if (this.character.isColliding(enemy) && !enemy.enemyIsDead && this.character.y > 190) {
+                if (!enemy.isJumped || !this.level.endBoss.endBossIsDead){
+                    if (this.character.isColliding(enemy) && !enemy.enemyIsDead ) {
+                        if (!(enemy instanceof Endboss)) {
+                            this.character.isHurtCharacter = true;
+                        } else {
+                            this.character.isHurtCharacter = false;
+                        }
                         this.character.hit();
                         this.statusBar.setPercentage(this.character.energy);
                     }
                 }
             })
         })             
-        
     }
 
 
@@ -124,21 +132,22 @@ class World {
 
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
-
-
-        this.ctx.translate(-this.camera_x, 0);
-        //------------ Space for fixed objects
-        this.addToMap(this.statusBar);
-        this.ctx.translate(this.camera_x, 0);
-
-
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.endBoss);
         this.addObjectsToMap(this.throwableObjects);
+        this.addToMap(this.collectableObjects);
         this.addToMap(this.character);
-
         this.ctx.translate(-this.camera_x, 0);
+        
+        //------------ Space for fixed objects
+        this.addToMap(this.statusBar);
+        this.addToMap(this.endBossStatusBar);
+        this.addToMap(this.coinBar);
+        this.addToMap(this.bottleBar);
+
+        // this.ctx.translate(this.camera_x, 0);
+        // this.ctx.translate(-this.camera_x, 0);
 
         this.createNewChickenIfNecessary();
         setTimeout(() => {
