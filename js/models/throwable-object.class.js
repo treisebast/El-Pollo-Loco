@@ -23,6 +23,11 @@ class ThrowableObject extends MovableObject{
      rotationHeight = 100;
      rotationWidth = 70;
 
+     collisionBoxOffsetY = 20;
+     collisionBoxOffsetX = 15;
+     collisionBoxWidth = 40;
+     collisionBoxHeight = 60;
+
 
     constructor(x, y, speed){
         super().loadImage('img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png');
@@ -33,18 +38,26 @@ class ThrowableObject extends MovableObject{
         this.y = y;
         this.height = this.rotationHeight;
         this.width = this.rotationWidth;
-        this.throw( speed);
+        this.throw(speed);
     }
 
     throw(speed){
 
         this.speedY = 27;
         this.applyGravity();
+        
+        let throwDirection = MovableObject.throwOtherDirection;
 
         setInterval(() => {
             this.playAnimation(this.IMAGES_ROTATION);
-            this.x += (speed + 12);
-           
+            
+            if (throwDirection === false) {
+                this.x += (speed + 12);
+            
+            } else if (throwDirection === true) {
+                this.x -= (speed + 12);
+            }
+    
         }, 60)
     }
 }

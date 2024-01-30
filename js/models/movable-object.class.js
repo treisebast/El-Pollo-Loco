@@ -1,6 +1,7 @@
 class MovableObject extends DrawableObject {
     speed = 0.15;
     otherDirection = false;
+    static throwOtherDirection = false;
     speedY = 0;
     acceleration = 2.1;
     energy = 100;
@@ -8,6 +9,10 @@ class MovableObject extends DrawableObject {
     immune = false;
     currentImageLastPic = 0;
 
+
+    setThrowOtherDirection(value) {
+        MovableObject.throwOtherDirection = value;
+    }
 
 
     applyGravity(){
