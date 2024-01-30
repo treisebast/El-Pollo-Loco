@@ -2,7 +2,7 @@ class MovableObject extends DrawableObject {
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
-    acceleration = 2;
+    acceleration = 2.1;
     energy = 100;
     lastHit = 0;
     immune = false;
@@ -24,7 +24,7 @@ class MovableObject extends DrawableObject {
         if (this instanceof ThrowableObject) { // Throwable object should always fall
             return true;
         } else if (this instanceof SmallChicken) {
-            return this.y < 370;
+            return this.y < 360;
         } else if (this instanceof Endboss) {
             return this.y < 35;
         } else {
@@ -147,6 +147,5 @@ class MovableObject extends DrawableObject {
         clearTimeout(this.timeoutId);
         clearInterval(this.moveInterval);
         clearInterval(this.animationInterval);
-        // this.characterDead = true;
     }
 }

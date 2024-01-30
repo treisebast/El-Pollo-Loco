@@ -6,9 +6,8 @@ class World {
     keyboard;
     camera_x = 0;
     statusBar = new StatusBar();
-    coinBar = new CoinBar();
-    bottleBar = new BottleBar();
-    collectableObjects = new CollectableObjects();
+    collectedCoin = new CollectedCoin();
+    collectedBottle = new CollectedBottle();
     endBossStatusBar = new EndbossStatusBar();
     throwableObjects = [];
 
@@ -46,6 +45,7 @@ class World {
             this.checkJumpOnChicken();
             this.checkCollisions(['endBoss', 'enemies']);
             this.checkThrowObjects();
+            this.checkCollectedItems();
         }, 25)
     }
 
@@ -115,6 +115,30 @@ class World {
     }
 
 
+    checkCollectedItems(){
+        this.level.placedItems.forEach((item) => {
+            if (this.character.isColliding(item)) {
+                console.log(item);
+                if (item instanceof Coins) {
+                    this.collectedCoin.collectedCoins.push(item);
+                    this.deletePlacedItems(item);
+                } else {
+                    this.collectedBottle.collectedBottles.push(item);
+                    this.deletePlacedItems(item);
+                }
+            }           
+        })                
+    }
+
+
+    deletePlacedItems(item){
+        let index = this.level.placedItems.indexOf(item);
+        if (index !== -1) {
+            this.level.placedItems.splice(index, 1);
+        }
+    }
+
+
     createNewChickenIfNecessary() {
         if (this.character.x > this.breakpoint) {
             this.breakpoint += this.offset;
@@ -135,30 +159,26 @@ class World {
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.endBoss);
+        this.addObjectsToMap(this.level.placedItems);
         this.addObjectsToMap(this.throwableObjects);
-        this.addToMap(this.collectableObjects);
         this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0);
         
         //------------ Space for fixed objects
         this.addToMap(this.statusBar);
         this.addToMap(this.endBossStatusBar);
-        this.addToMap(this.coinBar);
-        this.addToMap(this.bottleBar);
+        this.addToMap(this.collectedCoin);
+        this.addToMap(this.collectedBottle);
 
         // this.ctx.translate(this.camera_x, 0);
         // this.ctx.translate(-this.camera_x, 0);
 
         this.createNewChickenIfNecessary();
+
+        //Draw() wird immer wieder aufgerufen
         setTimeout(() => {
             requestAnimationFrame(() => this.draw());
         }, 20);
-
-        //Draw() wird immer wieder aufgerufen
-        // let self = this;
-        // requestAnimationFrame(function(){
-        //     self.draw();
-        // });
     }
 
 

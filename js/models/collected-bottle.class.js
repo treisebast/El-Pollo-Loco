@@ -1,10 +1,10 @@
-class BottleBar extends DrawableObject {
+class CollectedBottle extends DrawableObject {
     
     IMAGE_BOTTLE = [
         'img/7_statusbars/3_icons/icon_salsa_bottle.png'
     ];
 
-    bottles = ['coin', 'coin'];
+    collectedBottles = [];
 
 
     constructor(){
@@ -15,8 +15,6 @@ class BottleBar extends DrawableObject {
         this.width = 60;
         this.height = 60;
 
-        this.text = "x " + this.bottles.length;
-        console.log(this.text);
     }
 
     draw(ctx){
@@ -24,7 +22,7 @@ class BottleBar extends DrawableObject {
 
         ctx.font = 'bolder 32px Risque, serif';
         ctx.fillStyle = 'white';
-
+        this.text = "x " + this.collectedBottles.length;
         ctx.fillText(this.text, this.x + 55, this.y + 40);
     }
 }

@@ -7,11 +7,6 @@ class DrawableObject {
     imageCache = {};
     currentImage = 0;
 
-    collisionBoxOffsetY; 
-    collisionBoxOffsetX;
-    collisionBoxWidth;
-    collisionBoxHeight;
-
     // loadImage('img/test.png');
     loadImage(path){
         this.img = new Image(); // this.img = document.getElementById('image') <img id="image" src>
@@ -43,7 +38,7 @@ class DrawableObject {
 
 
     drawFrame(ctx){
-        if (this instanceof Character || this instanceof Chicken || this instanceof SmallChicken || this instanceof Endboss) {
+        if (this instanceof Character || this instanceof Chicken || this instanceof SmallChicken || this instanceof Endboss || this instanceof Coins || this instanceof Bottles) {
             ctx.beginPath();
             ctx.lineWidth = '3';
             ctx.strokeStyle = 'blue';

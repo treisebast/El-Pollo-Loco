@@ -35,7 +35,7 @@ class Character extends MovableObject {
         "img/2_character_pepe/2_walk/W-23.png",
         "img/2_character_pepe/2_walk/W-24.png",
         "img/2_character_pepe/2_walk/W-25.png",
-        "img/2_character_pepe/2_walk/W-26.png",
+        "img/2_character_pepe/2_walk/W-26.png"
     ];
 
     IMAGES_JUMPING = [
@@ -53,7 +53,7 @@ class Character extends MovableObject {
     IMAGES_HURT = [
         'img/2_character_pepe/4_hurt/H-41.png',
         'img/2_character_pepe/4_hurt/H-42.png',
-        'img/2_character_pepe/4_hurt/H-43.png',
+        'img/2_character_pepe/4_hurt/H-43.png'
     ];
 
     IMAGES_DEAD = [
@@ -81,7 +81,7 @@ class Character extends MovableObject {
 
 
     constructor() {
-        super().loadImage("img/2_character_pepe/2_walk/W-21.png");
+        super().loadImage('img/2_character_pepe/1_idle/idle/I-1.png');
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_LONG_IDLE);
         this.loadImages(this.IMAGES_WALKING);
