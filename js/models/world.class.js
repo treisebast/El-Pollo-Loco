@@ -6,15 +6,17 @@ class World {
     keyboard;
     camera_x = 0;
     statusBar = new StatusBar();
-    collectedCoin = new CollectedCoin();
-    collectedBottle = new CollectedBottle();
+    collectedCoinBar = new CollectedCoin();
+    collectedBottleBar = new CollectedBottle();
     endBossStatusBar = new EndbossStatusBar();
-    throwableObjects = [];
-
+    thrownBottle = [];
+    bottle = new ThrowableObject();
     breakpoint = 350;
     offset= 350;
 
     IMAGES_DEAD;
+
+    hasThrownBottle = false;
       
 
 
@@ -30,7 +32,7 @@ class World {
             this.setWorld(enemy);
         });
         this.setWorld(this.level.endBoss[0]);
- 
+        this.setWorld(this.bottle);
         this.run();
     }
 
@@ -51,11 +53,21 @@ class World {
 
 
     checkThrowObjects(){
-        if (this.keyboard.D) {
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
-            this.throwableObjects.push(bottle);        
-        }
+        if (this.keyboard.D && this.collectedBottleBar.collectedBottles.length > 0 && !this.hasThrownBottle) {
+            console.log('Flasche werfen');
+            this.hasThrownBottle = true;
+            
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, this.character.speed);
+            this.thrownBottle.push(bottle);
+
+            this.collectedBottleBar.collectedBottles.pop();
+
+            setTimeout(() => {
+                this.hasThrownBottle = false;
+            }, 800);
+        }     
     }
+    
 
 
     checkJumpOnChicken() {
@@ -120,10 +132,10 @@ class World {
             if (this.character.isColliding(item)) {
                 console.log(item);
                 if (item instanceof Coins) {
-                    this.collectedCoin.collectedCoins.push(item);
+                    this.collectedCoinBar.collectedCoins.push(item);
                     this.deletePlacedItems(item);
                 } else {
-                    this.collectedBottle.collectedBottles.push(item);
+                    this.collectedBottleBar.collectedBottles.push(item);
                     this.deletePlacedItems(item);
                 }
             }           
@@ -150,7 +162,6 @@ class World {
     }
 
 
-
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -160,15 +171,15 @@ class World {
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.endBoss);
         this.addObjectsToMap(this.level.placedItems);
-        this.addObjectsToMap(this.throwableObjects);
+        this.addObjectsToMap(this.thrownBottle);
         this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0);
         
         //------------ Space for fixed objects
         this.addToMap(this.statusBar);
         this.addToMap(this.endBossStatusBar);
-        this.addToMap(this.collectedCoin);
-        this.addToMap(this.collectedBottle);
+        this.addToMap(this.collectedCoinBar);
+        this.addToMap(this.collectedBottleBar);
 
         // this.ctx.translate(this.camera_x, 0);
         // this.ctx.translate(-this.camera_x, 0);

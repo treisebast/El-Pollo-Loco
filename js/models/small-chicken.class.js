@@ -1,8 +1,8 @@
 class SmallChicken extends MovableObject{
     world;
     y = 360;
-    width = this.width * 0.5;
-    height= this.height * 0.5;
+    width = this.width * 0.6;
+    height= this.height * 0.6;
 
     IMAGES_WALKING =[
         'img/3_enemies_chicken/chicken_small/1_walk/1_w.png',

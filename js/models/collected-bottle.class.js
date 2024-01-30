@@ -4,7 +4,7 @@ class CollectedBottle extends DrawableObject {
         'img/7_statusbars/3_icons/icon_salsa_bottle.png'
     ];
 
-    collectedBottles = [];
+    collectedBottles = [1,1,1,1,1,1];
 
 
     constructor(){
