@@ -78,6 +78,8 @@ class Character extends MovableObject {
     collisionBoxHeight = (this.height / 1.8);
 
     isHurtCharacter = false;
+    immune = false;
+    
 
 
     constructor() {
@@ -126,7 +128,7 @@ class Character extends MovableObject {
         this.animationInterval = setInterval(() => {
             this.currentTime = new Date().getTime();
             if (this.isDead()) {
-                this.characterDeadAnimation();
+                this.DeadAnimation();
             } else if (this.isHurt()) {
                 this.isHurtBounce();
             } else if (this.isAboveGround()) {
@@ -143,13 +145,7 @@ class Character extends MovableObject {
     }
 
 
-    characterDeadAnimation(){
-        this.world.keyboard = false;
-        this.stopAnimations();
-        this.lastInt = setInterval(() => {
-        this.playAnimationLastPic(this.IMAGES_DEAD);
-        }, 250);   
-    }
+    
     
 
     isHurtBounce(){

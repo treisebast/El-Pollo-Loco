@@ -6,7 +6,6 @@ class MovableObject extends DrawableObject {
     acceleration = 2.1;
     energy = 100;
     lastHit = 0;
-    immune = false;
     currentImageLastPic = 0;
 
 
@@ -143,12 +142,22 @@ class MovableObject extends DrawableObject {
     }
 
 
+    DeadAnimation(){
+        this.stopAnimations();
+        this.world.keyboard = false;
+        this.lastInt = setInterval(() => {
+        this.playAnimationLastPic(this.IMAGES_DEAD);
+        }, 250);   
+    }
+
+
     stopInterval() {
         clearInterval(this.lastInt);
     }
 
 
     stopAnimations() {
+        clearTimeout(this.timeoutIdMathRandom);
         clearTimeout(this.timeoutId);
         clearInterval(this.moveInterval);
         clearInterval(this.animationInterval);

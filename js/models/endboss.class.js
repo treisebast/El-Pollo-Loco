@@ -62,6 +62,9 @@ class Endboss extends MovableObject{
 
     endBossIsDead = false;
     energy = 100;
+    immune = false;
+
+    hurtCooldown = false;
     
 
     constructor(){
@@ -83,20 +86,29 @@ class Endboss extends MovableObject{
 
     animate() { 
         this.animationInterval = setInterval(() => {
-            if (this.walkAnimate) {
+            // if (this.hurtCooldown) {
+            //     this.playAnimation(this.IMAGES_HURT);
+            //     setTimeout(() => {
+            //         this.hurtCooldown = false;
+            //     }, 10000);} 
+            // else 
+            if (this.walkAnimate && !this.isDead() && !this.isHurt()) {
                 this.playAnimation(this.IMAGES_WALK);
-            } else if (this.attackAnimate) {
+            } else if (this.attackAnimate && !this.isDead() && !this.isHurt()) {
                 this.playAnimation(this.IMAGES_ATTACK);
-            } else if (this.isHurt()) {
+            } else if (this.isHurt() && !this.isDead()) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
+                this.DeadAnimation();
             } else {
                 this.playAnimation(this.IMAGES_ALERT);
             } 
         }, 150);
         this.startMoveInterval(2.5);
     }
+
+
+    
 
 
     startMoveInterval(speed){
@@ -136,7 +148,7 @@ class Endboss extends MovableObject{
                 this.otherDirection = false;
                 this.walkAnimate = false;
                 clearInterval(this.moveInterval);
-                setTimeout(() => {
+                this.timeoutIdMathRandom = setTimeout(() => {
                     this.animateMathRandom();
                 }, 5000); 
             }
@@ -162,12 +174,17 @@ class Endboss extends MovableObject{
             this.endBossGoAttack = true;
             this.moveZoneX = 250;
             this.speed = 18;
-            this.startMoveInterval(5);
+            if (!this.isDead()) {
+                this.startMoveInterval(5);
+            }
         } else if (number >= 0.85) {
             this.walkAnimate = true;
             this.moveZoneX = 225;
             this.speed = 7.5;
-            this.startMoveInterval(7.5);
+            if (!this.isDead()) {
+                this.startMoveInterval(7.5);
+            }
+            
         }      
     }
 }

@@ -47,33 +47,32 @@ class World {
             this.checkJumpOnChicken();
             this.checkCollisions(['endBoss', 'enemies']);
             this.checkThrowObjects();
-            this.checkCollisionThrowableObjekt(['endBoss', 'enemies']);
+            this.checkCollisionThrowableObjekt();
             this.checkCollectedItems();
         }, 25)
     }
 
 
-    checkCollisionThrowableObjekt(enemies) {
-        enemies.forEach((e) => {
-            this.level[e].forEach((enemy) => {
-                this.thrownBottle.forEach((thrownBottle) => {
-                    if (thrownBottle.isColliding(enemy)) {
-                        if (enemy instanceof Chicken || enemy instanceof SmallChicken) {
-                             // Hier kannst du den Code ausführen, der bei Kollision passieren soll
-                            console.log('Kollision zwischen this.bottle und thrownBottle!');
-                            //TODO: weiter
-                        } 
-                    }
-                });
-            })   
-        }) 
+    checkCollisionThrowableObjekt() {
+        this.level.endBoss.forEach((endBoss) =>{
+            this.thrownBottle.forEach((thrownBottle, i) => {
+                if (thrownBottle.isColliding(endBoss)) {
+                    endBoss.hit();
+                    this.endBossStatusBar.setPercentage(endBoss.energy);    
+                    // console.log(endBoss.energy);
+                       
+
+                // console.log('Kollision zwischen this.bottle und thrownBottle!');
+                 
+                }
+            })                
+        });  
     }
     
 
 
     checkThrowObjects(){
         if (this.keyboard.D && this.collectedBottleBar.collectedBottles.length > 0 && !this.hasThrownBottle) {
-            console.log('Flasche werfen');
             this.hasThrownBottle = true;
             
             let bottle = new ThrowableObject(this.character.x + 10, this.character.y + 80, this.character.speed);
@@ -86,7 +85,7 @@ class World {
             }, 800);
         }
         for (let i = this.thrownBottle.length - 1; i >= 0; i--) {
-            if (this.thrownBottle[i].y > 55000) {
+            if (this.thrownBottle[i].y > 550) {
                 this.thrownBottle.splice(i, 1);
             }
         }     
