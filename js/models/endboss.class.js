@@ -61,7 +61,8 @@ class Endboss extends MovableObject{
     attackAnimate = false;
 
     endBossIsDead = false;
-    energy = 100;
+    gameOver = false;
+    energy = 20; //TODO: auf 100 ändern
     immune = false;
 
     pausedInterval = false;
@@ -95,7 +96,7 @@ class Endboss extends MovableObject{
             } else if (this.isDead()) {
                 this.isHurtAnimation();
                 if ((new Date().getTime() - this.lastHit) > 1800) {
-                    this.DeadAnimation();
+                    this.deadAnimation();
                 }
             } else {
                 this.playAnimation(this.IMAGES_ALERT);

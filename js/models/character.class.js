@@ -79,6 +79,8 @@ class Character extends MovableObject {
 
     isHurtCharacter = false;
     immune = false;
+    gameOver = false;
+
     
     
 
@@ -128,7 +130,7 @@ class Character extends MovableObject {
         this.animationInterval = setInterval(() => {
             this.currentTime = new Date().getTime();
             if (this.isDead()) {
-                this.DeadAnimation();
+                this.deadAnimation();
             } else if (this.isHurt()) {
                 this.isHurtBounce();
             } else if (this.isAboveGround()) {

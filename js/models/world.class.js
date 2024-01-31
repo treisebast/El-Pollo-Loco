@@ -47,7 +47,7 @@ class World {
             this.checkThrowObjects();
             this.checkCollisionThrowableObjekt();
             this.checkCollectedItems();
-        }, 25)
+        }, 30)
     }
 
 
@@ -148,7 +148,6 @@ class World {
     checkCollectedItems(){
         this.level.placedItems.forEach((item) => {
             if (this.character.isColliding(item)) {
-                console.log(item);
                 if (item instanceof Coins) {
                     this.collectedCoinBar.collectedCoins.push(item);
                     this.deletePlacedItems(item);
@@ -243,10 +242,12 @@ class World {
     }
 
 
-    //TODO: Weiter GameOverScreen
-    // endscreen(){
-    //     document.getElementById('canvas').style = 'display: none';
-    //     handleGameEnd();
-    // }
+    endScreen(){
+        if (this.level.endBoss[0].gameOver === true) {            
+            handleGameEnd('youWin');
+        } else if (this.character.gameOver === true) {
+            handleGameEnd('youLose');
+        } 
+    }
 
 }

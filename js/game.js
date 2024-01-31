@@ -13,9 +13,21 @@ function init() {
 
 }
 
-function handleGameEnd() {
+function handleGameEnd(winOrLose) {
     console.log("Spiel beendet!");
+
+    let endScreen = document.getElementById('endScreen');
+    endScreen.style.display = 'block'; 
 }
+
+
+
+
+
+
+
+
+
 
 document.addEventListener('keydown', (e) => {
 

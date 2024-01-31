@@ -1,6 +1,6 @@
 class SmallChicken extends MovableObject{
     world;
-    y = 360;
+    y = 358;
     width = this.width * 0.6;
     height= this.height * 0.6;
 

@@ -7,6 +7,7 @@ class MovableObject extends DrawableObject {
     energy = 100;
     lastHit = 0;
     currentImageLastPic = 0;
+    deadAnimationBeginn = 0;
 
 
     setThrowOtherDirection(value) {
@@ -28,7 +29,7 @@ class MovableObject extends DrawableObject {
         if (this instanceof ThrowableObject) { // Throwable object should always fall
             return true;
         } else if (this instanceof SmallChicken) {
-            return this.y < 360;
+            return this.y < 357;
         } else if (this instanceof Endboss) {
             return this.y < 35;
         } else {
@@ -137,7 +138,11 @@ class MovableObject extends DrawableObject {
         this.img = this.imageCache[path];
         this.currentImageLastPic++;
         if (this.currentImageLastPic === images.length) {
-            this.stopInterval();
+            if (this.timeTillGameOver()) {
+                this.gameOver = true;
+                this.world.endScreen();
+                this.stopInterval();
+            }
         }
     }
 
@@ -147,7 +152,15 @@ class MovableObject extends DrawableObject {
     }
 
 
-    DeadAnimation(){
+    timeTillGameOver(){
+        let timepassed = new Date().getTime() - this.deadAnimationBeginn; // Difference in ms
+        timepassed = timepassed / 1000; // Difference in s
+        return timepassed < 2.5;
+    }
+
+
+    deadAnimation(){
+        this.deadAnimationBeginn = new Date().getTime();
         this.stopAnimations();
         this.world.keyboard = false;
         this.lastInt = setInterval(() => {

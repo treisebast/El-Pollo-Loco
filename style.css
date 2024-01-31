@@ -17,18 +17,30 @@ h1 {
     margin: 16px;
     letter-spacing: 4px;
     text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 10vh;
+    height: 74px;
 }
 
-.container{
+/* .container{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-}
+} */
 
 canvas {
     background-color: black;
     display: block;
+    position: absolute;
+}
+
+.end-screen {
+    background-color: black;
+    display: none;
+    opacity: 0.9;
+    width: 720px;
+    height: 480px;
 }
 
 
