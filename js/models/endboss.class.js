@@ -64,7 +64,7 @@ class Endboss extends MovableObject{
     energy = 100;
     immune = false;
 
-    hurtCooldown = false;
+    pausedInterval = false;
     
 
     constructor(){
@@ -86,39 +86,41 @@ class Endboss extends MovableObject{
 
     animate() { 
         this.animationInterval = setInterval(() => {
-            // if (this.hurtCooldown) {
-            //     this.playAnimation(this.IMAGES_HURT);
-            //     setTimeout(() => {
-            //         this.hurtCooldown = false;
-            //     }, 10000);} 
-            // else 
             if (this.walkAnimate && !this.isDead() && !this.isHurt()) {
                 this.playAnimation(this.IMAGES_WALK);
             } else if (this.attackAnimate && !this.isDead() && !this.isHurt()) {
                 this.playAnimation(this.IMAGES_ATTACK);
             } else if (this.isHurt() && !this.isDead()) {
-                this.playAnimation(this.IMAGES_HURT);
+                this.isHurtAnimation();
             } else if (this.isDead()) {
                 this.DeadAnimation();
             } else {
                 this.playAnimation(this.IMAGES_ALERT);
             } 
-        }, 150);
+        }, 125);
         this.startMoveInterval(2.5);
     }
 
 
-    
+    isHurtAnimation(){
+        this.pausedInterval = true;
+        setTimeout(() => {
+            this.pausedInterval = false;
+        }, 2000);
+        this.playAnimation(this.IMAGES_HURT);            
+    }
 
 
     startMoveInterval(speed){
         this.moveInterval = setInterval(() => {
-            if (this.world?.character.x > 800 && this.walkAnimate || this.hadFirstContact) {
-                this.hadFirstContact = true;
-                this.moveWithinZoneEndboss(speed);
-                if (!this.endBossGoAttack) {
-                    this.checkAndPerformJump();  
-                }
+            if (!this.pausedInterval) {
+                if (this.world?.character.x > 800 && this.walkAnimate || this.hadFirstContact) {
+                    this.hadFirstContact = true;
+                    this.moveWithinZoneEndboss(speed);
+                    if (!this.endBossGoAttack) {
+                        this.checkAndPerformJump();  
+                    }
+                } 
             }
         }, 50);
     }

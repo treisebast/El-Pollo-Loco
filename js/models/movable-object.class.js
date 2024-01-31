@@ -147,7 +147,7 @@ class MovableObject extends DrawableObject {
         this.world.keyboard = false;
         this.lastInt = setInterval(() => {
         this.playAnimationLastPic(this.IMAGES_DEAD);
-        }, 250);   
+        }, 200);   
     }
 
 
