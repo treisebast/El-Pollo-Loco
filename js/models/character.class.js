@@ -80,7 +80,7 @@ class Character extends MovableObject {
     isHurtCharacter = false;
     immune = false;
     
-
+    
 
     constructor() {
         super().loadImage('img/2_character_pepe/1_idle/idle/I-1.png');
@@ -144,9 +144,6 @@ class Character extends MovableObject {
         }, 180); // Imageframes
     }
 
-
-    
-    
 
     isHurtBounce(){
         if (!this.isHurtCharacter) {

@@ -93,21 +93,25 @@ class Endboss extends MovableObject{
             } else if (this.isHurt() && !this.isDead()) {
                 this.isHurtAnimation();
             } else if (this.isDead()) {
-                this.DeadAnimation();
+                this.isHurtAnimation();
+                if ((new Date().getTime() - this.lastHit) > 1800) {
+                    this.DeadAnimation();
+                }
             } else {
                 this.playAnimation(this.IMAGES_ALERT);
             } 
-        }, 125);
+        }, 150);
         this.startMoveInterval(2.5);
     }
 
 
     isHurtAnimation(){
         this.pausedInterval = true;
+        this.playAnimation(this.IMAGES_HURT);
         setTimeout(() => {
             this.pausedInterval = false;
         }, 2000);
-        this.playAnimation(this.IMAGES_HURT);            
+                    
     }
 
 
@@ -122,7 +126,7 @@ class Endboss extends MovableObject{
                     }
                 } 
             }
-        }, 50);
+        }, 60);
     }
     
 
@@ -175,7 +179,7 @@ class Endboss extends MovableObject{
         if (number < 0.85) {
             this.endBossGoAttack = true;
             this.moveZoneX = 250;
-            this.speed = 18;
+            this.speed = 15;
             if (!this.isDead()) {
                 this.startMoveInterval(5);
             }

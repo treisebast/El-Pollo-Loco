@@ -80,7 +80,7 @@ class MovableObject extends DrawableObject {
             }
             setTimeout(() => {
                 this.immune = false;
-            }, 500);
+            }, 1200);
         }
     }
 
@@ -88,7 +88,7 @@ class MovableObject extends DrawableObject {
     isHurt(){
         let timepassed = new Date().getTime() - this.lastHit; // Difference in ms
         timepassed = timepassed / 1000; // Difference in s
-        return timepassed < 1;
+        return timepassed < 1.2;
     }
 
 
@@ -142,17 +142,17 @@ class MovableObject extends DrawableObject {
     }
 
 
+    stopInterval() {
+        clearInterval(this.lastInt);
+    }
+
+
     DeadAnimation(){
         this.stopAnimations();
         this.world.keyboard = false;
         this.lastInt = setInterval(() => {
         this.playAnimationLastPic(this.IMAGES_DEAD);
         }, 200);   
-    }
-
-
-    stopInterval() {
-        clearInterval(this.lastInt);
     }
 
 

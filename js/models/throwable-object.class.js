@@ -17,8 +17,8 @@ class ThrowableObject extends MovableObject{
         'img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png'
     ];
 
-     splashHeight = 120;
-     splashWidth = 100;
+     splashHeight = 180;
+     splashWidth = 235;
  
      rotationHeight = 100;
      rotationWidth = 70;
@@ -28,6 +28,8 @@ class ThrowableObject extends MovableObject{
      collisionBoxWidth = 40;
      collisionBoxHeight = 60;
 
+
+     isBrokenBottle = false;
 
     constructor(x, y, speed){
         super().loadImage('img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png');
@@ -48,14 +50,17 @@ class ThrowableObject extends MovableObject{
         
         let throwDirection = MovableObject.throwOtherDirection;
 
-        setInterval(() => {
-            this.playAnimation(this.IMAGES_ROTATION);
-            
-            if (throwDirection === false) {
+        this.lastInt = setInterval(() => {
+            if (throwDirection === false && !this.isBrokenBottle) {
                 this.x += (speed + 12);
-            
-            } else if (throwDirection === true) {
+                this.playAnimation(this.IMAGES_ROTATION);
+            } else if (throwDirection === true && !this.isBrokenBottle) {
                 this.x -= (speed + 12);
+                this.playAnimation(this.IMAGES_ROTATION);
+            } else if (this.isBrokenBottle === true) {
+                this.height = this.splashHeight;
+                this.width = this.splashWidth;
+                this.playAnimationLastPic(this.IMAGES_SPLASH);
             }
     
         }, 60)

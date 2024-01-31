@@ -17,8 +17,6 @@ class World {
     IMAGES_DEAD;
 
     hasThrownBottle = false;
-      
-
 
 
     constructor(canvas, keyboard) {
@@ -55,21 +53,19 @@ class World {
 
     checkCollisionThrowableObjekt() {
         this.level.endBoss.forEach((endBoss) =>{
-            this.thrownBottle.forEach((thrownBottle, i) => {
+            this.thrownBottle.forEach((thrownBottle) => {
                 if (thrownBottle.isColliding(endBoss)) {
                     endBoss.hit();
-                    this.endBossStatusBar.setPercentage(endBoss.energy);    
-                    // console.log(endBoss.energy);
-                       
-
-                // console.log('Kollision zwischen this.bottle und thrownBottle!');
-                 
+                    console.log(endBoss.energy);
+                    this.endBossStatusBar.setPercentage(endBoss.energy);
+                    thrownBottle.isBrokenBottle = true;
+                    console.log(thrownBottle);
+                    // console.log(endBoss.energy);                  
                 }
             })                
         });  
     }
     
-
 
     checkThrowObjects(){
         if (this.keyboard.D && this.collectedBottleBar.collectedBottles.length > 0 && !this.hasThrownBottle) {
@@ -91,7 +87,6 @@ class World {
         }     
     }
     
-
 
     checkJumpOnChicken() {
         if (!this.level.enemies.isJumped && this.character.y < 200 && this.character.speedY < 0) {
@@ -204,12 +199,9 @@ class World {
         this.addToMap(this.collectedCoinBar);
         this.addToMap(this.collectedBottleBar);
 
-        // this.ctx.translate(this.camera_x, 0);
-        // this.ctx.translate(-this.camera_x, 0);
-
         this.createNewChickenIfNecessary();
 
-        //Draw() wird immer wieder aufgerufen
+        // repeat Draw() always
         setTimeout(() => {
             requestAnimationFrame(() => this.draw());
         }, 20);
