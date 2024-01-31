@@ -32,21 +32,31 @@
 
 </head>
 
-<body onload="init()">
+<body >  
+    <!-- onload="init()" -->
 
     <h1 id="header">El Pollo Loco</h1>
 
     <div class="container">
 
-        <canvas id="canvas" height="480" width="720"></canvas>
-        
-        <div class="end-screen" id="endScreen">
-            <img src="img/9_intro_outro_screens/game_over/game over.png" alt="Game Over">
-            <img src="img/9_intro_outro_screens/game_over/oh no you lost!.png" alt="You Lost">
+        <div class="start-screen" id="startScreen">
+            <img id="imageStartScreen" class="image-start-screen" src="img/9_intro_outro_screens/start/startscreen_1.png">
+
+            <button id="startGame" class="start-game-btn sg-btn-position" onclick="startGame()">Start Game</button>
         </div>
+
+        <canvas id="canvas" height="480" width="720"></canvas>
+
+        <div class="end-screen" id="endScreen">
+            <img id="imageEndScreen" class="image-end-screen">
+
+            <button id="restartGame" class="restart-game-btn rg-btn-position" onclick="restartGame()">Restart Game</button>
+        </div>
+    
 
     </div>
 
+    
 
 
 
