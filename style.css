@@ -78,6 +78,7 @@ canvas {
     max-height: 480px;
     overflow: hidden;
     opacity: 0;
+    z-index: 10;
 }
 
 .show {
@@ -125,7 +126,7 @@ canvas {
     top: 30px;
 }
 
-.restart-game:hover, .start-game:hover {
+.restart-game-btn:hover, .start-game-btn:hover {
     background-color: rgba(253, 207, 18, 0.85);
 }
 
@@ -146,6 +147,7 @@ canvas {
 /* Overlay und Penel */
 .overlay{
     display: flex;
+    visibility: hidden;
     flex-direction: column;
     justify-content: space-between;
     aspect-ratio: auto 720 / 480;
@@ -153,7 +155,6 @@ canvas {
     max-width: 720px;
     max-height: 480px;
     width: 100%;
-    z-index: 10;
 }
 
 .header-penel{
@@ -161,8 +162,18 @@ canvas {
     justify-content: flex-end;
 }
 
+.btn-z-index{
+    visibility: visible;
+    z-index: 11;
+}
+
 .move-penel{
     justify-content: space-between;
+    display: flex;
+    visibility: hidden;
+}
+
+.move-penel-left, .move-penel-right{
     display: none;
 }
 
@@ -224,6 +235,7 @@ canvas {
     width: 100vw;
     height: 100vh;
     background-color: black;
+    position: absolute;
     z-index: 100;
 
 }
@@ -269,8 +281,8 @@ canvas {
         width: 100%;
     }
 
-    .move-penel{
-        display: flex;
+    .move-penel-left, .move-penel-right{
+        z-index: 10;
     }
 }
 
@@ -279,7 +291,8 @@ canvas {
         height: 100vh;
     }
 
-    .move-penel{
-        display: flex;
+    .move-penel-left, .move-penel-right{
+        z-index: 10;
     }
+    
 }

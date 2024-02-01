@@ -23,6 +23,8 @@ function init() {
 function handleGameEnd(winOrLose) {
     console.log("Spiel beendet!");
 
+    clearAllIntervals();
+
     let endScreen = document.getElementById("endScreen");
     endScreen.classList.add('show');
 
@@ -31,6 +33,13 @@ function handleGameEnd(winOrLose) {
         imageEndScreen.src = "img/9_intro_outro_screens/game_over/game over!.png";
     } else {
         imageEndScreen.src = "img/9_intro_outro_screens/game_over/oh no you lost!.png";
+    }
+}
+
+
+function clearAllIntervals() {
+    for (let i = 1; i < 9999; i++){
+        window.clearInterval(i);
     }
 }
 
