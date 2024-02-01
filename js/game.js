@@ -5,6 +5,8 @@ let keyboard = new Keyboard();
 function startGame() {
     document.getElementById("startScreen").classList.add('none-show');
     document.getElementById("canvas").classList.add('show');
+    document.getElementById("movePenelLeft").classList.add('show');
+    document.getElementById("movePenelRight").classList.add('show');
     document.getElementById("headerPenel").style.justifyContent = "center";
 
     init();

@@ -147,7 +147,7 @@ canvas {
 /* Overlay und Penel */
 .overlay{
     display: flex;
-    visibility: hidden;
+    /* visibility: hidden; */
     flex-direction: column;
     justify-content: space-between;
     aspect-ratio: auto 720 / 480;
@@ -163,18 +163,19 @@ canvas {
 }
 
 .btn-z-index{
-    visibility: visible;
+    /* visibility: visible; */
     z-index: 11;
 }
 
 .move-penel{
     justify-content: space-between;
     display: flex;
-    visibility: hidden;
 }
 
 .move-penel-left, .move-penel-right{
-    display: none;
+    display: flex;
+    visibility: hidden;
+    opacity: 0;
 }
 
 .btn-head-p, .btn-move-p{
@@ -283,6 +284,7 @@ canvas {
 
     .move-penel-left, .move-penel-right{
         z-index: 10;
+        visibility: visible;
     }
 }
 
@@ -293,6 +295,7 @@ canvas {
 
     .move-penel-left, .move-penel-right{
         z-index: 10;
+        visibility: visible;
     }
     
 }
