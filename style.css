@@ -125,8 +125,8 @@ canvas {
 }
 
 .move-penel{
-    display: flex;
     justify-content: space-between;
+    display: none;
 }
 
 .btn-head-p, .btn-move-p{
@@ -191,10 +191,18 @@ canvas {
     canvas, .end-screen, .start-screen, .overlay {
         width: 100%;
     }
+
+    .move-penel{
+        display: flex;
+    }
 }
 
 @media only screen and (max-height: 480px){
     canvas, .end-screen, .start-screen, .overlay {
         height: 100vh;
+    }
+
+    .move-penel{
+        display: flex;
     }
 }
