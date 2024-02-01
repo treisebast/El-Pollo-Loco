@@ -12,9 +12,9 @@ function startGame() {
 
 
 function init() {
+    initLevel();
     canvas = document.getElementById("canvas");
     world = new World(canvas, keyboard);
-
     console.log(world.level.enemies);
     console.log("My charakter is", world.character);
 }
@@ -32,5 +32,10 @@ function handleGameEnd(winOrLose) {
     } else {
         imageEndScreen.src = "img/9_intro_outro_screens/game_over/oh no you lost!.png";
     }
+}
+
+
+function restartGame(){
+    
 }
 

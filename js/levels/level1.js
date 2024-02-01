@@ -1,14 +1,17 @@
-const level1 = new Level(
-    enemies = [new Chicken(500), new SmallChicken(600)],
-    endBoss =[new Endboss()],
-    placedItems = [],
-    cloud = [],
-    backgroundObjects = [],
-    createCloudObjects(),
-    createBackgroundObjects(),
-    createCoins(),
-    createBottles()
-);
+let level1; 
+
+function initLevel() { 
+    level1 = new Level(
+        enemies = [new Chicken(500), new SmallChicken(600)],
+        endBoss =[new Endboss()],
+        placedItems = [],
+        cloud = [],
+        backgroundObjects = []);
+        createCoins();
+        createBottles();
+        createCloudObjects();
+        createBackgroundObjects();
+}
 
 
 function createCoins(){
