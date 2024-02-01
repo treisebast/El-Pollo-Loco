@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>El Pollo Loco</title>
 
+    <link rel="stylesheet" href="font-icons.css">
     <link rel="stylesheet" href="fonts.css">
     <link rel="stylesheet" href="style.css">
 
@@ -32,36 +33,92 @@
 
 </head>
 
-<body >  
-    <!-- onload="init()" -->
+<body>
+    <!--onload="init()" -->
 
     <h1 id="header">El Pollo Loco</h1>
 
     <div class="container">
 
+<!-- Overlay for Menupenel -->
+        <div class="overlay">
+            <div class="header-penel" id="headerPenel">
+                <button class="btn-head-p" id="audioSound">
+                    <span class="material-symbols-outlined">
+                        music_note
+                    </span>
+                    <span class="material-symbols-outlined">
+                        music_off
+                    </span>
+                </button>
+
+                <button class="btn-head-p" id="fullscreen">
+                    <span class="material-symbols-outlined">
+                        pause
+                    </span>
+                    <span class="material-symbols-outlined">
+                        play_circle
+                    </span>
+                </button>
+
+                <button class="btn-head-p" id="paused">
+                    <span class="material-symbols-outlined">
+                        fullscreen
+                    </span>
+                    <span class="material-symbols-outlined">
+                        fullscreen_exit
+                    </span>
+                </button>
+            </div>
+
+            <div id="movePenel" class="move-penel">
+                <div>
+                    <button class="btn-move-p btn-size" id="btnLeft">
+                        <span class="material-symbols-outlined mso-left">
+                            arrow_back_ios
+                        </span>
+                    </button>
+                    <button class="btn-move-p btn-size" id="btnRight">
+                        <span class="material-symbols-outlined mso-right">
+                            arrow_forward_ios
+                        </span>
+                    </button>
+                </div>
+                <div>
+                    <button class="btn-move-p btn-size " id="btnThrow">
+                        <span class="material-symbols-outlined mso-throw">
+                            switch_access_shortcut
+                        </span>
+                    </button>
+                    <button class="btn-move-p btn-size" id="btnJump">
+                        <span class="material-symbols-outlined mso-jump">
+                            keyboard_double_arrow_up
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+<!-- Start- Canvas and EndScreen -->
         <div class="start-screen" id="startScreen">
-            <img id="imageStartScreen" class="image-start-screen" src="img/9_intro_outro_screens/start/startscreen_1.png">
+            <img id="imageStartScreen" class="image-start-screen"
+                src="img/9_intro_outro_screens/start/startscreen_1.png">
 
             <button id="startGame" class="start-game-btn sg-btn-position" onclick="startGame()">Start Game</button>
         </div>
 
+
         <canvas id="canvas" height="480" width="720"></canvas>
+
 
         <div class="end-screen" id="endScreen">
             <img id="imageEndScreen" class="image-end-screen">
 
-            <button id="restartGame" class="restart-game-btn rg-btn-position" onclick="restartGame()">Restart Game</button>
+            <button id="restartGame" class="restart-game-btn rg-btn-position" onclick="restartGame()">Restart
+                Game</button>
         </div>
-    
-
     </div>
-
-    
-
-
-
-
-
 
 </body>
 

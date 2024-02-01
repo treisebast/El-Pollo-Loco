@@ -122,7 +122,7 @@ class Character extends MovableObject {
                 this.startTime = this.currentTime;
             }
             
-            this.world.camera_x = -this.x + 100;
+            this.world.camera_x = -this.x + 135;
             this.world.createNewChickenIfNecessary();
         }, 25); //Speed character
 

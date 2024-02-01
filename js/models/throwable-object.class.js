@@ -62,7 +62,6 @@ class ThrowableObject extends MovableObject{
                 this.width = this.splashWidth;
                 this.playAnimationLastPic(this.IMAGES_SPLASH);
             }
-    
         }, 60)
     }
 }

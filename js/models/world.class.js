@@ -56,11 +56,8 @@ class World {
             this.thrownBottle.forEach((thrownBottle) => {
                 if (thrownBottle.isColliding(endBoss)) {
                     endBoss.hit();
-                    console.log(endBoss.energy);
                     this.endBossStatusBar.setPercentage(endBoss.energy);
-                    thrownBottle.isBrokenBottle = true;
-                    console.log(thrownBottle);
-                    // console.log(endBoss.energy);                  
+                    thrownBottle.isBrokenBottle = true;                  
                 }
             })                
         });  
@@ -69,13 +66,10 @@ class World {
 
     checkThrowObjects(){
         if (this.keyboard.D && this.collectedBottleBar.collectedBottles.length > 0 && !this.hasThrownBottle) {
-            this.hasThrownBottle = true;
-            
+            this.hasThrownBottle = true; 
             let bottle = new ThrowableObject(this.character.x + 10, this.character.y + 80, this.character.speed);
             this.thrownBottle.push(bottle);
-
             this.collectedBottleBar.collectedBottles.pop();
-
             setTimeout(() => {
                 this.hasThrownBottle = false;
             }, 800);

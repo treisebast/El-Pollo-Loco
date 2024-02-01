@@ -5,6 +5,7 @@ let keyboard = new Keyboard();
 function startGame(){
     document.getElementById('startScreen').style.display = 'none';
     document.getElementById('canvas').style.display = 'flex';
+    document.getElementById('headerPenel').style.justifyContent = 'center';
     init();
 }
 
