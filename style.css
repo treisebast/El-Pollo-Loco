@@ -22,6 +22,8 @@ h1 {
     height: 74px;
 }
 
+
+/* Container width Canvas */
 .container{
     display: contents;
 }
@@ -107,6 +109,8 @@ canvas {
 }
 
 
+
+/* Overlay und Penel */
 .overlay{
     display: flex;
     flex-direction: column;
@@ -164,7 +168,47 @@ canvas {
 }
 
 
+/* Screenrotation */
+.mso-rotation{
+    font-size: 200px;
+    color: white;
+    margin-bottom: 5vh;
+}
 
+.text-rotation{
+    color: white;
+    text-align: center;
+    font-size: 32px;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.screen-rotation{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    z-index: 100;
+
+}
+
+@media (orientation: landscape) {
+    .screen-rotation{
+        display: none;
+    }
+  }
+  
+  @media (orientation: portrait) and (max-width: 720px) {
+    .screen-rotation{
+        display: flex;
+    }
+  }
+
+
+/* MediaQuery */
 
 @media only screen and (max-height: 830px){
     h1{
