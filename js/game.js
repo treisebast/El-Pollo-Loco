@@ -3,8 +3,8 @@ let world;
 let keyboard = new Keyboard();
 
 function startGame() {
-    document.getElementById("startScreen").style.display = "none";
-    document.getElementById("canvas").style.display = "flex";
+    document.getElementById("startScreen").classList.add('none-show');
+    document.getElementById("canvas").classList.add('show');
     document.getElementById("headerPenel").style.justifyContent = "center";
 
     init();
@@ -24,7 +24,7 @@ function handleGameEnd(winOrLose) {
     console.log("Spiel beendet!");
 
     let endScreen = document.getElementById("endScreen");
-    endScreen.style.display = "flex";
+    endScreen.classList.add('show');
 
     let imageEndScreen = document.getElementById("imageEndScreen");
     if (winOrLose == "youWin") {

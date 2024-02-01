@@ -155,7 +155,7 @@ class MovableObject extends DrawableObject {
     timeTillGameOver(){
         let timepassed = new Date().getTime() - this.deadAnimationBeginn; // Difference in ms
         timepassed = timepassed / 1000; // Difference in s
-        return timepassed < 2.5;
+        return timepassed < 3.5;
     }
 
 

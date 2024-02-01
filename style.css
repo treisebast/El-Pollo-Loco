@@ -37,6 +37,22 @@ h1 {
     max-width: 720px;
     max-height: 480px;
     overflow: hidden;
+    opacity: 1;
+}
+
+.none-show{
+    animation: fadeOut 1s forwards;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        display: none; 
+    }
 }
 
 .image-start-screen{
@@ -47,6 +63,7 @@ h1 {
 
 canvas {
     background-color: black;
+    opacity: 0;
     display: none;
 }
 
@@ -60,6 +77,22 @@ canvas {
     max-width: 720px;
     max-height: 480px;
     overflow: hidden;
+    opacity: 0;
+}
+
+.show {
+    display: flex;
+    animation: fadeIn 1.5s forwards;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 .image-end-screen{
