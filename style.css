@@ -126,7 +126,7 @@ canvas {
     top: 30px;
 }
 
-.restart-game-btn:hover, .start-game-btn:hover {
+.restart-game-btn:hover, .start-game-btn:hover, .btn-menu-hover:hover {
     background-color: rgba(253, 207, 18, 0.85);
 }
 
@@ -147,7 +147,6 @@ canvas {
 /* Overlay und Penel */
 .overlay{
     display: flex;
-    /* visibility: hidden; */
     flex-direction: column;
     justify-content: space-between;
     aspect-ratio: auto 720 / 480;
@@ -163,7 +162,6 @@ canvas {
 }
 
 .btn-z-index{
-    /* visibility: visible; */
     z-index: 11;
 }
 
@@ -238,7 +236,6 @@ canvas {
     background-color: black;
     position: absolute;
     z-index: 100;
-
 }
 
 @media (orientation: landscape) {
@@ -247,11 +244,22 @@ canvas {
     }
   }
   
-  @media (orientation: portrait) and (max-width: 720px) {
+@media (orientation: portrait) and (max-width: 720px) {
     .screen-rotation{
         display: flex;
     }
-  }
+}
+
+
+
+/* FullScreenSizeUpper */
+.fullScreenUpperSize{
+    max-width: 1440px;
+    max-height: 960px;
+    width: 100vw;
+    height: 100vh;
+}
+
 
 
 /* MediaQuery */

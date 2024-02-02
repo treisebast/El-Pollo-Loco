@@ -37,17 +37,18 @@ class World {
     
     setWorld(obj) {
         obj.world = this;
-     }
-
+    }
+    
 
     run(){
-        setInterval(() =>{
+        this.runInterval = setInterval(() =>{
             this.checkJumpOnChicken();
             this.checkCollisions(['endBoss', 'enemies']);
             this.checkThrowObjects();
             this.checkCollisionThrowableObjekt();
             this.checkCollectedItems();
         }, 30)
+        this.pushIntervalToArray(this.runInterval);
     }
 
 
@@ -235,6 +236,11 @@ class World {
         this.ctx.restore();
     }
 
+
+    pushIntervalToArray(id){
+        setStoppableInterval(id);
+    }
+    
 
     endScreen(){
         if (this.level.endBoss[0].gameOver === true) {            

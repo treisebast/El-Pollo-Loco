@@ -13,6 +13,7 @@ class Coins extends MovableObject{
         'img/8_coin/coin_2.png'
     ];
 
+    
     constructor(x, y){
         super().loadImage('img/8_coin/coin_1.png');
         this.loadImages(this.COIN_IMAGES);
@@ -22,13 +23,16 @@ class Coins extends MovableObject{
         this.animate();
     }
 
+
     animate(){
-        setInterval(() => {
+        this.animationInterval = setInterval(() => {
             this.playAnimation(this.COIN_IMAGES);  
         }, 500);
-        
+        this.pushIntervalToArray(this.animationInterval);
     }
 
     
-
+    pushIntervalToArray(id){
+        setStoppableInterval(id);
+    }
 }

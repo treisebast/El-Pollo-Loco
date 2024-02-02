@@ -41,7 +41,9 @@ class ThrowableObject extends MovableObject{
         this.height = this.rotationHeight;
         this.width = this.rotationWidth;
         this.throw(speed);
+        this.pushIntervalToArray(this.lastInt);
     }
+
 
     throw(speed){
 
@@ -63,5 +65,10 @@ class ThrowableObject extends MovableObject{
                 this.playAnimationLastPic(this.IMAGES_SPLASH);
             }
         }, 60)
+    }
+
+
+    pushIntervalToArray(id){
+        setStoppableInterval(id);
     }
 }

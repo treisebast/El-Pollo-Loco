@@ -37,6 +37,8 @@ class SmallChicken extends MovableObject{
         this.applyGravity();
         this.animate();
         
+        this.pushIntervalToArray(this.moveInterval);
+        this.pushIntervalToArray(this.animationInterval);
     }
 
     
@@ -63,4 +65,7 @@ class SmallChicken extends MovableObject{
     }
 
     
+    pushIntervalToArray(id){
+        setStoppableInterval(id);
+    }
 }

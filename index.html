@@ -42,12 +42,12 @@
 
     <h1 id="header">El Pollo Loco</h1>
 
-    <div class="container">
+    <div class="container" id="fullScreen">
 
         <!-- Overlay for Menupenel -->
-        <div class="overlay">
+        <div class="overlay" id="overlay">
             <div class="header-penel" id="headerPenel">
-                <button class="btn-head-p btn-z-index" id="audioSound">
+                <button class="btn-head-p btn-z-index btn-menu-hover" id="audioSound">
                     <span class="material-symbols-outlined">
                         music_note
                     </span>
@@ -56,20 +56,20 @@
                     </span>
                 </button>
 
-                <button class="btn-head-p btn-z-index" id="fullscreen">
-                    <span class="material-symbols-outlined">
+                <button class="btn-head-p btn-z-index btn-menu-hover" id="paused" onclick="togglePause()">
+                    <span class="material-symbols-outlined" id="pauseIcon">
                         pause
                     </span>
-                    <span class="material-symbols-outlined">
+                    <span class="material-symbols-outlined" id="playIcon" style="display:none;">
                         play_circle
                     </span>
                 </button>
 
-                <button class="btn-head-p btn-z-index" id="paused">
-                    <span class="material-symbols-outlined">
+                <button class="btn-head-p btn-z-index btn-menu-hover" id="fullScreen" onclick="toggleFullScreen()">
+                    <span class="material-symbols-outlined" id="fullscreenIcon">
                         fullscreen
                     </span>
-                    <span class="material-symbols-outlined">
+                    <span class="material-symbols-outlined" id="exitFullscreenIcon" style="display:none;">
                         fullscreen_exit
                     </span>
                 </button>

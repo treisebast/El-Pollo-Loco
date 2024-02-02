@@ -102,6 +102,7 @@ class Endboss extends MovableObject{
                 this.playAnimation(this.IMAGES_ALERT);
             } 
         }, 150);
+        this.pushIntervalToArray(this.animationInterval);
         this.startMoveInterval(2.5);
     }
 
@@ -128,6 +129,7 @@ class Endboss extends MovableObject{
                 } 
             }
         }, 60);
+        this.pushIntervalToArray(this.moveInterval);
     }
     
 
@@ -193,5 +195,10 @@ class Endboss extends MovableObject{
             }
             
         }      
+    }
+
+
+    pushIntervalToArray(id){
+        setStoppableInterval(id);
     }
 }

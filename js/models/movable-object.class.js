@@ -16,12 +16,13 @@ class MovableObject extends DrawableObject {
 
 
     applyGravity(){
-        setInterval(() => {
+        this.gravityInterval = setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration; 
             }
         }, 50)
+        this.pushIntervalToArray(this.gravityInterval);
     }
 
 
@@ -138,11 +139,11 @@ class MovableObject extends DrawableObject {
         this.img = this.imageCache[path];
         this.currentImageLastPic++;
         if (this.currentImageLastPic === images.length) {
-            if (this.timeTillGameOver()) {
+            this.stopInterval();
+            setTimeout(() => {
                 this.gameOver = true;
-                this.world.endScreen();
-                this.stopInterval();
-            }
+                this.world?.endScreen();
+            }, 500);
         }
     }
 
@@ -152,20 +153,14 @@ class MovableObject extends DrawableObject {
     }
 
 
-    timeTillGameOver(){
-        let timepassed = new Date().getTime() - this.deadAnimationBeginn; // Difference in ms
-        timepassed = timepassed / 1000; // Difference in s
-        return timepassed < 3.5;
-    }
-
-
     deadAnimation(){
         this.deadAnimationBeginn = new Date().getTime();
         this.stopAnimations();
         this.world.keyboard = false;
         this.lastInt = setInterval(() => {
         this.playAnimationLastPic(this.IMAGES_DEAD);
-        }, 200);   
+        }, 200); 
+        this.pushIntervalToArray(this.lastInt);  
     }
 
 
@@ -174,5 +169,9 @@ class MovableObject extends DrawableObject {
         clearTimeout(this.timeoutId);
         clearInterval(this.moveInterval);
         clearInterval(this.animationInterval);
+    }
+
+    pushIntervalToArray(id){
+        setStoppableInterval(id);
     }
 }

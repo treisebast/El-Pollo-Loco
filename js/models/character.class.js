@@ -125,6 +125,7 @@ class Character extends MovableObject {
             this.world.camera_x = -this.x + 135;
             this.world.createNewChickenIfNecessary();
         }, 25); //Speed character
+        this.pushIntervalToArray(this.moveInterval);
 
         
         this.animationInterval = setInterval(() => {
@@ -141,9 +142,9 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_IDLE);
             } else {
                 this.playAnimation(this.IMAGES_LONG_IDLE);
-            }
-            
+            } 
         }, 180); // Imageframes
+        this.pushIntervalToArray(this.animationInterval);
     }
 
 
@@ -159,4 +160,7 @@ class Character extends MovableObject {
     }
 
 
+    pushIntervalToArray(id){
+        setStoppableInterval(id);
+    }
 }
