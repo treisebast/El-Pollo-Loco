@@ -196,9 +196,7 @@ class World {
         this.createNewChickenIfNecessary();
 
         // repeat Draw() always
-        setTimeout(() => {
-            requestAnimationFrame(() => this.draw());
-        }, 20);
+        this.requestAnimationFrame = requestAnimationFrame(() => this.draw());
     }
 
 

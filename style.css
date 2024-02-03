@@ -22,6 +22,10 @@ h1 {
     height: 74px;
 }
 
+.d-none{
+    display: none;
+}
+
 
 /* Container width Canvas */
 .container{

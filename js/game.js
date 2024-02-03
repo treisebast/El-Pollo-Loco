@@ -4,13 +4,18 @@ let keyboard = new Keyboard();
 
 let allIntervals = [];
 let isPaused = false;
+let gameStart = false;
 
 
-function startGame() {
+function startGame(x) {
+    if (!(x === 'play-btn')) {
+        togglePause('start-btn');
+    }
+    let layerIds = ["canvas", "movePenelLeft", "movePenelRight"]
+    layerIds.forEach((id) => {
+        document.getElementById(id).classList.add('show');
+    })
     document.getElementById("startScreen").classList.add('none-show');
-    document.getElementById("canvas").classList.add('show');
-    document.getElementById("movePenelLeft").classList.add('show');
-    document.getElementById("movePenelRight").classList.add('show');
     document.getElementById("headerPenel").style.justifyContent = "center";
 
     init();
@@ -28,6 +33,7 @@ function init() {
 
 function handleGameEnd(winOrLose) {
     console.log("Spiel beendet!");
+    gameStart = false;
 
     clearAllIntervals();
 
@@ -61,24 +67,53 @@ function clearAllIntervals(){
 
 
 function restartGame(){
+    let layerIds = ["canvas", "movePenelLeft", "movePenelRight"]
+    let endScreen = document.getElementById("endScreen");
+    endScreen.classList.remove('show');
+
+    cancelAnimationFrame(world.requestAnimationFrame);
+
+    let ctx = world.canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     
+    document.getElementById("startScreen").classList.remove('none-show');
+    layerIds.forEach((id) => {
+        document.getElementById(id).classList.remove('show');
+    })
+    document.getElementById("headerPenel").style.justifyContent = "flex-end";  
 }
 
 
-function togglePause() {
+
+
+function togglePause(x) {
     let pauseIcon = document.getElementById('pauseIcon');
     let playIcon = document.getElementById('playIcon');
-
-    if (isPaused) {
+    if (isPaused && gameStart) {
         playIcon.style.display = 'none';
-        pauseIcon.style.display = 'inline-block';
+        pauseIcon.style.display = 'flex';
+        isPaused = false;
         resumeIntervals();
-    } else {
+    } else if (!isPaused && gameStart) {
         pauseIcon.style.display = 'none';
-        playIcon.style.display = 'inline-block';
+        playIcon.style.display = 'flex';
+        isPaused = true;
         pauseIntervals();
-    }
-    isPaused = !isPaused;
+    } 
+    gameIsStarted(pauseIcon, playIcon, x);
+
+}
+
+
+function gameIsStarted(pauseIcon, playIcon, x){
+    if (!gameStart && !isPaused){
+        gameStart = true;
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'flex';
+        if (x === 'play-btn') {
+            startGame('play-btn');
+        }  
+    } 
 }
 
 
@@ -90,7 +125,18 @@ function pauseIntervals() {
 
 
 function resumeIntervals() {
-    Character.animate();
+
+    // console.log(world.throwBottle[0]);
+
+    world.run();
+    world.character.animate();
+    world.thrownBottle.forEach((bottle) => {
+        bottle.throw();
+    })
+    world.level.enemies.forEach((e) => {
+        e.animate();
+    })
+    
 }
 
 

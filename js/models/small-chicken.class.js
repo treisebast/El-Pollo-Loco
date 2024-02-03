@@ -14,7 +14,8 @@ class SmallChicken extends MovableObject{
         'img/3_enemies_chicken/chicken_small/2_dead/dead.png'
     ];
 
-    lastJump = 'last';
+    lastJump = false;
+    lastJumpTime = 0;
 
     collisionBoxOffsetY = 10;
     collisionBoxOffsetX = 3;
@@ -32,36 +33,25 @@ class SmallChicken extends MovableObject{
         this.loadImages(this.IMAGES_DEAD);
 
         this.x = Math.min(offset + 300 + Math.random() * 400, 3700);
-        this.speed = 0.25 + Math.random() * 0.4;
+        this.speed = 1.4 + Math.random() * 0.4;
 
         this.applyGravity();
         this.animate();
-        
-        this.pushIntervalToArray(this.moveInterval);
-        this.pushIntervalToArray(this.animationInterval);
     }
 
     
     animate() { 
         this.moveInterval = setInterval(() => {
             this.moveLeft();
-            this.checkAndPerformJump();
-        }, 1000 / 60);
+            this.createTimeJumpBeginn();
+            this.createTimeoutJump(3500);
+        }, 1000 / 25);
 
         this.animationInterval = setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING);
-        }, 200);
-    }
-
-
-    checkAndPerformJump() {
-        if (this.lastJump === 'last') {
-            this.lastJump = 'now';
-            this.timeoutId = setTimeout(() => {
-                this.jump();
-                this.lastJump = 'last';
-              }, 4000);
-        }      
+        }, 150);
+        this.pushIntervalToArray(this.moveInterval);
+        this.pushIntervalToArray(this.animationInterval);
     }
 
     

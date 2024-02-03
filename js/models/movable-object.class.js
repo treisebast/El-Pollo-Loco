@@ -116,12 +116,29 @@ class MovableObject extends DrawableObject {
 
     jump() {
         if (this instanceof SmallChicken) {
-            this.speedY = 17;
+            this.speedY = 18;
         } else if (this instanceof Character) {
             this.speedY = 25;
         } else if (this instanceof Endboss) {
-            this.speedY = 15;
+            this.speedY = 13;
         } 
+    }
+
+
+    createTimeJumpBeginn() {
+        if (!this.lastJump) {
+            this.lastJump = true;
+            this.lastJumpTime = new Date().getTime();
+        }      
+    }
+
+    // x = number
+    createTimeoutJump(x){
+        let timePassed = ((new Date().getTime()) - this.lastJumpTime);
+        if (timePassed >= x && this.lastJump) {
+            this.jump();
+            this.lastJump = false;
+        }
     }
 
 
@@ -143,7 +160,7 @@ class MovableObject extends DrawableObject {
             setTimeout(() => {
                 this.gameOver = true;
                 this.world?.endScreen();
-            }, 500);
+            }, 300);
         }
     }
 
@@ -159,14 +176,12 @@ class MovableObject extends DrawableObject {
         this.world.keyboard = false;
         this.lastInt = setInterval(() => {
         this.playAnimationLastPic(this.IMAGES_DEAD);
-        }, 200); 
+        }, 180); 
         this.pushIntervalToArray(this.lastInt);  
     }
 
 
     stopAnimations() {
-        clearTimeout(this.timeoutIdMathRandom);
-        clearTimeout(this.timeoutId);
         clearInterval(this.moveInterval);
         clearInterval(this.animationInterval);
     }
