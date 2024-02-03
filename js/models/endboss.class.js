@@ -67,8 +67,11 @@ class Endboss extends MovableObject{
     immune = false;
 
     pausedInterval = false;
-    timeIsBeginn = false;
-    beginnTime = 0;
+    timeIsBeginHurt = false;
+    beginnAtTimeHurt = 0;
+
+    timeIsBeginRandom = false;
+    beginnAtTimeRandom = 0;
     
 
     constructor(){
@@ -84,7 +87,6 @@ class Endboss extends MovableObject{
        
         this.applyGravity();
         this.animate();
-
     }
 
 
@@ -104,7 +106,9 @@ class Endboss extends MovableObject{
             } else {
                 this.playAnimation(this.IMAGES_ALERT);
             }
-            this.createTimeOut(1200); 
+            this.createTimeOut('timeIsBeginHurt', 1200, 'beginnAtTimeHurt'); 
+            this.createTimeOut('timeIsBeginRandom', 4000, 'beginnAtTimeRandom'); 
+
         }, 150);
         this.pushIntervalToArray(this.animationInterval);
         this.startMoveInterval(2.5);
@@ -114,31 +118,65 @@ class Endboss extends MovableObject{
     isHurtAnimation(){
         this.pausedInterval = true;
         this.playAnimation(this.IMAGES_HURT);
-        this.createTimeBeginn();         
+        this.createTimeBeginn('timeIsBeginHurt', 'beginnAtTimeHurt');         
     }
 
 
-    createTimeBeginn(){
-        if (!this.timeIsBeginn) {
-            this.timeIsBeginn = true;
-            this.beginnTime = new Date().getTime();
+
+
+
+
+    // createTimeBeginn(){
+    //     if (!this.timeIsBeginn) {
+    //         this.timeIsBeginn = true;
+    //         this.beginnTime = new Date().getTime();
+    //     } 
+    // }
+
+    // createTimeOut(x){
+    //     let timePassed = ((new Date().getTime()) - this.beginnTime);
+    //     if (timePassed >= x && timePassed < 10000) {
+    //         this.timeIsBeginn = false;
+           
+    //         this.pausedInterval = false; 
+    //     }
+    // }
+
+
+
+
+    // Funktioniert soweit
+
+    createTimeBeginn(variable, timeVariable){
+        if (!this[variable]) {
+            this[variable] = true;
+            this[timeVariable] = new Date().getTime();
         } 
     }
 
-    createTimeOut(x){
-        let timePassed = ((new Date().getTime()) - this.beginnTime);
-        if (timePassed >= x && timePassed < 10000) {
-            this.timeIsBeginn = false;
-           
-            this.pausedInterval = false;
+    createTimeOut(variable, duration, timeVariable){
+        let timePassed = ((new Date().getTime()) - this[timeVariable]);
+        // console.log(this[variable]);
+        if (timePassed >= duration && this[variable]) {
+            this[variable] = false;
 
-           
+            if (variable === 'timeIsBeginHurt') {
+            this.pausedInterval = false;   
+            } else if (variable === 'timeIsBeginRandom') {
+            this.animateMathRandom();
+            }
         }
     }
+
+    // Funktioniert in beiden Fällen
+
+
+
 
 
     startMoveInterval(speed){
         this.moveInterval = setInterval(() => {
+            // console.log(this.pausedInterval);
             if (!this.pausedInterval) {
                 if (this.world?.character.x > 800 && this.walkAnimate || this.hadFirstContact) {
                     this.hadFirstContact = true;
@@ -178,12 +216,14 @@ class Endboss extends MovableObject{
                 this.otherDirection = false;
                 this.walkAnimate = false;
                 clearInterval(this.moveInterval);
+
+                this.createTimeBeginn('timeIsBeginRandom', 'beginnAtTimeRandom');         
                 
 
 
-                this.timeoutIdMathRandom = setTimeout(() => {
-                    this.animateMathRandom();
-                }, 5000); 
+                // this.timeoutIdMathRandom = setTimeout(() => {
+                //     this.animateMathRandom();
+                // }, 5000); 
             }
         }
     }

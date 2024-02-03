@@ -49,12 +49,6 @@ function handleGameEnd(winOrLose) {
 }
 
 
-// function clearAllIntervals() {
-//     for (let i = 1; i < 9999; i++){
-//         window.clearInterval(i);
-//     }
-// }
-
 function setStoppableInterval(id){
     allIntervals.push(id);
 }
@@ -125,18 +119,28 @@ function pauseIntervals() {
 
 
 function resumeIntervals() {
-
-    // console.log(world.throwBottle[0]);
-
     world.run();
     world.character.animate();
+    world.character.applyGravity();
     world.thrownBottle.forEach((bottle) => {
         bottle.throw();
-    })
+    });
     world.level.enemies.forEach((e) => {
         e.animate();
+        e.applyGravity();
+    });
+    world.level.endBoss.forEach((b) => {
+        b.animate();
+        b.applyGravity();
+    });
+    world.level.placedItems.forEach((item) => {
+        if (item instanceof Coins) {
+            item.animate();
+        }
+    });
+    world.level.clouds.forEach((c) => {
+        c.animate();
     })
-    
 }
 
 

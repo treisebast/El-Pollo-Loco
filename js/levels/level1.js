@@ -5,7 +5,7 @@ function initLevel() {
         enemies = [new Chicken(500), new SmallChicken(600)],
         endBoss =[new Endboss()],
         placedItems = [],
-        cloud = [],
+        clouds = [],
         backgroundObjects = []);
         createCoins();
         createBottles();
@@ -51,7 +51,7 @@ function createCloudObjects() {
     let repetitions = 9;
     let offset = 420;
     for (let i = 0; i < repetitions; i += 2) {
-        this.cloud.push(
+        this.clouds.push(
             new Cloud("img/5_background/layers/4_clouds/1.png", i * (offset)),
             new Cloud("img/5_background/layers/4_clouds/2.png", (i + 1) * offset),
         );
