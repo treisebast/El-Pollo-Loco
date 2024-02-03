@@ -63,7 +63,7 @@ class Endboss extends MovableObject{
 
     endBossIsDead = false;
     gameOver = false;
-    energy = 100; //TODO: auf 100 ändern
+    energy = 100; 
     immune = false;
 
     pausedInterval = false;
@@ -122,31 +122,6 @@ class Endboss extends MovableObject{
     }
 
 
-
-
-
-
-    // createTimeBeginn(){
-    //     if (!this.timeIsBeginn) {
-    //         this.timeIsBeginn = true;
-    //         this.beginnTime = new Date().getTime();
-    //     } 
-    // }
-
-    // createTimeOut(x){
-    //     let timePassed = ((new Date().getTime()) - this.beginnTime);
-    //     if (timePassed >= x && timePassed < 10000) {
-    //         this.timeIsBeginn = false;
-           
-    //         this.pausedInterval = false; 
-    //     }
-    // }
-
-
-
-
-    // Funktioniert soweit
-
     createTimeBeginn(variable, timeVariable){
         if (!this[variable]) {
             this[variable] = true;
@@ -156,7 +131,6 @@ class Endboss extends MovableObject{
 
     createTimeOut(variable, duration, timeVariable){
         let timePassed = ((new Date().getTime()) - this[timeVariable]);
-        // console.log(this[variable]);
         if (timePassed >= duration && this[variable]) {
             this[variable] = false;
 
@@ -168,15 +142,9 @@ class Endboss extends MovableObject{
         }
     }
 
-    // Funktioniert in beiden Fällen
-
-
-
-
 
     startMoveInterval(speed){
         this.moveInterval = setInterval(() => {
-            // console.log(this.pausedInterval);
             if (!this.pausedInterval) {
                 if (this.world?.character.x > 800 && this.walkAnimate || this.hadFirstContact) {
                     this.hadFirstContact = true;
@@ -218,12 +186,6 @@ class Endboss extends MovableObject{
                 clearInterval(this.moveInterval);
 
                 this.createTimeBeginn('timeIsBeginRandom', 'beginnAtTimeRandom');         
-                
-
-
-                // this.timeoutIdMathRandom = setTimeout(() => {
-                //     this.animateMathRandom();
-                // }, 5000); 
             }
         }
     }
