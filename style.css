@@ -40,12 +40,11 @@ h1 {
     position: absolute;
     max-width: 720px;
     max-height: 480px;
-    overflow: hidden;
     opacity: 1;
 }
 
 .none-show{
-    animation: fadeOut 1s forwards;
+    animation: fadeOut 500ms forwards !important;
 }
 
 @keyframes fadeOut {
@@ -75,8 +74,8 @@ canvas:focus {
     outline: none;
 }
 
-.end-screen{
-    background-color: rgba(0, 0, 0, 0.85);
+.end-screen,  .instruction-container{
+    background-color: rgba(0, 0, 0, 0.9);
     display: none;
     flex-direction: column;
     align-items: center;
@@ -84,14 +83,13 @@ canvas:focus {
     position: absolute;
     max-width: 720px;
     max-height: 480px;
-    overflow: hidden;
     opacity: 0;
     z-index: 10;
 }
 
 .show {
     display: flex;
-    animation: fadeIn 1.5s forwards;
+    animation: fadeIn 1s forwards;
 }
 
 @keyframes fadeIn {
@@ -121,10 +119,64 @@ canvas:focus {
     cursor: pointer;
     z-index: 10;
     animation: pulse 1s infinite;
+    opacity: 1;
     transition: background-color 0.3s ease; 
 }
 
-.instruction-btn{
+.rg-btn-position{
+    position: absolute;
+    bottom: 60px;
+}
+
+.sg-btn-position{
+    position: absolute;
+    top: 30px;
+}
+
+.restart-game-btn:hover, .start-game-btn:hover, .btn-menu-hover:hover, .close-instruction-btn:hover {
+    background-color: rgb(226, 189, 41);
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+
+
+/* Instruction */
+.instruction-container{
+    background-color: rgba(0, 0, 0, 0.9);
+    width: 100%;
+    height: 100%;
+}
+
+.h1-instruction{
+    color: white;
+    font-size: 32px;
+    font-weight: 700;
+    position: absolute;
+    top: 20px;
+}
+
+.close-instruction-btn{
+    left: unset !important;
+    right: 20px;
+}
+
+.mso-close-instruction{
+    font-size: 32px;
+}
+
+.instruction-btn, .close-instruction-btn{
     background-color: rgb(253, 207, 18);
     color: black;
     position: absolute;
@@ -160,31 +212,6 @@ canvas:focus {
     }
 }
 
-.rg-btn-position{
-    position: absolute;
-    bottom: 60px;
-}
-
-.sg-btn-position{
-    position: absolute;
-    top: 30px;
-}
-
-.restart-game-btn:hover, .start-game-btn:hover, .btn-menu-hover:hover {
-    background-color: rgb(226, 189, 41);
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
 
 
 
@@ -197,6 +224,7 @@ canvas:focus {
     position: absolute;
     max-width: 720px;
     max-height: 480px;
+    opacity: 1;
     width: 100%;
 }
 
@@ -220,7 +248,7 @@ canvas:focus {
     opacity: 0;
 }
 
-.btn-head-p, .btn-move-p{
+.btn-head-p, .btn-move-p, .close-instruction-btn{
     background-color: rgb(253, 207, 18);
     color: black;
     padding: 4px;
@@ -330,7 +358,7 @@ canvas:focus {
 
 
 @media only screen and (max-width: 720px){
-    canvas, .end-screen, .start-screen, .overlay {
+    canvas, .end-screen, .start-screen, .overlay, .instruction-container {
         width: 100%;
     }
 
@@ -341,7 +369,7 @@ canvas:focus {
 }
 
 @media only screen and (max-height: 480px){
-    canvas, .end-screen, .start-screen, .overlay {
+    canvas, .end-screen, .start-screen, .overlay, .instruction-container {
         height: 100vh;
     }
 

@@ -34,6 +34,22 @@ function init() {
 }
 
 
+
+
+function toggleShowInstruction(add_remove){
+    let layerIds = ['startGameBtn', 'instructionBtn', 'headerPenel']
+
+    let instruction = document.getElementById("instructionContainer");
+    instruction.classList[add_remove]('show');
+
+    layerIds.forEach((id) => {
+    document.getElementById(id).classList[add_remove]('none-show');
+    })    
+}
+
+
+
+
 function handleGameEnd(winOrLose) {
     console.log("Spiel beendet!");
 
@@ -79,6 +95,8 @@ function restartGame(){
     })
     document.getElementById("headerPenel").style.justifyContent = "flex-end";  
 }
+
+
 
 
 
@@ -154,7 +172,7 @@ function resumeIntervals() {
 
 
 function toggleFullScreen(){
-    let layerIds = ['overlay', 'startScreen', 'canvas', 'endScreen'];
+    let layerIds = ['overlay', 'startScreen', 'canvas', 'endScreen', 'instructionContainer'];
     let fullscreenIcon = document.getElementById('fullscreenIcon');
     let exitFullscreenIcon = document.getElementById('exitFullscreenIcon');
 
