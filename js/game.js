@@ -6,6 +6,9 @@ let allIntervals = [];
 let isPaused = false;
 let gameStart = false;
 
+let pauseIcon = document.getElementById('pauseIcon');
+let playIcon = document.getElementById('playIcon');
+
 
 function startGame(x) {
     if (!(x === 'play-btn')) {
@@ -33,9 +36,9 @@ function init() {
 
 function handleGameEnd(winOrLose) {
     console.log("Spiel beendet!");
-    gameStart = false;
 
     clearAllIntervals();
+    gameIsStarted('GameOver');
 
     let endScreen = document.getElementById("endScreen");
     endScreen.classList.add('show');
@@ -66,7 +69,7 @@ function restartGame(){
     endScreen.classList.remove('show');
 
     cancelAnimationFrame(world.requestAnimationFrame);
-
+    
     let ctx = world.canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
@@ -79,10 +82,8 @@ function restartGame(){
 
 
 
-
 function togglePause(x) {
-    let pauseIcon = document.getElementById('pauseIcon');
-    let playIcon = document.getElementById('playIcon');
+    document.getElementById('canvas').focus();
     if (isPaused && gameStart) {
         playIcon.style.display = 'none';
         pauseIcon.style.display = 'flex';
@@ -94,20 +95,25 @@ function togglePause(x) {
         isPaused = true;
         pauseIntervals();
     } 
-    gameIsStarted(pauseIcon, playIcon, x);
-
+    gameIsStarted(x);
 }
 
 
-function gameIsStarted(pauseIcon, playIcon, x){
+function gameIsStarted(x){
+    document.getElementById('canvas').focus();
     if (!gameStart && !isPaused){
         gameStart = true;
         playIcon.style.display = 'none';
         pauseIcon.style.display = 'flex';
         if (x === 'play-btn') {
+            restartGame();
             startGame('play-btn');
         }  
-    } 
+    } else if (x === 'GameOver') {
+        gameStart = false;
+        playIcon.style.display = 'flex';
+        pauseIcon.style.display = 'none';
+    }
 }
 
 

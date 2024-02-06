@@ -104,6 +104,14 @@
         </div>
 
 
+
+        <!-- Instruction-Sheet -->
+        <div class="instruction-container" id="instructionContainer">
+            <!-- TODO: weiter -->
+        </div>
+
+
+
         <!-- Screenrotation -->
         <div class="screen-rotation">
             <span class="material-symbols-outlined mso-rotation">
@@ -120,10 +128,11 @@
                 src="img/9_intro_outro_screens/start/startscreen_1.png">
 
             <button id="startGame" class="start-game-btn sg-btn-position" onclick="startGame()">Start Game</button>
+            <button class="instruction-btn" onclick="showInstruction()">Instructions</button>
         </div>
 
 
-        <canvas id="canvas" height="480" width="720"></canvas>
+        <canvas id="canvas" height="480" width="720" tabindex="0"></canvas>
 
 
         <div class="end-screen" id="endScreen">

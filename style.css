@@ -71,6 +71,10 @@ canvas {
     display: none;
 }
 
+canvas:focus {
+    outline: none;
+}
+
 .end-screen{
     background-color: rgba(0, 0, 0, 0.85);
     display: none;
@@ -120,6 +124,42 @@ canvas {
     transition: background-color 0.3s ease; 
 }
 
+.instruction-btn{
+    background-color: rgb(253, 207, 18);
+    color: black;
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    font-size: 20px;
+    font-weight: 500;
+    font-family: 'Risque', serif;
+    border: none;
+    padding: 8px 8px;
+    cursor: pointer;
+    z-index: 10;
+    transition: background-color 0.3s ease; 
+}
+
+.instruction-btn:hover{
+    background-color: rgb(226, 189, 41);
+    animation: wobble 0.5s ease-in-out infinite;
+}
+
+@keyframes wobble {
+    25% {
+        transform: rotate(-2deg);
+    }
+    50% {
+        transform: rotate(2deg);
+    }
+    75% {
+        transform: rotate(-2deg);
+    }
+    100% {
+        transform: rotate(2deg);
+    }
+}
+
 .rg-btn-position{
     position: absolute;
     bottom: 60px;
@@ -131,7 +171,7 @@ canvas {
 }
 
 .restart-game-btn:hover, .start-game-btn:hover, .btn-menu-hover:hover {
-    background-color: rgba(253, 207, 18, 0.85);
+    background-color: rgb(226, 189, 41);
 }
 
 @keyframes pulse {
