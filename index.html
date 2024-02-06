@@ -108,14 +108,41 @@
         <!-- Instruction-Sheet -->
         <div class="instruction-container" id="instructionContainer">
             <button id="closeInstruction" class="close-instruction-btn" onclick="toggleShowInstruction('remove')"><span
-                class="material-symbols-outlined mso-close-instruction">
-                close</span></button>
+                    class="material-symbols-outlined mso-close-instruction">
+                    close</span></button>
             <h1 class="h1-instruction">Instruction</h1>
-            <h2>Keyboard</h2>
+            <div class="instruction-text">
+                <span></span>
+
+                <h2 class="h2-instruction">Keyboard:</h2>
+
+                <table>
+                    <tr>
+                        <td class="td-position"><span class="material-symbols-outlined instruction-keys mso-right-position">
+                            arrow_back_ios
+                        </span></td>
+                        <td>Move left</td>
+                        <td class="td-separator"></td> 
+                        <td class="td-position"><span class="material-symbols-outlined instruction-keys">
+                            arrow_forward_ios
+                        </span></td>
+                        <td>Move right</td>
+                    </tr>
+                    <tr>
+                        <td class="instruction-keys">Spacebar</td>
+                        <td>Jump</td>
+                        <td class="td-separator"></td> 
+                        <td class="instruction-keys">D key</td>
+                        <td>Throw Bottle</td>
+                    </tr>
+                </table>
+
+                <div class="separator"></div>
+
+                <h2 class="h2-instruction">Mobildevice:</h2>
 
 
-            <h2>Mobildevice</h2>
-
+            </div>
         </div>
 
 
@@ -136,7 +163,8 @@
                 src="img/9_intro_outro_screens/start/startscreen_1.png">
 
             <button id="startGameBtn" class="start-game-btn sg-btn-position" onclick="startGame()">Start Game</button>
-            <button id="instructionBtn" class="instruction-btn" onclick="toggleShowInstruction('add')">Instructions</button>
+            <button id="instructionBtn" class="instruction-btn"
+                onclick="toggleShowInstruction('add')">Instructions</button>
         </div>
 
 
