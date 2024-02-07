@@ -20,6 +20,7 @@ class Chicken extends MovableObject{
 
     enemyIsDead = false;
     isJumped = false;
+    isHit = false;
     
 
     constructor(offset){
@@ -28,7 +29,7 @@ class Chicken extends MovableObject{
         this.loadImages(this.IMAGES_DEAD);
 
         this.x = offset +200 + Math.random() * 500;
-        this.speed = 0.15 + Math.random() * 0.4;
+        this.speed = 0.25 + Math.random() * 0.6;
     
         this.animate();
     }

@@ -19,6 +19,8 @@ class ThrowableObject extends MovableObject{
 
      splashHeight = 180;
      splashWidth = 235;
+     splashHeightOnEnemy = 85;
+     splashWidthOnEnemy = 111;
  
      rotationHeight = 100;
      rotationWidth = 70;
@@ -30,6 +32,8 @@ class ThrowableObject extends MovableObject{
 
 
      isBrokenBottle = false;
+     isBrokenBottleOnEnemy = false;
+     attackEndboss = false;
 
     constructor(x, y, speed){
         super().loadImage('img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png');
@@ -41,31 +45,35 @@ class ThrowableObject extends MovableObject{
         this.height = this.rotationHeight;
         this.width = this.rotationWidth;
         this.speed = speed;
+        this.speedY = 24;
+
+        this.applyGravity();
         this.throw();
-        this.pushIntervalToArray(this.lastInt);
     }
 
 
     throw(){
 
-        this.speedY = 27;
-        this.applyGravity();
-        
         let throwDirection = MovableObject.throwOtherDirection;
 
         this.lastInt = setInterval(() => {
             if (throwDirection === false && !this.isBrokenBottle) {
-                this.x += (this.speed + 12);
+                this.x += (this.speed + 23);
                 this.playAnimation(this.IMAGES_ROTATION);
             } else if (throwDirection === true && !this.isBrokenBottle) {
-                this.x -= (this.speed + 12);
+                this.x -= (this.speed + 23);
                 this.playAnimation(this.IMAGES_ROTATION);
-            } else if (this.isBrokenBottle === true) {
+            } else if (this.isBrokenBottle === true && this.attackEndboss === true ) {
                 this.height = this.splashHeight;
                 this.width = this.splashWidth;
                 this.playAnimationLastPic(this.IMAGES_SPLASH);
+            } else if ( this.isBrokenBottleOnEnemy === true) {
+                this.height = this.splashHeightOnEnemy;
+                this.width = this.splashWidthOnEnemy;
+                this.playAnimationLastPic(this.IMAGES_SPLASH);
             }
-        }, 60)
+        }, 100)
+        this.pushIntervalToArray(this.lastInt);
     }
 
 

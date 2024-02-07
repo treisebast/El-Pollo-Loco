@@ -47,6 +47,7 @@ class World {
             this.checkCollisions(['endBoss', 'enemies']);
             this.checkThrowObjects();
             this.checkCollisionThrowableObjekt();
+            this.checkCollisionThrowableObjektOnEnemy();
             this.checkCollectedItems();
         }, 30)
         this.pushIntervalToArray(this.runInterval);
@@ -59,12 +60,27 @@ class World {
                 if (thrownBottle.isColliding(endBoss)) {
                     endBoss.hit();
                     this.endBossStatusBar.setPercentage(endBoss.energy);
-                    thrownBottle.isBrokenBottle = true;                  
+                    thrownBottle.isBrokenBottle = true;
+                    thrownBottle.attackEndboss = true;                  
                 }
             })                
         });  
     }
+
     
+    checkCollisionThrowableObjektOnEnemy(){
+        this.level.enemies.forEach((enemy) => {
+            this.thrownBottle.forEach((thrownBottle) => {
+                if (!thrownBottle.isBrokenBottle && !thrownBottle.isBrokenBottleOnEnemy && thrownBottle.isColliding(enemy)) {
+                    enemy.isHit = true; 
+                    thrownBottle.isBrokenBottle = true;
+                    thrownBottle.isBrokenBottleOnEnemy = true;
+                    this.enemyDeadAnimation(enemy);
+                }
+            });
+        });
+    }
+
 
     checkThrowObjects(){
         if (this.keyboard.D && this.collectedBottleBar.collectedBottles.length > 0 && !this.hasThrownBottle) {
@@ -106,7 +122,9 @@ class World {
     enemyDeadAnimation(enemy) {
         if (!enemy.enemyIsDead) {
             enemy.stopAnimations();
-            this.character.jump();
+            if (enemy.isJumped === true) {
+                this.character.jump();
+            }
             enemy.enemyIsDead = true;
             this.IMAGES_DEAD = enemy.IMAGES_DEAD;
             enemy.playAnimation(this.IMAGES_DEAD);

@@ -82,7 +82,7 @@ class Endboss extends MovableObject{
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
 
-        this.speed = 2.5; // in startMoveInterval like the same write
+        this.speed = 4; // in startMoveInterval like the same write
         this.x = 1200; //TODO: wieder ändern
        
         this.applyGravity();
@@ -197,17 +197,17 @@ class Endboss extends MovableObject{
         if (number < 0.8) {
             this.endBossGoAttack = true;
             this.moveZoneX = 250;
-            this.speed = 15;
+            this.speed = 18;
             if (!this.isDead()) {
-                this.startMoveInterval(5);
+                this.startMoveInterval(9);
             }
         } else if (number >= 0.8) {
             this.walkAnimate = true;
             this.endBossGoAttack = false;
             this.moveZoneX = 225;
-            this.speed = 7.5;
+            this.speed = 9;
             if (!this.isDead()) {
-                this.startMoveInterval(7.5);
+                this.startMoveInterval(9);
             }
             
         }      

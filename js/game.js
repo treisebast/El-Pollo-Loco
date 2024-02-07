@@ -81,7 +81,6 @@ function clearAllIntervals(){
 
 
 function restartGame(){
-    let layerIds = ["canvas", "movePenelLeft", "movePenelRight"]
     let endScreen = document.getElementById("endScreen");
     endScreen.classList.remove('show');
 
@@ -89,12 +88,13 @@ function restartGame(){
     
     let ctx = world.canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
+    document.getElementById("headerPenel").style.justifyContent = "flex-end";  
     document.getElementById("startScreen").classList.remove('none-show');
+    let layerIds = ["canvas", "movePenelLeft", "movePenelRight"]
     layerIds.forEach((id) => {
         document.getElementById(id).classList.remove('show');
     })
-    document.getElementById("headerPenel").style.justifyContent = "flex-end";  
 }
 
 
@@ -152,6 +152,7 @@ function resumeIntervals() {
     world.character.applyGravity();
     world.thrownBottle.forEach((bottle) => {
         bottle.throw();
+        bottle.applyGravity();
     });
     world.level.enemies.forEach((e) => {
         e.animate();

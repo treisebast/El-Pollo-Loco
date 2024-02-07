@@ -24,6 +24,7 @@ class SmallChicken extends MovableObject{
 
     enemyIsDead = false;
     isJumped = false;
+    isHit = false;
 
 
 

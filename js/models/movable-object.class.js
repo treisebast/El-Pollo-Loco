@@ -3,7 +3,7 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     static throwOtherDirection = false;
     speedY = 0;
-    acceleration = 2.1;
+    acceleration = 2;
     energy = 100;
     lastHit = 0;
     currentImageLastPic = 0;
@@ -21,7 +21,7 @@ class MovableObject extends DrawableObject {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration; 
             }
-        }, 50)
+        }, 55)
         this.pushIntervalToArray(this.gravityInterval);
     }
 
@@ -176,7 +176,7 @@ class MovableObject extends DrawableObject {
         this.world.keyboard = false;
         this.lastInt = setInterval(() => {
         this.playAnimationLastPic(this.IMAGES_DEAD);
-        }, 180); 
+        }, 150); 
         this.pushIntervalToArray(this.lastInt);  
     }
 
