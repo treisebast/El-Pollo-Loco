@@ -244,6 +244,7 @@ ul{
     color: white;
     font-weight: 700;
     margin-bottom: 0.25em;
+    letter-spacing: 0.1em;
 }
 
 .instruction-text {

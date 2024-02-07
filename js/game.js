@@ -5,6 +5,7 @@ let keyboard = new Keyboard();
 let allIntervals = [];
 let isPaused = false;
 let gameStart = false;
+let restartIsAllowed = false;
 
 let pauseIcon = document.getElementById('pauseIcon');
 let playIcon = document.getElementById('playIcon');
@@ -124,11 +125,14 @@ function gameIsStarted(x){
         playIcon.style.display = 'none';
         pauseIcon.style.display = 'flex';
         if (x === 'play-btn') {
-            restartGame();
             startGame('play-btn');
+            if (restartIsAllowed == true) {
+            restartGame();  
+            }
         }  
     } else if (x === 'GameOver') {
         gameStart = false;
+        restartIsAllowed = true;
         playIcon.style.display = 'flex';
         pauseIcon.style.display = 'none';
     }

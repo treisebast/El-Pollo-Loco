@@ -1,4 +1,5 @@
 class World {
+    requestAnimationFrame;
     character = new Character();
     level = level1;
     ctx;
@@ -196,7 +197,10 @@ class World {
         this.createNewChickenIfNecessary();
 
         // repeat Draw() always
-        this.requestAnimationFrame = requestAnimationFrame(() => this.draw());
+        let self = this;
+        this.requestAnimationFrame = requestAnimationFrame(() => {
+            self.draw()
+        });
     }
 
 
