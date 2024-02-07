@@ -251,7 +251,7 @@ ul{
     max-width: 90%;
     max-height: 100%;
     width: 100%;
-    top: 10%;
+    top: 15%;
     position: absolute;
     left: auto;
 }
@@ -317,7 +317,7 @@ ul{
     max-width: 720px;
     max-height: 480px;
     opacity: 1;
-    width: 100%;
+    width: auto;
 }
 
 .header-penel {
@@ -332,6 +332,10 @@ ul{
 .move-penel {
     justify-content: space-between;
     display: flex;
+}
+
+.move-penel-width{
+    width: 720px;
 }
 
 .move-penel-left, .move-penel-right {
