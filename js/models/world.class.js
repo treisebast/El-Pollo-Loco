@@ -167,6 +167,8 @@ class World {
                         if (!this.character.immune) {
                             this.character.playSound(this.character.hurt_sound, '');
                         }
+                        this.level.endBoss[0].playSound(this.level.endBoss[0].chicken_walking, 'paused');
+                        this.level.endBoss[0].chicken_walking.currentTime = 0;
                         this.character.hit();
                         this.statusBar.setPercentage(this.character.energy);
                     }

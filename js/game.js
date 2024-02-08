@@ -172,8 +172,6 @@ function muteSound(){
     isMuted = false; 
     play_sound.loop = false;
     play_sound.pause();
-    chicken_walking.pause();
-    chicken_walking.currentTime = 0;
 }
 
 
