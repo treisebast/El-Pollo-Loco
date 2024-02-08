@@ -185,6 +185,12 @@ class MovableObject extends DrawableObject {
         clearInterval(this.moveInterval);
         clearInterval(this.animationInterval);
     }
+    
+
+    playSound(sound, paused){
+        togglePlaySound(sound, paused);
+    }
+
 
     pushIntervalToArray(id){
         setStoppableInterval(id);

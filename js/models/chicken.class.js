@@ -21,6 +21,8 @@ class Chicken extends MovableObject{
     enemyIsDead = false;
     isJumped = false;
     isHit = false;
+
+    chicken_sound = new Audio('audio/chicken.mp3');
     
 
     constructor(offset){
@@ -47,9 +49,5 @@ class Chicken extends MovableObject{
         this.pushIntervalToArray(this.animationInterval);
     }
 
-
-    pushIntervalToArray(id){
-        setStoppableInterval(id);
-    }
 }
 

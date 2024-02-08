@@ -26,6 +26,9 @@ class SmallChicken extends MovableObject{
     isJumped = false;
     isHit = false;
 
+    chicken_sound = new Audio('audio/smallChicken.mp3');
+
+
 
 
     constructor(offset){
@@ -55,8 +58,4 @@ class SmallChicken extends MovableObject{
         this.pushIntervalToArray(this.animationInterval);
     }
 
-    
-    pushIntervalToArray(id){
-        setStoppableInterval(id);
-    }
 }

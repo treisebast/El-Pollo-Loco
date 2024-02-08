@@ -37,7 +37,7 @@
 
 </head>
 
-<body>
+<body onload="soundInit()">
     <!--onload="init()" -->
 
     <h1 id="header">El Pollo Loco</h1>
@@ -47,12 +47,9 @@
         <!-- Overlay for Menupenel -->
         <div class="overlay" id="overlay">
             <div class="header-penel" id="headerPenel">
-                <button class="btn-head-p btn-z-index btn-menu-hover" id="audioSound">
-                    <span class="material-symbols-outlined">
+                <button class="btn-head-p btn-z-index btn-menu-hover" id="audioSound" onclick="toggleSoundMute()">
+                    <span class="material-symbols-outlined" id="musicNoteIcon">
                         music_note
-                    </span>
-                    <span class="material-symbols-outlined">
-                        music_off
                     </span>
                 </button>
 

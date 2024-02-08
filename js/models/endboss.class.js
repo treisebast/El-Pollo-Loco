@@ -72,6 +72,11 @@ class Endboss extends MovableObject{
 
     timeIsBeginRandom = false;
     beginnAtTimeRandom = 0;
+
+    chicken_hurt_sound = new Audio('audio/chicken_hurt2.mp3');
+    chicken_sound = new Audio('audio/chicken.mp3');
+    chicken_alert = new Audio('audio/chicken_alert.mp3');
+    chicken_walking = new Audio('audio/chicken_walking.mp3');
     
 
     constructor(){
@@ -108,7 +113,6 @@ class Endboss extends MovableObject{
             }
             this.createTimeOut('timeIsBeginHurt', 1200, 'beginnAtTimeHurt'); 
             this.createTimeOut('timeIsBeginRandom', 4000, 'beginnAtTimeRandom'); 
-
         }, 150);
         this.pushIntervalToArray(this.animationInterval);
         this.startMoveInterval(2.5);
@@ -147,6 +151,7 @@ class Endboss extends MovableObject{
         this.moveInterval = setInterval(() => {
             if (!this.pausedInterval) {
                 if (this.world?.character.x > 800 && this.walkAnimate || this.hadFirstContact) {
+                    this.playSound(this.chicken_walking, '');
                     this.hadFirstContact = true;
                     this.moveWithinZoneEndboss(speed);
                     if (!this.endBossGoAttack) {
@@ -165,6 +170,8 @@ class Endboss extends MovableObject{
             this.walkAnimate = true;
             this.moveLeft();
             if (this.x <= this.startPositionEndboss - this.moveZoneX + 35 && this.endBossGoAttack) {
+                this.playSound(this.chicken_walking, 'paused');
+                this.playSound(this.chicken_sound, '');
                 this.speed = 0.18;
                 this.moveLeftSlow();
                 this.walkAnimate = false;
@@ -196,6 +203,8 @@ class Endboss extends MovableObject{
         let number = Math.random();
         if (number < 0.8) {
             this.endBossGoAttack = true;
+            this.playSound(this.chicken_walking, 'paused');
+            this.playSound(this.chicken_alert, '');
             this.moveZoneX = 250;
             this.speed = 18;
             if (!this.isDead()) {
@@ -213,8 +222,4 @@ class Endboss extends MovableObject{
         }      
     }
 
-
-    pushIntervalToArray(id){
-        setStoppableInterval(id);
-    }
 }

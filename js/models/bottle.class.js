@@ -7,6 +7,7 @@ class Bottles extends MovableObject{
     collisionBoxWidth = this.width - 80;
     collisionBoxHeight = this.height - 55;
 
+    bottle_sound = new Audio('audio/bottle.mp3');
 
     // BOTTLE_IMAGES =[
     //     'img/6_salsa_bottle/1_salsa_bottle_on_ground.png',

@@ -10,6 +10,22 @@ let restartIsAllowed = false;
 let pauseIcon = document.getElementById('pauseIcon');
 let playIcon = document.getElementById('playIcon');
 
+let isMuted = false;
+let win_sound = new Audio('audio/win.mp3');
+let lose_sound = new Audio('audio/lose.mp3');
+let play_sound = new Audio('audio/mexican.mp3');
+let chicken_walking = new Audio('audio/chicken_walking.mp3');
+let loop = true;
+
+
+function soundInit(){
+    play_sound.loop;
+    play_sound.loop = true;
+    play_sound.play();
+    play_sound.volume = 0.15;
+}
+
+
 
 function startGame(x) {
     if (!(x === 'play-btn')) {
@@ -52,9 +68,8 @@ function toggleShowInstruction(add_remove){
 
 
 function handleGameEnd(winOrLose) {
-    console.log("Spiel beendet!");
-
     clearAllIntervals();
+    stopSound();
     gameIsStarted('GameOver');
 
     let endScreen = document.getElementById("endScreen");
@@ -63,8 +78,11 @@ function handleGameEnd(winOrLose) {
     let imageEndScreen = document.getElementById("imageEndScreen");
     if (winOrLose == "youWin") {
         imageEndScreen.src = "img/9_intro_outro_screens/game_over/game over!.png";
+        win_sound.play();
     } else {
         imageEndScreen.src = "img/9_intro_outro_screens/game_over/oh no you lost!.png";
+        lose_sound.play();
+
     }
 }
 
@@ -96,6 +114,41 @@ function restartGame(){
         document.getElementById(id).classList.remove('show');
     })
 }
+
+
+
+
+
+function toggleSoundMute() {
+    let button = document.getElementById("audioSound");
+    if (isMuted) {
+        stopSound();
+        button.innerHTML = '<span class="material-symbols-outlined">music_note</span>';
+    } else {
+        button.innerHTML = '<span class="material-symbols-outlined">music_off</span>';
+    }
+    document.getElementById('canvas').focus();
+    isMuted = !isMuted;
+}
+
+
+function togglePlaySound(sound, paused){
+    if (isMuted || paused === 'paused') {
+        sound.pause();
+    } else if (paused === '') {
+        sound.play();  
+    } 
+}
+
+
+function stopSound(){
+    isMuted = false; 
+    play_sound.loop = false;
+    play_sound.pause();
+    chicken_walking.pause();
+    chicken_walking.currentTime = 0;
+}
+
 
 
 

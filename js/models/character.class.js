@@ -67,8 +67,11 @@ class Character extends MovableObject {
     ];
 
     world;
-    walking_sound = new Audio("audio/running.mp3");
 
+    walking_sound = new Audio("audio/running.mp3");
+    jump_sound = new Audio('audio/jump.mp3');
+    hurt_sound = new Audio('audio/hurt.mp3');
+   
     startTime = new Date().getTime();
     currentTime;
 
@@ -94,32 +97,34 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_HURT);
         this.applyGravity();
         this.animate();
-        // this.characterDeadAnimation();
     }
 
+
+    
 
     animate() {
         this.moveInterval = setInterval(() => {
             // Character walking left or rigth
-            this.walking_sound.pause();
+            this.playSound(this.walking_sound, 'paused');
 
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
                 this.setThrowOtherDirection(false);
                 this.startTime = this.currentTime;
-                this.walking_sound.play();
+                this.playSound(this.walking_sound, '');
             }
             if (this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
                 this.otherDirection = true; 
                 this.setThrowOtherDirection(true);
                 this.startTime = this.currentTime;
-                this.walking_sound.play();
+                this.playSound(this.walking_sound, '');
             }
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
                 this.startTime = this.currentTime;
+                this.playSound(this.jump_sound, '');
             }
             
             this.world.camera_x = -this.x + 135;
@@ -159,8 +164,4 @@ class Character extends MovableObject {
         this.playAnimation(this.IMAGES_HURT);
     }
 
-
-    pushIntervalToArray(id){
-        setStoppableInterval(id);
-    }
 }

@@ -22,9 +22,5 @@ class Cloud extends MovableObject {
         this.pushIntervalToArray(this.animationInterval);
     }
 
-
-    pushIntervalToArray(id){
-        setStoppableInterval(id);
-    }
 }
 

@@ -35,6 +35,11 @@ class ThrowableObject extends MovableObject{
      isBrokenBottleOnEnemy = false;
      attackEndboss = false;
 
+     throw_sound = new Audio('audio/throw.mp3');
+     break_sound = new Audio('audio/glass.mp3');
+
+
+
     constructor(x, y, speed){
         super().loadImage('img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png');
         this.loadImages(this.IMAGES_ROTATION);
@@ -76,8 +81,4 @@ class ThrowableObject extends MovableObject{
         this.pushIntervalToArray(this.lastInt);
     }
 
-
-    pushIntervalToArray(id){
-        setStoppableInterval(id);
-    }
 }
