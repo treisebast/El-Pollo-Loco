@@ -10,20 +10,15 @@ let restartIsAllowed = false;
 let pauseIcon = document.getElementById('pauseIcon');
 let playIcon = document.getElementById('playIcon');
 
-let isMuted = false;
+let isMuted = true;
 let win_sound = new Audio('audio/win.mp3');
 let lose_sound = new Audio('audio/lose.mp3');
-let play_sound = new Audio('audio/mexican.mp3');
 let chicken_walking = new Audio('audio/chicken_walking.mp3');
-let loop = true;
+let play_sound = new Audio('audio/mexican.mp3');
+play_sound.volume = 0.13;
+play_sound.loop = true;
 
 
-function soundInit(){
-    play_sound.loop;
-    play_sound.loop = true;
-    play_sound.play();
-    play_sound.volume = 0.15;
-}
 
 
 
@@ -69,7 +64,6 @@ function toggleShowInstruction(add_remove){
 
 function handleGameEnd(winOrLose) {
     clearAllIntervals();
-    stopSound();
     gameIsStarted('GameOver');
 
     let endScreen = document.getElementById("endScreen");
@@ -119,29 +113,47 @@ function restartGame(){
 
 
 
+window.addEventListener('DOMContentLoaded', () => {
+    toggleSoundMute();
+ })    
+
 function toggleSoundMute() {
-    let button = document.getElementById("audioSound");
+    let musicNoteIcon = document.getElementById('musicNoteIcon');
+    let musicOffIcon = document.getElementById('musicOffIcon');
     if (isMuted) {
-        stopSound();
-        button.innerHTML = '<span class="material-symbols-outlined">music_note</span>';
+        muteSound();
+        musicNoteIcon.style.display = 'none';
+        musicOffIcon.style.display = 'flex';
+        // unmuteSound();
+        // musicNoteIcon.style.display = 'flex';
+        // musicOffIcon.style.display = 'none';
     } else {
-        button.innerHTML = '<span class="material-symbols-outlined">music_off</span>';
+        unmuteSound();
+        musicNoteIcon.style.display = 'flex';
+        musicOffIcon.style.display = 'none';
+        // muteSound();
+        // musicNoteIcon.style.display = 'none';
+        // musicOffIcon.style.display = 'flex';
     }
     document.getElementById('canvas').focus();
-    isMuted = !isMuted;
 }
 
 
 function togglePlaySound(sound, paused){
-    if (isMuted || paused === 'paused') {
+    if (!isMuted || paused === 'paused') {
         sound.pause();
     } else if (paused === '') {
         sound.play();  
     } 
 }
 
+function unmuteSound(){
+    isMuted = true; 
+    play_sound.loop = true;
+    play_sound.play();
+}
 
-function stopSound(){
+function muteSound(){
     isMuted = false; 
     play_sound.loop = false;
     play_sound.pause();

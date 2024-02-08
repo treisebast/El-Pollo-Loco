@@ -105,7 +105,6 @@ class Character extends MovableObject {
     animate() {
         this.moveInterval = setInterval(() => {
             // Character walking left or rigth
-            this.playSound(this.walking_sound, 'paused');
 
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
@@ -126,7 +125,7 @@ class Character extends MovableObject {
                 this.startTime = this.currentTime;
                 this.playSound(this.jump_sound, '');
             }
-            
+            this.playSound(this.walking_sound, 'paused');
             this.world.camera_x = -this.x + 135;
             this.world.createNewChickenIfNecessary();
         }, 25); //Speed character

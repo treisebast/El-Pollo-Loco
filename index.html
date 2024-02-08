@@ -37,7 +37,8 @@
 
 </head>
 
-<body onload="soundInit()">
+<body>
+    <!-- onload="soundInit()" -->
     <!--onload="init()" -->
 
     <h1 id="header">El Pollo Loco</h1>
@@ -50,6 +51,9 @@
                 <button class="btn-head-p btn-z-index btn-menu-hover" id="audioSound" onclick="toggleSoundMute()">
                     <span class="material-symbols-outlined" id="musicNoteIcon">
                         music_note
+                    </span>
+                    <span class="material-symbols-outlined d-none" id="musicOffIcon">
+                        music_off
                     </span>
                 </button>
 

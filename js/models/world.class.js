@@ -62,6 +62,8 @@ class World {
                     console.log(endBoss);
                     if (!(endBoss.immune)) {
                         endBoss.playSound(endBoss.chicken_hurt_sound, '');
+                        endBoss.chicken_hurt_sound.volume = 0.6;
+
                     }
                     endBoss.hit();
                     this.endBossStatusBar.setPercentage(endBoss.energy);
@@ -139,7 +141,7 @@ class World {
             enemy.playAnimation(this.IMAGES_DEAD);
             setTimeout(() => {
                 enemy.playSound(enemy.chicken_sound, 'paused');
-            }, 1200);
+            }, 700);
             setTimeout(() => {
                 if (enemy.enemyIsDead) {
                     let index = this.level.enemies.indexOf(enemy);
