@@ -30,7 +30,7 @@ function startGame(x) {
     if (!(x === 'play-btn')) {
         togglePause('start-btn');
     }
-    let layerIds = ["canvas", "movePenelLeft", "movePenelRight"]
+    let layerIds = ["canvas", "movePenelLeft", "movePenelRight", "controller"]
     layerIds.forEach((id) => {
         document.getElementById(id).classList.add('show');
     })
@@ -86,10 +86,10 @@ function handleGameEnd(winOrLose) {
     let imageEndScreen = document.getElementById("imageEndScreen");
     if (winOrLose == "youWin") {
         imageEndScreen.src = "img/9_intro_outro_screens/game_over/game over!.png";
-        win_sound.play();
+        togglePlaySound(win_sound, '');
     } else {
         imageEndScreen.src = "img/9_intro_outro_screens/game_over/oh no you lost!.png";
-        lose_sound.play();
+        togglePlaySound(lose_sound, '');
     }
 }
 
@@ -129,7 +129,7 @@ function restartGame(){
 
     document.getElementById("headerPenel").style.justifyContent = "flex-end";  
     document.getElementById("startScreen").classList.remove('none-show');
-    let layerIds = ["canvas", "movePenelLeft", "movePenelRight"]
+    let layerIds = ["canvas", "movePenelLeft", "movePenelRight", "controller"]
     layerIds.forEach((id) => {
         document.getElementById(id).classList.remove('show');
     })

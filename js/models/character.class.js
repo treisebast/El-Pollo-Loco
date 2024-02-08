@@ -68,22 +68,28 @@ class Character extends MovableObject {
 
     world;
 
-    walking_sound = new Audio("audio/running.mp3");
-    jump_sound = new Audio('audio/jump.mp3');
-    hurt_sound = new Audio('audio/hurt.mp3');
-   
     startTime = new Date().getTime();
     currentTime;
-
-    collisionBoxOffsetY = 80;
-    collisionBoxOffsetX = 15;
-    collisionBoxWidth = 60;
-    collisionBoxHeight = (this.height / 1.8);
 
     isHurtCharacter = false;
     immune = false;
     gameOver = false;
 
+    /**
+     * Audio for Animation
+     */
+    walking_sound = new Audio("audio/running.mp3");
+    jump_sound = new Audio('audio/jump.mp3');
+    hurt_sound = new Audio('audio/hurt.mp3');
+
+
+    /**
+     * collisionbox is a box with offset. This is required for isColliding()
+     */
+    collisionBoxOffsetY = 80;
+    collisionBoxOffsetX = 15;
+    collisionBoxWidth = 60;
+    collisionBoxHeight = (this.height / 1.8);
     
     
 
@@ -99,59 +105,92 @@ class Character extends MovableObject {
         this.animate();
     }
 
-
     
-
+    /**
+     * Intervals for the Character Moves and for the animation of images are defined in animate()
+     */
     animate() {
         this.moveInterval = setInterval(() => {
-            // Character walking left or rigth
-
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.moveRight();
-                this.otherDirection = false;
-                this.setThrowOtherDirection(false);
-                this.startTime = this.currentTime;
-                this.playSound(this.walking_sound, '');
-            }
-            if (this.world.keyboard.LEFT && this.x > 0) {
-                this.moveLeft();
-                this.otherDirection = true; 
-                this.setThrowOtherDirection(true);
-                this.startTime = this.currentTime;
-                this.playSound(this.walking_sound, '');
-            }
-            if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-                this.jump();
-                this.startTime = this.currentTime;
-                this.playSound(this.jump_sound, '');
-            }
-            this.playSound(this.walking_sound, 'paused');
-            this.world.camera_x = -this.x + 135;
-            this.world.createNewChickenIfNecessary();
-        }, 25); //Speed character
+            this.charcterMoveInterval();
+        }, 25);
         this.pushIntervalToArray(this.moveInterval);
 
-        
         this.animationInterval = setInterval(() => {
             this.currentTime = new Date().getTime();
-            if (this.isDead()) {
-                this.deadAnimation();
-            } else if (this.isHurt()) {
-                this.isHurtBounce();
-            } else if (this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_JUMPING);
-            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {    
-                this.playAnimation(this.IMAGES_WALKING); 
-            } else if (10000 > this.currentTime - this.startTime){
-                this.playAnimation(this.IMAGES_IDLE);
-            } else {
-                this.playAnimation(this.IMAGES_LONG_IDLE);
-            } 
-        }, 180); // Imageframes
+            this.characterPlayAnimationInterval();
+        }, 180); 
         this.pushIntervalToArray(this.animationInterval);
     }
 
 
+    /**
+     * Some functions for the Moves of the Character
+     */
+    charcterMoveInterval(){
+        this.charcterMoveRight();
+        this.charcterMoveLeft();
+        this.charcterMoveJump();
+            
+        this.playSound(this.walking_sound, 'paused');
+        this.world.camera_x = -this.x + 135;
+        this.world.createNewChickenIfNecessary();
+    }
+
+
+    charcterMoveRight(){
+        if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+            this.moveRight();
+            this.otherDirection = false;
+            this.setThrowOtherDirection(false);
+            this.startTime = this.currentTime;
+            this.playSound(this.walking_sound, '');
+        }
+    }
+
+
+    charcterMoveLeft(){
+        if (this.world.keyboard.LEFT && this.x > 0) {
+            this.moveLeft();
+            this.otherDirection = true; 
+            this.setThrowOtherDirection(true);
+            this.startTime = this.currentTime;
+            this.playSound(this.walking_sound, '');
+        }
+    }
+
+
+    charcterMoveJump(){
+        if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+            this.jump();
+            this.startTime = this.currentTime;
+            this.playSound(this.jump_sound, '');
+        }
+    }
+
+
+    /**
+     * Functions for the Animate of the character
+     */
+    characterPlayAnimationInterval(){
+        if (this.isDead()) {
+            this.deadAnimation();
+        } else if (this.isHurt()) {
+            this.isHurtBounce();
+        } else if (this.isAboveGround()) {
+            this.playAnimation(this.IMAGES_JUMPING);
+        } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {    
+            this.playAnimation(this.IMAGES_WALKING); 
+        } else if (10000 > this.currentTime - this.startTime){
+            this.playAnimation(this.IMAGES_IDLE);
+        } else {
+            this.playAnimation(this.IMAGES_LONG_IDLE);
+        } 
+    }
+
+
+    /**
+     * If the Character colliding with Endboss, then the character move 200px back automaticly 
+     */
     isHurtBounce(){
         if (!this.isHurtCharacter) {
             this.isHurtCharacter = true;

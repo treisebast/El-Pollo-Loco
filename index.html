@@ -38,9 +38,6 @@
 </head>
 
 <body>
-    <!-- onload="soundInit()" -->
-    <!--onload="init()" -->
-
     <h1 id="header">El Pollo Loco</h1>
 
     <div class="container" id="fullScreen">
@@ -48,6 +45,12 @@
         <!-- Overlay for Menupenel -->
         <div class="overlay" id="overlay">
             <div class="header-penel" id="headerPenel">
+                <button class="btn-head-p btn-z-index btn-menu-hover d-none" id="controller" onclick="toggleShowInstruction('add'), togglePause('play-btn')">
+                    <span class="material-symbols-outlined">
+                        stadia_controller
+                    </span>
+                </button>                 
+
                 <button class="btn-head-p btn-z-index btn-menu-hover" id="audioSound" onclick="toggleSoundMute()">
                     <span class="material-symbols-outlined" id="musicNoteIcon">
                         music_note
@@ -110,7 +113,7 @@
 
         <!-- Instruction-Sheet -->
         <div class="instruction-container" id="instructionContainer">
-            <button id="closeInstruction" class="close-instruction-btn" onclick="toggleShowInstruction('remove')"><span
+            <button id="closeInstruction" class="close-instruction-btn" onclick="toggleShowInstruction('remove'), togglePause('play-btn')"><span
                     class="material-symbols-outlined mso-close-instruction">
                     close</span></button>
             <h1 class="h1-instruction">Instruction</h1>

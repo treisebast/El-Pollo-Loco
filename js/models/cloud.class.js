@@ -3,6 +3,13 @@ class Cloud extends MovableObject {
     height = 250;
     width = 500;
 
+
+    /**
+     * Constructor Class Cloud
+     * 
+     * @param {string} imagePath - path for the Image of the Cloud
+     * @param {number} x - number to place the Cloud in this game
+     */
     constructor(imagePath, x) {
         super().loadImage(imagePath);
 
@@ -12,6 +19,10 @@ class Cloud extends MovableObject {
         this.animate();
     }
 
+
+    /**
+     * Intervals for the Cloud Moves are defined in animate()
+     */
     animate() {
         this.animationInterval = setInterval(() => {
             this.moveLeft();

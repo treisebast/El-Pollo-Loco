@@ -13,18 +13,26 @@ class Chicken extends MovableObject{
         'img/3_enemies_chicken/chicken_normal/2_dead/dead.png'
     ];
 
-    collisionBoxOffsetY = 25;
-    collisionBoxOffsetX = 3;
-    collisionBoxWidth = this.width - 10;
-    collisionBoxHeight = this.height - 20;
-
     enemyIsDead = false;
     isJumped = false;
     isHit = false;
 
     chicken_sound = new Audio('audio/chicken.mp3');
-    
 
+    /**
+     * collisionbox is a box with offset. This is required for isColliding()
+     */
+    collisionBoxOffsetY = 25;
+    collisionBoxOffsetX = 3;
+    collisionBoxWidth = this.width - 10;
+    collisionBoxHeight = this.height - 20;
+
+
+    /**
+     * Constuctor Class Cicken
+     * 
+     * @param {number} offset - is the value of x to placed the new Chicken forward
+     */
     constructor(offset){
         super().loadImage('img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -36,7 +44,10 @@ class Chicken extends MovableObject{
         this.animate();
     }
 
-
+    
+    /**
+     * Intervals for the Chicken Moves and for the animation of images are defined in animate()
+     */
     animate() {
         this.moveInterval = setInterval(() =>{
             this.moveLeft();

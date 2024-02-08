@@ -23,6 +23,11 @@ class EndbossStatusBar extends DrawableObject{
     }
 
     
+    /**
+     * Images Lifepoints Endboss
+     * 
+     * @param {number} percentage - Images for the Lifepoints from the Endboss
+     */
     setPercentage(percentage){
         this.percentage = percentage;
         let path = this.IMAGES[this.resolveImageIndex()];
@@ -30,6 +35,11 @@ class EndbossStatusBar extends DrawableObject{
     }
 
 
+    /**
+     * Return the right Picture for the Lifepoints
+     * 
+     * @returns - the right Image for the Lifepoints
+     */
     resolveImageIndex(){
         if (this.percentage == 100) {
             return 5;

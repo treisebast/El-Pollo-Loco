@@ -7,7 +7,10 @@ class DrawableObject {
     imageCache = {};
     currentImage = 0;
 
-    // loadImage('img/test.png');
+
+    /**
+     * loadImage('img/test.png'); 
+     */ 
     loadImage(path){
         this.img = new Image(); // this.img = document.getElementById('image') <img id="image" src>
         this.img.src = path;
@@ -27,6 +30,11 @@ class DrawableObject {
     }
 
 
+    /**
+     * Draws the collected bottle count on the canvas.
+     *
+     * @param {CanvasRenderingContext2D} ctx - The 2D rendering context of the canvas.
+     */
     draw(ctx){
         try {
             ctx.drawImage(this.img, this.x, this.y, this.width, this.height); 
@@ -36,7 +44,11 @@ class DrawableObject {
         }
     }
 
-
+    /**
+     * Draws the collected bottle count on the canvas.
+     *
+     * @param {CanvasRenderingContext2D} ctx - The 2D rendering context of the canvas.
+     */
     drawFrame(ctx){
         if (this instanceof Character || this instanceof Chicken || this instanceof SmallChicken || this instanceof Endboss || this instanceof Coins || this instanceof Bottles || this instanceof ThrowableObject) {
             ctx.beginPath();
