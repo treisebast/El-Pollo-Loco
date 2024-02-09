@@ -53,7 +53,7 @@ class DrawableObject {
         if (this instanceof Character || this instanceof Chicken || this instanceof SmallChicken || this instanceof Endboss || this instanceof Coins || this instanceof Bottles || this instanceof ThrowableObject) {
             ctx.beginPath();
             ctx.lineWidth = '3';
-            ctx.strokeStyle = 'blue';
+            ctx.strokeStyle = 'transparent';
             ctx.rect(this.x + this.collisionBoxOffsetX, this.y + this. collisionBoxOffsetY, 
                 this.collisionBoxWidth, this.collisionBoxHeight);
             ctx.stroke();

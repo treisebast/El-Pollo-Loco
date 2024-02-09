@@ -133,14 +133,14 @@ class Endboss extends MovableObject{
         } else {
             this.playAnimation(this.IMAGES_ALERT);
         }
-        this.createTimeOut('timeIsBeginHurt', 600, 'beginnAtTimeHurt'); 
+        this.createTimeOut('timeIsBeginHurt', 800, 'beginnAtTimeHurt'); 
         this.createTimeOut('timeIsBeginRandom', 2000, 'beginnAtTimeRandom'); 
     }
 
 
     hurtAnimationAndDeadAnimation(){
         this.HurtAnimation();
-            if ((new Date().getTime() - this.lastHit) > 1800) {
+            if ((new Date().getTime() - this.lastHit) > 1200) {
                 this.deadAnimation();
             }
     }
