@@ -81,6 +81,7 @@ class Character extends MovableObject {
     walking_sound = new Audio("audio/running.mp3");
     jump_sound = new Audio('audio/jump.mp3');
     hurt_sound = new Audio('audio/hurt.mp3');
+    sleep_sound = new Audio('audio/sleep.mp3');
 
 
     /**
@@ -180,10 +181,11 @@ class Character extends MovableObject {
             this.playAnimation(this.IMAGES_JUMPING);
         } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {    
             this.playAnimation(this.IMAGES_WALKING); 
-        } else if (10000 > this.currentTime - this.startTime){
+        } else if (100000 > this.currentTime - this.startTime){
             this.playAnimation(this.IMAGES_IDLE);
         } else {
             this.playAnimation(this.IMAGES_LONG_IDLE);
+            this.playSound(this.sleep_sound, '');
         } 
     }
 

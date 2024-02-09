@@ -45,7 +45,7 @@
         <!-- Overlay for Menupenel -->
         <div class="overlay" id="overlay">
             <div class="header-penel" id="headerPenel">
-                <button class="btn-head-p btn-z-index btn-menu-hover d-none" id="controller" onclick="toggleShowInstruction('add')">
+                <button class="btn-head-p btn-z-index btn-menu-hover d-none" id="controller" onclick="toggleShowInstruction('add'), PauseForInstruction()">
                     <span class="material-symbols-outlined">
                         stadia_controller
                     </span>
@@ -113,7 +113,7 @@
 
         <!-- Instruction-Sheet -->
         <div class="instruction-container" id="instructionContainer">
-            <button id="closeInstruction" class="close-instruction-btn" onclick="toggleShowInstruction('remove')"><span
+            <button id="closeInstruction" class="close-instruction-btn" onclick="toggleShowInstruction('remove'), PauseForInstruction()"><span
                     class="material-symbols-outlined mso-close-instruction">
                     close</span></button>
             <h1 class="h1-instruction">Instruction</h1>
@@ -196,7 +196,7 @@
 
             <button id="startGameBtn" class="start-game-btn sg-btn-position" onclick="startGame()">Start Game</button>
             <button id="instructionBtn" class="instruction-btn"
-                onclick="toggleShowInstruction('add')">Instructions</button>
+                onclick="toggleShowInstruction('add'), PauseForInstruction()">Instructions</button>
         </div>
 
 

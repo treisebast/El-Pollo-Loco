@@ -89,7 +89,7 @@ canvas:focus {
 
 .show {
     display: flex;
-    animation: fadeIn 1s forwards;
+    animation: fadeIn 0.7s forwards;
 }
 
 @keyframes fadeIn {
@@ -228,6 +228,7 @@ ul{
     background-color: rgba(0, 0, 0, 0.9);
     max-width: 720px;
     height: 480px;
+    z-index: 11;
 }
 
 .h1-instruction {
@@ -351,8 +352,8 @@ ul{
 }
 
 .btn-size {
-    height: 55px;
-    width: 55px;
+    height: 60px;
+    width: 60px;
 }
 
 .mso-left {

@@ -15,8 +15,8 @@ function initLevel() {
 
 
 function createCoins(){
-    let repetitions = 7;
-    let offset = 700;
+    let repetitions = 5;
+    let offset = 1000;
     for (let i = 0; i < repetitions; i+=2) {
         this.placedItems.push(
             new Coins((i+1) * offset, 100),
@@ -24,32 +24,35 @@ function createCoins(){
             new Coins((i+1) * offset, 175),
             new Coins((i+1) * offset-75, 175),
             new Coins((i+1) * offset, 250),
-            new Coins((i+2.3) * offset-125, 225),
-            new Coins((i+2.3) * offset-75, 150),
-            new Coins((i+2.3) * offset, 100),
-            new Coins((i+2.3) * offset+75, 150),
-            new Coins((i+2.3) * offset+125, 225)
+            new Coins((i+2) * offset-125, 225),
+            new Coins((i+2) * offset-75, 150),
+            new Coins((i+2) * offset, 100),
+            new Coins((i+2) * offset+75, 150),
+            new Coins((i+2) * offset+125, 225)
         );
     }
 }
 
 
 function createBottles(){
-    let repetitions = 7;
-    let offset = 700;
-    for (let i = 0; i < repetitions; i++) {
+    let repetitions = 5;
+    let offset = 1000;
+    for (let i = 0; i < repetitions; i+=2) {
         this.placedItems.push(
             new Bottles('img/6_salsa_bottle/1_salsa_bottle_on_ground.png', (i+1) * offset, 350),
             new Bottles('img/6_salsa_bottle/2_salsa_bottle_on_ground.png', (i+1) * offset + 150, 355),
-            new Bottles('img/6_salsa_bottle/1_salsa_bottle_on_ground.png', (i+1) * offset + 225, 335)
+            new Bottles('img/6_salsa_bottle/1_salsa_bottle_on_ground.png', (i+1) * offset + 225, 335),
+            new Bottles('img/6_salsa_bottle/1_salsa_bottle_on_ground.png', (i+1.8) * offset, 350),
+            new Bottles('img/6_salsa_bottle/2_salsa_bottle_on_ground.png', (i+2.25) * offset + 150, 355),
+            new Bottles('img/6_salsa_bottle/1_salsa_bottle_on_ground.png', (i+1.95) * offset + 225, 335)
         )
     }
 }
 
 
 function createCloudObjects() {
-    let repetitions = 9;
-    let offset = 420;
+    let repetitions = 20;
+    let offset = 480;
     for (let i = 0; i < repetitions; i += 2) {
         this.clouds.push(
             new Cloud("img/5_background/layers/4_clouds/1.png", i * (offset)),
@@ -60,7 +63,7 @@ function createCloudObjects() {
 
 
 function createBackgroundObjects() {
-    let repetitions = 7;
+    let repetitions = 16;
     let offset = 719;
     let start_x = 719;
     for (let i = 0; i < repetitions; i += 2) {

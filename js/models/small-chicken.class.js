@@ -43,7 +43,7 @@ class SmallChicken extends MovableObject{
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_DEAD);
 
-        this.x = Math.min(offset + 300 + Math.random() * 400, 3700);
+        this.x = Math.min(offset + 400 + Math.random() * 400, 8000);
         this.speed = 1.4 + Math.random() * 0.4;
 
         this.applyGravity();

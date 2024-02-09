@@ -36,7 +36,7 @@ function startGame(x) {
     })
     document.getElementById("startScreen").classList.add('none-show');
     document.getElementById("headerPenel").style.justifyContent = "center";
-
+    gameStart = true;
     init();
 }
 
@@ -189,6 +189,12 @@ function togglePlaySound(sound, paused){
     } 
 }
 
+// let pauseInstruction = false;
+function PauseForInstruction(){
+    if (gameStart == true) {
+        togglePause('play-btn')
+    }
+}
 
 /**
  * Section to toggle game play and pause
@@ -215,7 +221,6 @@ function togglePause(x) {
 function gameIsStarted(x){
     document.getElementById('canvas').focus();
     if (!gameStart && !isPaused){
-        gameStart = true;
         playIcon.style.display = 'none';
         pauseIcon.style.display = 'flex';
         checkStartAndRestart(x);
@@ -229,11 +234,16 @@ function gameIsStarted(x){
 
 
 function checkStartAndRestart(x){
-    if (x === 'play-btn') {
+    if (x === 'play-btn' && !restartIsAllowed) {
         startGame('play-btn');
-        if (restartIsAllowed == true) {
-        restartGame();  
-        }
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'flex';
+    }
+    if (restartIsAllowed === true) {
+        restartGame();
+        playIcon.style.display = 'flex';
+        pauseIcon.style.display = 'none';
+        restartIsAllowed = false;  
     }  
 }
 

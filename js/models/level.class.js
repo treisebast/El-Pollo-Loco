@@ -3,7 +3,7 @@ class Level {
     clouds;
     backgroundObjects;
     endBoss;
-    level_end_x = 3600;
+    level_end_x = 8000;
     placedItems;
     
 

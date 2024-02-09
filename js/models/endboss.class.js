@@ -46,7 +46,7 @@ class Endboss extends MovableObject{
         'img/4_enemie_boss_chicken/5_dead/G26.png'
     ];
 
-    startPositionEndboss = 1200;
+    startPositionEndboss = 7800;
     lastJump = false;
     lastJumpTime = 0;
 
@@ -73,9 +73,9 @@ class Endboss extends MovableObject{
      * collisionbox is a box with offset. This is required for isColliding()
      */
     collisionBoxOffsetY = 70;
-    collisionBoxOffsetX = 60;
+    collisionBoxOffsetX = 65;
     collisionBoxWidth = this.width - 80;
-    collisionBoxHeight = this.height - 120;
+    collisionBoxHeight = this.height - 130;
 
 
     /**
@@ -95,8 +95,8 @@ class Endboss extends MovableObject{
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
 
-        this.speed = 4; // in startMoveInterval like the same write
-        this.x = 1200; //TODO: wieder ändern
+        this.speed = 4; 
+        this.x = 7800;
        
         this.applyGravity();
         this.animate();
@@ -112,7 +112,7 @@ class Endboss extends MovableObject{
             
         }, 150);
         this.pushIntervalToArray(this.animationInterval);
-        this.startMoveInterval(2.5);
+        this.startMoveInterval(4);
     }
 
 
@@ -131,8 +131,8 @@ class Endboss extends MovableObject{
         } else {
             this.playAnimation(this.IMAGES_ALERT);
         }
-        this.createTimeOut('timeIsBeginHurt', 1200, 'beginnAtTimeHurt'); 
-        this.createTimeOut('timeIsBeginRandom', 4000, 'beginnAtTimeRandom'); 
+        this.createTimeOut('timeIsBeginHurt', 1000, 'beginnAtTimeHurt'); 
+        this.createTimeOut('timeIsBeginRandom', 6000, 'beginnAtTimeRandom'); 
     }
 
 
@@ -195,13 +195,13 @@ class Endboss extends MovableObject{
     startMoveInterval(speed){
         this.moveInterval = setInterval(() => {
             if (!this.pausedInterval) {
-                if (this.world?.character.x > 800 && this.walkAnimate || this.hadFirstContact) {
+                if (this.world?.character.x > 7000 && this.walkAnimate || this.hadFirstContact) {
                     this.playSound(this.chicken_walking, '');
                     this.hadFirstContact = true;
                     this.moveWithinZoneEndboss(speed);
                     if (!this.endBossGoAttack) {
                         this.createTimeJumpBeginn();
-                        this.createTimeoutJump(3500);  
+                        this.createTimeoutJump(5000);  
                     }
                 } 
             }
