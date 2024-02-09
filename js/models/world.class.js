@@ -153,10 +153,26 @@ class World {
         if (!this.level.enemies.isJumped && this.character.y < 200 && this.character.speedY < 0) {
             let selectedChicken = this.findEnemyWithMaxOverlap(this.level.enemies, this.character);
             if (selectedChicken !== null) {
-                selectedChicken.isJumped = true;
-                this.enemyDeadAnimation(selectedChicken);
+                if (this.isCharacterDirectlyAboveEnemy(this.character, selectedChicken)) {
+                    selectedChicken.isJumped = true;
+                    this.enemyDeadAnimation(selectedChicken);
+                }
             }
         }
+    }
+
+
+    /**
+     * Checks if the character is directly above the enemy.
+     * 
+     * @param {Object} character - The character object.
+     * @param {Object} enemy - The enemy object.
+     * @returns {boolean} - Returns true if the character is directly above the enemy, otherwise false.
+     */
+    isCharacterDirectlyAboveEnemy(character, enemy) {
+        let characterBottom = character.y + character.collisionBoxHeight ;
+        let enemyTop = enemy.y;
+        return characterBottom < enemyTop;
     }
     
 

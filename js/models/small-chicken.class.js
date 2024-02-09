@@ -44,7 +44,7 @@ class SmallChicken extends MovableObject{
         this.loadImages(this.IMAGES_DEAD);
 
         this.x = Math.min(offset + 400 + Math.random() * 400, 8000);
-        this.speed = 1.4 + Math.random() * 0.4;
+        this.speed = 1.4 + Math.random() * 2.5;
 
         this.applyGravity();
         this.animate();
@@ -58,8 +58,8 @@ class SmallChicken extends MovableObject{
         this.moveInterval = setInterval(() => {
             this.moveLeft();
             this.createTimeJumpBeginn();
-            this.createTimeoutJump(3500);
-        }, 1000 / 25);
+            this.createTimeoutJump(2000);
+        }, 1000 / 28);
 
         this.animationInterval = setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING);

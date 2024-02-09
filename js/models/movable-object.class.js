@@ -43,7 +43,7 @@ class MovableObject extends DrawableObject {
         if (this instanceof ThrowableObject) { // Throwable object should always fall
             return true;
         } else if (this instanceof SmallChicken) {
-            return this.y < 357;
+            return this.y < 352;
         } else if (this instanceof Endboss) {
             return this.y < 35;
         } else {
@@ -165,7 +165,7 @@ class MovableObject extends DrawableObject {
      */
     jump() {
         if (this instanceof SmallChicken) {
-            this.speedY = 19;
+            this.speedY = 24;
         } else if (this instanceof Character) {
             this.speedY = 21;
         } else if (this instanceof Endboss) {
