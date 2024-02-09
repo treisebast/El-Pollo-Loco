@@ -59,13 +59,12 @@ function init() {
  * 
  */
 function showInstruction(){
-    let layerIds = ['startGameBtn', 'instructionBtn', 'headerPenel']
-
     let instruction = document.getElementById("instructionContainer");
     instruction.classList.add('show');
     instruction.classList.remove('hide');
     instruction.style.zIndex = '11';
 
+    let layerIds = ['startGameBtn', 'instructionBtn', 'headerPenel']
     layerIds.forEach((id) => {
     document.getElementById(id).classList.add('none-show');
     })    
@@ -77,13 +76,12 @@ function showInstruction(){
  * 
  */
 function hideInstruction(){
-    let layerIds = ['startGameBtn', 'instructionBtn', 'headerPenel']
-
     let instruction = document.getElementById("instructionContainer");
     instruction.classList.remove('show');
     instruction.classList.add('hide');
     instruction.style.zIndex = '';
 
+    let layerIds = ['startGameBtn', 'instructionBtn', 'headerPenel']
     layerIds.forEach((id) => {
     document.getElementById(id).classList.remove('none-show');
     })    
