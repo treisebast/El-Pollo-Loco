@@ -21,7 +21,11 @@ class StatusBar extends DrawableObject{
         this.setPercentage(100);
     }
 
-    
+    /**
+     * Images Lifepoints Character
+     * 
+     * @param {number} percentage - Images for the Lifepoints from the Character
+     */
     setPercentage(percentage){
         this.percentage = percentage;
         let path = this.IMAGES[this.resolveImageIndex()];
@@ -29,6 +33,11 @@ class StatusBar extends DrawableObject{
     }
 
 
+    /**
+     * Return the right Picture for the Lifepoints
+     * 
+     * @returns - the right Image for the Lifepoints
+     */
     resolveImageIndex(){
         if (this.percentage == 100) {
             return 5;

@@ -46,11 +46,6 @@ class Endboss extends MovableObject{
         'img/4_enemie_boss_chicken/5_dead/G26.png'
     ];
 
-    collisionBoxOffsetY = 70;
-    collisionBoxOffsetX = 30;
-    collisionBoxWidth = this.width - 40;
-    collisionBoxHeight = this.height - 90;
-
     startPositionEndboss = 1200;
     lastJump = false;
     lastJumpTime = 0;
@@ -73,6 +68,19 @@ class Endboss extends MovableObject{
     timeIsBeginRandom = false;
     beginnAtTimeRandom = 0;
 
+
+    /**
+     * collisionbox is a box with offset. This is required for isColliding()
+     */
+    collisionBoxOffsetY = 70;
+    collisionBoxOffsetX = 30;
+    collisionBoxWidth = this.width - 40;
+    collisionBoxHeight = this.height - 90;
+
+
+    /**
+     * Audio for Animation
+     */
     chicken_hurt_sound = new Audio('audio/chicken_hurt2.mp3');
     chicken_sound = new Audio('audio/chicken.mp3');
     chicken_alert = new Audio('audio/chicken_alert.mp3');
@@ -95,37 +103,61 @@ class Endboss extends MovableObject{
     }
 
 
+    /**
+     * Intervals for the animation of Endboss are defined in animate()
+     */
     animate() { 
         this.animationInterval = setInterval(() => {
-            if (this.walkAnimate && !this.isDead() && !this.isHurt()) {
-                this.playAnimation(this.IMAGES_WALK);
-            } else if (this.attackAnimate && !this.isDead() && !this.isHurt()) {
-                this.playAnimation(this.IMAGES_ATTACK);
-            } else if (this.isHurt() && !this.isDead()) {
-                this.isHurtAnimation();
-            } else if (this.isDead()) {
-                this.isHurtAnimation();
-                if ((new Date().getTime() - this.lastHit) > 1800) {
-                    this.deadAnimation();
-                }
-            } else {
-                this.playAnimation(this.IMAGES_ALERT);
-            }
-            this.createTimeOut('timeIsBeginHurt', 1200, 'beginnAtTimeHurt'); 
-            this.createTimeOut('timeIsBeginRandom', 4000, 'beginnAtTimeRandom'); 
+            this.endBossAnimationIntervals();
+            
         }, 150);
         this.pushIntervalToArray(this.animationInterval);
         this.startMoveInterval(2.5);
     }
 
 
-    isHurtAnimation(){
+    /**
+     * Endboss aniamtion function
+     */
+    endBossAnimationIntervals(){
+        if (this.walkAnimate && !this.isDead() && !this.isHurt()) {
+            this.playAnimation(this.IMAGES_WALK);
+        } else if (this.attackAnimate && !this.isDead() && !this.isHurt()) {
+            this.playAnimation(this.IMAGES_ATTACK);
+        } else if (this.isHurt() && !this.isDead()) {
+            this.HurtAnimation();
+        } else if (this.isDead()) {
+            this.hurtAnimationAndDeadAnimation();
+        } else {
+            this.playAnimation(this.IMAGES_ALERT);
+        }
+        this.createTimeOut('timeIsBeginHurt', 1200, 'beginnAtTimeHurt'); 
+        this.createTimeOut('timeIsBeginRandom', 4000, 'beginnAtTimeRandom'); 
+    }
+
+
+    hurtAnimationAndDeadAnimation(){
+        this.HurtAnimation();
+            if ((new Date().getTime() - this.lastHit) > 1800) {
+                this.deadAnimation();
+            }
+    }
+
+
+    HurtAnimation(){
         this.pausedInterval = true;
+        this.chicken_walking.pause();
         this.playAnimation(this.IMAGES_HURT);
         this.createTimeBeginn('timeIsBeginHurt', 'beginnAtTimeHurt');         
     }
 
 
+    /**
+     * SetTimeout function - start the Timeoutfunction
+     * 
+     * @param {boolean & string} variable - Variable, who will true or false
+     * @param {number & string} timeVariable - time - start of timeout
+     */
     createTimeBeginn(variable, timeVariable){
         if (!this[variable]) {
             this[variable] = true;
@@ -133,6 +165,14 @@ class Endboss extends MovableObject{
         } 
     }
 
+
+    /**
+     * Finish Timeout function
+     * 
+     * @param {boolean & string} variable - Variable, who will true or false
+     * @param {number} duration - Duration in milliseconds - is the time for timeout
+     * @param {number & string} timeVariable - time - start of timeout from the createTimeBeginn()
+     */
     createTimeOut(variable, duration, timeVariable){
         let timePassed = ((new Date().getTime()) - this[timeVariable]);
         if (timePassed >= duration && this[variable]) {
@@ -147,6 +187,11 @@ class Endboss extends MovableObject{
     }
 
 
+    /**
+     * MoveInterval from the Endboss
+     * 
+     * @param {number} speed - speed from the Endboss
+     */
     startMoveInterval(speed){
         this.moveInterval = setInterval(() => {
             if (!this.pausedInterval) {
@@ -165,61 +210,87 @@ class Endboss extends MovableObject{
     }
     
 
+    /**
+     * Section of Movezone, who will the Endboss alert, attack, move, run and go back
+     * 
+     * @param {number} speed - speed from the Endboss
+     */
     moveWithinZoneEndboss(speed) {   
-       if (this.x > this.startPositionEndboss - this.moveZoneX && !this.otherDirection) {
+        if (this.x > this.startPositionEndboss - this.moveZoneX && !this.otherDirection) {
             this.walkAnimate = true;
             this.moveLeft();
             if (this.x <= this.startPositionEndboss - this.moveZoneX + 35 && this.endBossGoAttack) {
-                this.playSound(this.chicken_walking, 'paused');
-                this.playSound(this.chicken_sound, '');
-                this.speed = 0.18;
-                this.moveLeftSlow();
-                this.walkAnimate = false;
-                this.attackAnimate = true;
-            }          
+                this.endbossAttackZone();
+            }
             if (this.x <= this.startPositionEndboss - this.moveZoneX) {
-                this.walkAnimate = true;
-                this.attackAnimate = false;
-                this.otherDirection = true;
-                this.endBossGoAttack = false;
+                this.endBossWalkingZone(); 
             }
-
         } else if (this.x < this.startPositionEndboss && this.otherDirection) {
-            this.speed = speed;
-            this.moveRight();
-            if (this.x >= this.startPositionEndboss) {
-                this.otherDirection = false;
-                this.walkAnimate = false;
-                clearInterval(this.moveInterval);
-
-                this.createTimeBeginn('timeIsBeginRandom', 'beginnAtTimeRandom');         
-            }
+            this.endBossGoBackZone(speed); 
         }
     }
 
+    endbossAttackZone(){
+        this.playSound(this.chicken_walking, 'paused');
+        this.playSound(this.chicken_sound, '');
+        this.speed = 0.18;
+        this.moveLeftSlow();
+        this.walkAnimate = false;
+        this.attackAnimate = true;         
+    }
 
+    endBossWalkingZone(){
+        this.walkAnimate = true;
+        this.attackAnimate = false;
+        this.otherDirection = true;
+        this.endBossGoAttack = false;
+    }
+
+    endBossGoBackZone(speed){
+        this.speed = speed;
+        this.moveRight();
+        if (this.x >= this.startPositionEndboss) {
+            this.otherDirection = false;
+            this.walkAnimate = false;
+            this.chicken_walking.pause();
+            clearInterval(this.moveInterval);
+            this.createTimeBeginn('timeIsBeginRandom', 'beginnAtTimeRandom');         
+        }        
+    }
+
+
+    /**
+     * MathRandom() for Endboss goes attack or walking
+     */
     animateMathRandom(){
         this.animateMathRandomIsRun = true;
         let number = Math.random();
         if (number < 0.8) {
-            this.endBossGoAttack = true;
-            this.playSound(this.chicken_walking, 'paused');
-            this.playSound(this.chicken_alert, '');
-            this.moveZoneX = 250;
-            this.speed = 18;
-            if (!this.isDead()) {
-                this.startMoveInterval(9);
-            }
+            this.endBossWillAttack();
         } else if (number >= 0.8) {
-            this.walkAnimate = true;
-            this.endBossGoAttack = false;
-            this.moveZoneX = 225;
-            this.speed = 9;
-            if (!this.isDead()) {
-                this.startMoveInterval(9);
-            }
-            
+            this.endBossWillWalking(); 
         }      
+    }
+
+    endBossWillAttack(){
+        this.endBossGoAttack = true;
+        this.playSound(this.chicken_walking, 'paused');
+        this.playSound(this.chicken_alert, '');
+        this.moveZoneX = 250;
+        this.speed = 18;
+        if (!this.isDead()) {
+            this.startMoveInterval(10);
+        }
+    }
+
+    endBossWillWalking(){
+        this.walkAnimate = true;
+        this.endBossGoAttack = false;
+        this.moveZoneX = 225;
+        this.speed = 10;
+        if (!this.isDead()) {
+            this.startMoveInterval(10);
+        }
     }
 
 }

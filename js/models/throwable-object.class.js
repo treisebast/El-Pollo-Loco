@@ -17,29 +17,42 @@ class ThrowableObject extends MovableObject{
         'img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png'
     ];
 
-     splashHeight = 180;
-     splashWidth = 235;
-     splashHeightOnEnemy = 85;
-     splashWidthOnEnemy = 111;
- 
-     rotationHeight = 100;
-     rotationWidth = 70;
+    isBrokenBottle = false;
+    isBrokenBottleOnEnemy = false;
+    attackEndboss = false;
 
-     collisionBoxOffsetY = 20;
-     collisionBoxOffsetX = 15;
-     collisionBoxWidth = 40;
-     collisionBoxHeight = 60;
+    throw_sound = new Audio('audio/throw.mp3');
+    break_sound = new Audio('audio/glass.mp3');
 
 
-     isBrokenBottle = false;
-     isBrokenBottleOnEnemy = false;
-     attackEndboss = false;
+    /**
+     * collisionbox is a box with offset. This is required for isColliding()
+     */
+    collisionBoxOffsetY = 20;
+    collisionBoxOffsetX = 15;
+    collisionBoxWidth = 40;
+    collisionBoxHeight = 60;
 
-     throw_sound = new Audio('audio/throw.mp3');
-     break_sound = new Audio('audio/glass.mp3');
+
+    /**
+     * Size of the Images for the Animation
+     */
+    splashHeight = 180;
+    splashWidth = 235;
+    splashHeightOnEnemy = 85;
+    splashWidthOnEnemy = 111;
+
+    rotationHeight = 100;
+    rotationWidth = 70;
 
 
-
+    /**
+     * Constructor from Class Throwableobject
+     * 
+     * @param {number} x - number for the X-position to throw the bottle
+     * @param {number} y - number for the Y-position to throw the bottle
+     * @param {number} speed - number for the speed to throw the bottle
+     */
     constructor(x, y, speed){
         super().loadImage('img/6_salsa_bottle/bottle_rotation/4_bottle_rotation.png');
         this.loadImages(this.IMAGES_ROTATION);
@@ -57,28 +70,40 @@ class ThrowableObject extends MovableObject{
     }
 
 
+    /**
+     * Animation interval of throw bottle
+     */
     throw(){
-
         let throwDirection = MovableObject.throwOtherDirection;
 
         this.lastInt = setInterval(() => {
-            if (throwDirection === false && !this.isBrokenBottle) {
-                this.x += (this.speed + 23);
-                this.playAnimation(this.IMAGES_ROTATION);
-            } else if (throwDirection === true && !this.isBrokenBottle) {
-                this.x -= (this.speed + 23);
-                this.playAnimation(this.IMAGES_ROTATION);
-            } else if (this.isBrokenBottle === true && this.attackEndboss === true ) {
-                this.height = this.splashHeight;
-                this.width = this.splashWidth;
-                this.playAnimationLastPic(this.IMAGES_SPLASH);
-            } else if ( this.isBrokenBottleOnEnemy === true) {
-                this.height = this.splashHeightOnEnemy;
-                this.width = this.splashWidthOnEnemy;
-                this.playAnimationLastPic(this.IMAGES_SPLASH);
-            }
+            this.throwAndAnimateBottle(throwDirection); 
         }, 100)
         this.pushIntervalToArray(this.lastInt);
+    }
+
+
+    /**
+     * Aniamtion of throw bottle and break bottle
+     * 
+     * @param {boolean} throwDirection - throw right or left from character
+     */
+    throwAndAnimateBottle(throwDirection){
+        if (throwDirection === false && !this.isBrokenBottle) {
+            this.x += (this.speed + 23);
+            this.playAnimation(this.IMAGES_ROTATION);
+        } else if (throwDirection === true && !this.isBrokenBottle) {
+            this.x -= (this.speed + 23);
+            this.playAnimation(this.IMAGES_ROTATION);
+        } else if (this.isBrokenBottle === true && this.attackEndboss === true ) {
+            this.height = this.splashHeight;
+            this.width = this.splashWidth;
+            this.playAnimationLastPic(this.IMAGES_SPLASH);
+        } else if ( this.isBrokenBottleOnEnemy === true) {
+            this.height = this.splashHeightOnEnemy;
+            this.width = this.splashWidthOnEnemy;
+            this.playAnimationLastPic(this.IMAGES_SPLASH);
+        }
     }
 
 }

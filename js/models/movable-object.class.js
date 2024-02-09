@@ -10,11 +10,19 @@ class MovableObject extends DrawableObject {
     deadAnimationBeginn = 0;
 
 
-    setThrowOtherDirection(value) {
-        MovableObject.throwOtherDirection = value;
+    /**
+     * throw bottle Left or Right with character
+     * 
+     * @param {boolean} boolean - when the character goes right or left
+     */
+    setThrowOtherDirection(boolean) {
+        MovableObject.throwOtherDirection = boolean;
     }
 
 
+    /**
+     * Gravity
+     */
     applyGravity(){
         this.gravityInterval = setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
@@ -26,6 +34,11 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * Over the underground
+     * 
+     * @returns true or value for the Movableobjects for the Y-position
+     */
     isAboveGround(){
         if (this instanceof ThrowableObject) { // Throwable object should always fall
             return true;
@@ -39,6 +52,12 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * Check character is jump on enemy
+     * 
+     * @param {object} chicken - enemy object
+     * @returns - return enemy, when the character jump on it
+     */
     isJumpOnEnemie(chicken) {
         let characterBottom = this.y + this.collisionBoxOffsetY + this.collisionBoxHeight + 10;
         let chickenTop = chicken.y - 8 + chicken.collisionBoxOffsetY;
@@ -56,6 +75,12 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * Check colliding between character and enemy
+     * 
+     * @param {object} obj - enemy object
+     * @returns - when the character is colliding with enemy - true
+     */
     isColliding(obj) {
         let thisRight = this.x + this.collisionBoxOffsetX + this.collisionBoxWidth;
         let thisBottom = this.y + this.collisionBoxOffsetY + this.collisionBoxHeight;
@@ -70,7 +95,9 @@ class MovableObject extends DrawableObject {
         );
     }
 
-
+    /**
+     * Character or Enemie have a damage
+     */
     hit(){
         if (!this.immune) {
             this.immune = true;
@@ -87,6 +114,11 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * when the character or endboss is damage, than returns true
+     * 
+     * @returns true
+     */
     isHurt(){
         let timepassed = new Date().getTime() - this.lastHit; // Difference in ms
         timepassed = timepassed / 1000; // Difference in s
@@ -94,26 +126,43 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * Someone is dead
+     * 
+     * @returns - someone is dead
+     */
     isDead(){
         return this.energy == 0;
     }
 
 
+    /**
+     * to move right
+     */
     moveRight(){
         this.x += this.speed;
     }
 
 
+    /**
+     * to move left
+     */
     moveLeft(){
         this.x -= this.speed;
     }
 
 
+    /**
+     * Slowpart endboss, when he attacks
+     */
     moveLeftSlow(){
         this.x -= this.speed;
     }
 
 
+    /**
+     * Jump
+     */
     jump() {
         if (this instanceof SmallChicken) {
             this.speedY = 18;
@@ -125,6 +174,9 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * for Jump() setTimeout beginn
+     */
     createTimeJumpBeginn() {
         if (!this.lastJump) {
             this.lastJump = true;
@@ -132,7 +184,11 @@ class MovableObject extends DrawableObject {
         }      
     }
 
-    // x = number
+    /**
+     * for Jump() setTimeout end with duration
+     * 
+     * @param {number} x - number in milliseconds for the duration
+     */
     createTimeoutJump(x){
         let timePassed = ((new Date().getTime()) - this.lastJumpTime);
         if (timePassed >= x && this.lastJump) {
@@ -142,6 +198,11 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * Animation with images
+     * 
+     * @param {path} images - images from character, endboss, ememie, cloud, coins etc.
+     */
     playAnimation(images){
         let i = this.currentImage % images.length; // % bedeutet Modulo => mit Rest wird gerechnet
         let path = images[i];
@@ -150,6 +211,11 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * Dead from character or endboss - the last animation
+     * 
+     * @param {path} images - images from character, endboss, ememie, cloud, coins etc.
+     */
     playAnimationLastPic(images) {
         let i = this.currentImageLastPic % images.length;
         let path = images[i];
@@ -165,11 +231,17 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * Stop the interval from deadAnimation()
+     */
     stopInterval() {
         clearInterval(this.lastInt);
     }
 
 
+    /**
+     * Dead from character or endboss
+     */
     deadAnimation(){
         this.deadAnimationBeginn = new Date().getTime();
         this.stopAnimations();
@@ -181,17 +253,31 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * Stop Intervals
+     */
     stopAnimations() {
         clearInterval(this.moveInterval);
         clearInterval(this.animationInterval);
     }
     
 
+    /**
+     * Play or pause Audiosound
+     * 
+     * @param {variable} sound - variable from the Audiosound, who will play or pause
+     * @param {string} paused - string assumes the certain value for pause
+     */
     playSound(sound, paused){
         togglePlaySound(sound, paused);
     }
 
 
+    /**
+     * Push intervals to a Array - allInterval = []
+     * 
+     * @param {variable} id - id from the intervals; push with: this.pushIntervalToArray(this.lastInt);
+     */
     pushIntervalToArray(id){
         setStoppableInterval(id);
     }

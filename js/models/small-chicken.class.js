@@ -17,20 +17,27 @@ class SmallChicken extends MovableObject{
     lastJump = false;
     lastJumpTime = 0;
 
+    enemyIsDead = false;
+    isJumped = false;
+    isHit = false;
+
+
+    /**
+     * collisionbox is a box with offset. This is required for isColliding()
+     */
     collisionBoxOffsetY = 10;
     collisionBoxOffsetX = 3;
     collisionBoxWidth = this.width - 10;
     collisionBoxHeight = this.height - 10;
 
-    enemyIsDead = false;
-    isJumped = false;
-    isHit = false;
-
     chicken_sound = new Audio('audio/smallChicken.mp3');
 
 
-
-
+    /**
+     * Constructor from class SmallChicken
+     * 
+     * @param {number} offset - offset for the X-position in the game
+     */
     constructor(offset){
         super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -44,6 +51,9 @@ class SmallChicken extends MovableObject{
     }
 
     
+    /**
+     * Animation and move intervals
+     */
     animate() { 
         this.moveInterval = setInterval(() => {
             this.moveLeft();

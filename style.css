@@ -334,10 +334,6 @@ ul{
     display: flex;
 }
 
-.move-penel-width{
-    width: 720px;
-}
-
 .move-penel-left, .move-penel-right {
     display: flex;
     visibility: hidden;
@@ -473,5 +469,10 @@ ul{
         z-index: 10;
         visibility: visible;
     }
+}
 
+@media only screen and (min-height: 480px) and (min-width: 720px) {
+    .move-penel-width{
+        width: 720px;
+    }
 }
