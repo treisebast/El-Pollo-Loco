@@ -181,7 +181,7 @@ class Character extends MovableObject {
             this.playAnimation(this.IMAGES_JUMPING);
         } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {    
             this.playAnimation(this.IMAGES_WALKING); 
-        } else if (100000 > this.currentTime - this.startTime){
+        } else if (4000 > this.currentTime - this.startTime){
             this.playAnimation(this.IMAGES_IDLE);
         } else {
             this.playAnimation(this.IMAGES_LONG_IDLE);

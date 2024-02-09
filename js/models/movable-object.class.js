@@ -3,7 +3,7 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     static throwOtherDirection = false;
     speedY = 0;
-    acceleration = 2;
+    acceleration = 2.1;
     energy = 100;
     lastHit = 0;
     currentImageLastPic = 0;
@@ -165,11 +165,11 @@ class MovableObject extends DrawableObject {
      */
     jump() {
         if (this instanceof SmallChicken) {
-            this.speedY = 18;
+            this.speedY = 19;
         } else if (this instanceof Character) {
-            this.speedY = 25;
+            this.speedY = 22;
         } else if (this instanceof Endboss) {
-            this.speedY = 13;
+            this.speedY = 15;
         } 
     }
 

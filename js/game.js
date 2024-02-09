@@ -30,11 +30,12 @@ function startGame(x) {
     if (!(x === 'play-btn')) {
         togglePause('start-btn');
     }
-    let layerIds = ["canvas", "movePenelLeft", "movePenelRight", "controller"]
+    let layerIds = ["canvas", "movePenelLeft", "movePenelRight"]
     layerIds.forEach((id) => {
         document.getElementById(id).classList.add('show');
     })
     document.getElementById("startScreen").classList.add('none-show');
+    document.getElementById('controller').style.display = 'flex';
     document.getElementById("headerPenel").style.justifyContent = "center";
     gameStart = true;
     init();
@@ -57,16 +58,35 @@ function init() {
 /**
  * Instruction show
  * 
- * @param {string} add_remove - add_remove assumes a certain string to add or remove classList
  */
-function toggleShowInstruction(add_remove){
+function showInstruction(){
     let layerIds = ['startGameBtn', 'instructionBtn', 'headerPenel']
 
     let instruction = document.getElementById("instructionContainer");
-    instruction.classList[add_remove]('show');
+    instruction.classList.add('show');
+    instruction.classList.remove('hide');
+    instruction.style.zIndex = '11';
 
     layerIds.forEach((id) => {
-    document.getElementById(id).classList[add_remove]('none-show');
+    document.getElementById(id).classList.add('none-show');
+    })    
+}
+
+
+/**
+ * Instruction hide
+ * 
+ */
+function hideInstruction(){
+    let layerIds = ['startGameBtn', 'instructionBtn', 'headerPenel']
+
+    let instruction = document.getElementById("instructionContainer");
+    instruction.classList.remove('show');
+    instruction.classList.add('hide');
+    instruction.style.zIndex = '';
+
+    layerIds.forEach((id) => {
+    document.getElementById(id).classList.remove('none-show');
     })    
 }
 
@@ -189,12 +209,14 @@ function togglePlaySound(sound, paused){
     } 
 }
 
+
 // let pauseInstruction = false;
 function PauseForInstruction(){
-    if (gameStart == true) {
+    if (gameStart == true && !isPaused) {
         togglePause('play-btn')
     }
 }
+
 
 /**
  * Section to toggle game play and pause

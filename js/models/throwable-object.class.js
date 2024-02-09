@@ -63,7 +63,7 @@ class ThrowableObject extends MovableObject{
         this.height = this.rotationHeight;
         this.width = this.rotationWidth;
         this.speed = speed;
-        this.speedY = 24;
+        this.speedY = 21;
 
         this.applyGravity();
         this.throw();
@@ -78,7 +78,7 @@ class ThrowableObject extends MovableObject{
 
         this.lastInt = setInterval(() => {
             this.throwAndAnimateBottle(throwDirection); 
-        }, 100)
+        }, 60)
         this.pushIntervalToArray(this.lastInt);
     }
 
@@ -90,10 +90,10 @@ class ThrowableObject extends MovableObject{
      */
     throwAndAnimateBottle(throwDirection){
         if (throwDirection === false && !this.isBrokenBottle) {
-            this.x += (this.speed + 23);
+            this.x += (this.speed + 13);
             this.playAnimation(this.IMAGES_ROTATION);
         } else if (throwDirection === true && !this.isBrokenBottle) {
-            this.x -= (this.speed + 23);
+            this.x -= (this.speed + 13);
             this.playAnimation(this.IMAGES_ROTATION);
         } else if (this.isBrokenBottle === true && this.attackEndboss === true ) {
             this.height = this.splashHeight;
