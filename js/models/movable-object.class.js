@@ -167,7 +167,7 @@ class MovableObject extends DrawableObject {
         if (this instanceof SmallChicken) {
             this.speedY = 19;
         } else if (this instanceof Character) {
-            this.speedY = 22;
+            this.speedY = 21;
         } else if (this instanceof Endboss) {
             this.speedY = 15;
         } 

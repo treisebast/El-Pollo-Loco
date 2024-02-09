@@ -147,23 +147,40 @@ class World {
     
 
     /**
-     * Check if the character is Jump on the enemy
+     * Check if the character can jump on an enemy, and if so, trigger the jump.
      */
     checkJumpOnChicken() {
         if (!this.level.enemies.isJumped && this.character.y < 200 && this.character.speedY < 0) {
-            let maxHorizontalOverlap = 0;
-            let selectedChicken = null; 
-            this.level.enemies.forEach((enemy) => {
-                let horizontalOverlap = this.character.isJumpOnEnemie(enemy);
-                if (horizontalOverlap > maxHorizontalOverlap) {
-                    maxHorizontalOverlap = horizontalOverlap;
-                    selectedChicken = enemy;
-                    selectedChicken.isJumped = true;
-                    this.enemyDeadAnimation(selectedChicken)
-                }
-            });
+            let selectedChicken = this.findEnemyWithMaxOverlap(this.level.enemies, this.character);
+            if (selectedChicken !== null) {
+                selectedChicken.isJumped = true;
+                this.enemyDeadAnimation(selectedChicken);
+            }
         }
     }
+    
+
+    /**
+     * Find the enemy with the maximum overlap with the character's jump.
+     * 
+     * @param {Array} enemies - Array of enemies to check.
+     * @param {Object} character - The character object.
+     * @returns {Object|null} - The enemy object with the maximum overlap, or null if no enemy found.
+     */
+    findEnemyWithMaxOverlap(enemies, character) {
+        let maxHorizontalOverlap = 0;
+        let selectedEnemy = null;
+    
+        enemies.forEach((enemy) => {
+            let horizontalOverlap = character.isJumpOnEnemie(enemy);
+            if (horizontalOverlap > maxHorizontalOverlap) {
+                maxHorizontalOverlap = horizontalOverlap;
+                selectedEnemy = enemy;
+            }
+        });
+        return selectedEnemy;
+    }
+    
 
 
     /**

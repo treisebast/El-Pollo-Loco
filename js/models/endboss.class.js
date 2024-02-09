@@ -133,7 +133,7 @@ class Endboss extends MovableObject{
         } else {
             this.playAnimation(this.IMAGES_ALERT);
         }
-        this.createTimeOut('timeIsBeginHurt', 1000, 'beginnAtTimeHurt'); 
+        this.createTimeOut('timeIsBeginHurt', 600, 'beginnAtTimeHurt'); 
         this.createTimeOut('timeIsBeginRandom', 2000, 'beginnAtTimeRandom'); 
     }
 
@@ -221,7 +221,7 @@ class Endboss extends MovableObject{
         if (this.x > this.startPositionEndboss - this.moveZoneX && !this.otherDirection) {
             this.walkAnimate = true;
             this.moveLeft();
-            if (this.x <= this.startPositionEndboss - this.moveZoneX + 35 && this.endBossGoAttack) {
+            if (this.x <= this.startPositionEndboss - this.moveZoneX + 32 && this.endBossGoAttack) {
                 this.endbossAttackZone();
             }
             if (this.x <= this.startPositionEndboss - this.moveZoneX) {
