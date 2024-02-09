@@ -112,7 +112,7 @@ class Endboss extends MovableObject{
         this.animationInterval = setInterval(() => {
             this.endBossAnimationIntervals();
             
-        }, 125);
+        }, 100);
         this.pushIntervalToArray(this.animationInterval);
         this.startMoveInterval(8);
     }

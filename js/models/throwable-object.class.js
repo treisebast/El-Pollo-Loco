@@ -78,7 +78,7 @@ class ThrowableObject extends MovableObject{
 
         this.lastInt = setInterval(() => {
             this.throwAndAnimateBottle(throwDirection); 
-        }, 60)
+        }, 45)
         this.pushIntervalToArray(this.lastInt);
     }
 

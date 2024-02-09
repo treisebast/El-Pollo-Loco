@@ -30,10 +30,9 @@ function startGame(x) {
     if (!(x === 'play-btn')) {
         togglePause('start-btn');
     }
-    let layerIds = ["canvas", "movePenelLeft", "movePenelRight"]
-    layerIds.forEach((id) => {
-        document.getElementById(id).classList.add('show');
-    })
+    showRemoveMovePenels('hide');
+    
+    document.getElementById('canvas').classList.add('show');
     document.getElementById("startScreen").classList.add('none-show');
     document.getElementById('controller').style.display = 'flex';
     document.getElementById("headerPenel").style.justifyContent = "center";
@@ -92,6 +91,26 @@ function hideInstruction(){
 
 
 /**
+ * Movepenels show or hide
+ * 
+ * @param {string} showHide - 'show' or 'hide' the the Movepenels
+ */
+function showRemoveMovePenels(showHide){
+    let layerIds = ["movePenelLeft", "movePenelRight"]
+    if (showHide === 'show') {
+        layerIds.forEach((id) => {
+            document.getElementById(id).classList.remove('show');
+            document.getElementById(id).classList.add('hide');
+        })
+    } else if (showHide === 'hide')
+    layerIds.forEach((id) => {
+        document.getElementById(id).classList.add('show');
+        document.getElementById(id).classList.remove('hide');
+    })
+}
+
+
+/**
  * Game end win oder lose
  * 
  * @param {string} winOrLose - winOrLose assumes a certain string for win or lose the game
@@ -99,10 +118,19 @@ function hideInstruction(){
 function handleGameEnd(winOrLose) {
     clearAllIntervals();
     gameIsStarted('GameOver');
-
+    showRemoveMovePenels('show');
     let endScreen = document.getElementById("endScreen");
     endScreen.classList.add('show');
+    whichGameOverImage(winOrLose);
+}
 
+
+/**
+ * Image for the endscreen
+ * 
+ * @param {string} winOrLose - 'youWin' or 'youLose' for the respective Image
+ */
+function whichGameOverImage(winOrLose){
     let imageEndScreen = document.getElementById("imageEndScreen");
     if (winOrLose == "youWin") {
         imageEndScreen.src = "img/9_intro_outro_screens/game_over/game over!.png";

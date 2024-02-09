@@ -470,7 +470,7 @@ ul{
     }
 
     .move-penel-left, .move-penel-right {
-        z-index: 10;
+        z-index: 11;
         visibility: visible;
     }
 }
@@ -481,7 +481,7 @@ ul{
     }
 
     .move-penel-left, .move-penel-right {
-        z-index: 10;
+        z-index: 11;
         visibility: visible;
     }
 }

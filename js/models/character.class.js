@@ -119,7 +119,7 @@ class Character extends MovableObject {
         this.animationInterval = setInterval(() => {
             this.currentTime = new Date().getTime();
             this.characterPlayAnimationInterval();
-        }, 180); 
+        }, 120); 
         this.pushIntervalToArray(this.animationInterval);
     }
 
