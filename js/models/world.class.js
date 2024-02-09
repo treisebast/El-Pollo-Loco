@@ -20,6 +20,12 @@ class World {
     hasThrownBottle = false;
 
 
+    /**
+     * Constructor from Class World - Represents a game controller.
+     * 
+     * @param {HTMLCanvasElement} canvas - The canvas element to render the game on.
+     * @param {KeyboardController} keyboard - The keyboard controller for user input.
+     */
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
@@ -36,11 +42,19 @@ class World {
     }
 
     
+    /**
+     * Set world in Objects
+     * 
+     * @param {object} obj - set world in the objects
+     */
     setWorld(obj) {
         obj.world = this;
     }
     
 
+    /**
+     * Interval for some checks
+     */
     run(){
         this.runInterval = setInterval(() =>{
             this.checkJumpOnChicken();
@@ -54,27 +68,42 @@ class World {
     }
 
 
+    /**
+     * Check collision between bottle and endboss
+     */
     checkCollisionThrowableObjekt() {
         this.level.endBoss.forEach((endBoss) =>{
             this.thrownBottle.forEach((thrownBottle) => {
-                if (!thrownBottle.isBrokenBottle && thrownBottle.isColliding(endBoss)) {
-                    thrownBottle.playSound(thrownBottle.break_sound, '');
-                    console.log(endBoss);
-                    if (!(endBoss.immune)) {
-                        endBoss.playSound(endBoss.chicken_hurt_sound, '');
-                        endBoss.chicken_hurt_sound.volume = 0.6;
-
-                    }
-                    endBoss.hit();
-                    this.endBossStatusBar.setPercentage(endBoss.energy);
-                    thrownBottle.isBrokenBottle = true;
-                    thrownBottle.attackEndboss = true;                  
-                }
+                this.isCollidingBottleEndboss(thrownBottle, endBoss);
             })                
         });  
     }
 
+
+    /**
+     * Is Colliding, than play sound, damage endboss
+     * 
+     * @param {object} thrownBottle - thrown bottle met endboss
+     * @param {object} endBoss - endboss 
+     */
+    isCollidingBottleEndboss(thrownBottle , endBoss){
+        if (!thrownBottle.isBrokenBottle && thrownBottle.isColliding(endBoss)) {
+            thrownBottle.playSound(thrownBottle.break_sound, '');
+            if (!(endBoss.immune)) {
+                endBoss.playSound(endBoss.chicken_hurt_sound, '');
+                endBoss.chicken_hurt_sound.volume = 0.6;
+            }
+            endBoss.hit();
+            this.endBossStatusBar.setPercentage(endBoss.energy);
+            thrownBottle.isBrokenBottle = true;
+            thrownBottle.attackEndboss = true;                  
+        }
+    }
+
     
+    /**
+     * Check collision between bottle and enemy
+     */
     checkCollisionThrowableObjektOnEnemy(){
         this.level.enemies.forEach((enemy) => {
             this.thrownBottle.forEach((thrownBottle) => {
@@ -90,6 +119,9 @@ class World {
     }
 
 
+    /**
+     * Check throw bottle outsite the gameplace and from the Array and splice there, when a bottle was thrown
+     */
     checkThrowObjects(){
         if (this.keyboard.D && this.collectedBottleBar.collectedBottles.length > 0 && !this.hasThrownBottle) {
             this.hasThrownBottle = true; 
@@ -101,14 +133,22 @@ class World {
                 this.hasThrownBottle = false;
             }, 800);
         }
+        this.spliceBottleFromArray();
+    }
+
+
+    spliceBottleFromArray(){
         for (let i = this.thrownBottle.length - 1; i >= 0; i--) {
             if (this.thrownBottle[i].y > 550) {
                 this.thrownBottle.splice(i, 1);
             }
-        }     
+        }  
     }
     
 
+    /**
+     * Check if the character is Jump on the enemy
+     */
     checkJumpOnChicken() {
         if (!this.level.enemies.isJumped && this.character.y < 200 && this.character.speedY < 0) {
             let maxHorizontalOverlap = 0;
@@ -118,66 +158,117 @@ class World {
                 if (horizontalOverlap > maxHorizontalOverlap) {
                     maxHorizontalOverlap = horizontalOverlap;
                     selectedChicken = enemy;
+                    selectedChicken.isJumped = true;
+                    this.enemyDeadAnimation(selectedChicken)
                 }
             });
-            if (selectedChicken !== null) {
-                selectedChicken.isJumped = true;
-                this.enemyDeadAnimation(selectedChicken);
-            }
         }
     }
 
 
+    /**
+     * Deadanimation with Audiosound from enemies
+     * 
+     * @param {object} enemy - the enemy, where the character jump on it
+     */
     enemyDeadAnimation(enemy) {
         if (!enemy.enemyIsDead) {
             enemy.playSound(enemy.chicken_sound, '');
             enemy.stopAnimations();
-            if (enemy.isJumped === true) {
-                this.character.jump();
-                this.character.playSound(this.character.jump_sound, '');
-            }
+            this.isCharacterJumpOnEnemy(enemy);
             enemy.enemyIsDead = true;
             this.IMAGES_DEAD = enemy.IMAGES_DEAD;
             enemy.playAnimation(this.IMAGES_DEAD);
             setTimeout(() => {
                 enemy.playSound(enemy.chicken_sound, 'paused');
-            }, 700);
-            setTimeout(() => {
-                if (enemy.enemyIsDead) {
-                    let index = this.level.enemies.indexOf(enemy);
-                    if (index !== -1) {
-                        this.level.enemies.splice(index, 1);
-                    }
-                }
-            }, 350);
+            }, 600);
+            this.spliceEnemyfromArry(enemy);
         }
     }
 
 
+    /**
+     * Is character jump on enemy
+     * 
+     * @param {object} enemy - if character jump on enemy
+     */
+    isCharacterJumpOnEnemy(enemy){
+        if (enemy.isJumped === true) {
+            this.character.jump();
+            this.character.playSound(this.character.jump_sound, '');
+        }
+    }
+
+
+    /**
+     * Enemy splice from Array
+     * 
+     * @param {object} enemy - if the enemy is dead, then will be splice from Array
+     */
+    spliceEnemyfromArry(enemy){
+        setTimeout(() => {
+            if (enemy.enemyIsDead) {
+                let index = this.level.enemies.indexOf(enemy);
+                if (index !== -1) {
+                    this.level.enemies.splice(index, 1);
+                }
+            }
+        }, 350);
+    }
+
+
+    /**
+     * Check Colliding between character and endboss or character and enemy
+     * 
+     * @param {ArrayWithStrings} enemies - Array with everyone enemies
+     */
     checkCollisions(enemies){
         enemies.forEach((e) =>{
             this.level[e].forEach((enemy) => {
                 if (!enemy.isJumped || !this.level.endBoss.endBossIsDead){
-                    if (this.character.isColliding(enemy) && !enemy.enemyIsDead ) {
-                        if (!(enemy instanceof Endboss)) {
-                            this.character.isHurtCharacter = true;
-                        } else {
-                            this.character.isHurtCharacter = false;
-                        }
-                        if (!this.character.immune) {
-                            this.character.playSound(this.character.hurt_sound, '');
-                        }
-                        this.level.endBoss[0].playSound(this.level.endBoss[0].chicken_walking, 'paused');
-                        this.level.endBoss[0].chicken_walking.currentTime = 0;
-                        this.character.hit();
-                        this.statusBar.setPercentage(this.character.energy);
-                    }
+                    this.isCharacterCollidingWithEnemy(enemy);
                 }
             })
         })             
     }
 
 
+    /**
+     * Is character colliding enemy
+     * 
+     * @param {object} enemy - enemy, who collidet with character
+     */
+    isCharacterCollidingWithEnemy(enemy){
+        if (this.character.isColliding(enemy) && !enemy.enemyIsDead ) {
+            this.ifCharacterCollidingEndboss(enemy);
+            if (!this.character.immune) {
+                this.character.playSound(this.character.hurt_sound, '');
+            }
+            this.level.endBoss[0].playSound(this.level.endBoss[0].chicken_walking, 'paused');
+            this.level.endBoss[0].chicken_walking.currentTime = 0;
+            this.character.hit();
+            this.statusBar.setPercentage(this.character.energy);
+        }
+    }
+
+
+    /**
+     * Character is colliding endboss
+     * 
+     * @param {object} enemy - enemy is endboss - this is for the function from character isHurtBounce()
+     */
+    ifCharacterCollidingEndboss(enemy){
+        if (!(enemy instanceof Endboss)) {
+            this.character.isHurtCharacter = true;
+        } else {
+            this.character.isHurtCharacter = false;
+        }
+    }
+
+
+    /**
+     * Check collected Coins and Bottles
+     */
     checkCollectedItems(){
         this.level.placedItems.forEach((item) => {
             if (this.character.isColliding(item)) {
@@ -195,6 +286,11 @@ class World {
     }
 
 
+    /**
+     * Splice item from placedArray
+     * 
+     * @param {object} item - item, who are coins or bottles will be splice from placedArray
+     */
     deletePlacedItems(item){
         let index = this.level.placedItems.indexOf(item);
         if (index !== -1) {
@@ -203,6 +299,9 @@ class World {
     }
 
 
+    /**
+     * Create new enemy, when the character come to X-breakpoints
+     */
     createNewChickenIfNecessary() {
         if (this.character.x > this.breakpoint) {
             this.breakpoint += this.offset;
@@ -214,9 +313,28 @@ class World {
     }
 
 
+    /**
+     * Draw the game
+     */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+        this.drawMovableObjects();
+        this.drawFixedObjects();
+    
+        this.createNewChickenIfNecessary();
+
+        let self = this;
+        this.requestAnimationFrame = requestAnimationFrame(() => {
+            self.draw()
+        });
+    }
+
+
+    /**
+     * Draw movable Objects
+     */
+    drawMovableObjects(){
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
@@ -226,23 +344,25 @@ class World {
         this.addObjectsToMap(this.thrownBottle);
         this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0);
-        
-        //------------ Space for fixed objects
+    }
+
+
+    /**
+     * Draw fixed Objects
+     */
+    drawFixedObjects(){
         this.addToMap(this.statusBar);
         this.addToMap(this.endBossStatusBar);
         this.addToMap(this.collectedCoinBar);
         this.addToMap(this.collectedBottleBar);
-
-        this.createNewChickenIfNecessary();
-
-        // repeat Draw() always
-        let self = this;
-        this.requestAnimationFrame = requestAnimationFrame(() => {
-            self.draw()
-        });
     }
 
 
+    /**
+     * Adds multiple objects to the game map.
+     * 
+     * @param {Array} objects - An array containing the objects to be added to the map.
+     */
     addObjectsToMap(objects) {
         objects.forEach((o) => {
             this.addToMap(o);
@@ -250,6 +370,11 @@ class World {
     }
 
 
+    /**
+     * Adds a single object to the game map.
+     * 
+     * @param {MapObject} mo - The object to be added to the map.
+     */
     addToMap(mo) {
         if (mo.otherDirection) {
             this.flipImage(mo);
@@ -264,6 +389,11 @@ class World {
     }
 
 
+    /**
+     * Flips the image horizontally for the given map object.
+     * 
+     * @param {MapObject} mo The map object whose image needs to be flipped.
+     */
     flipImage(mo){
         this.ctx.save();
         this.ctx.translate(mo.width, 0);
@@ -272,17 +402,30 @@ class World {
     }
 
 
+    /**
+     * Reverts the horizontal flip of the image for the given map object.
+     * 
+     * @param {MapObject} mo The map object whose image's horizontal flip needs to be reverted.
+     */
     flipImageBack(mo){
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
 
 
+    /**
+     * Push intervals to a Array - allInterval = []
+     * 
+     * @param {variable} id - id from the intervals; push with: this.pushIntervalToArray(this.lastInt);
+     */
     pushIntervalToArray(id){
         setStoppableInterval(id);
     }
     
 
+    /**
+     * Forward to Endscreen
+     */
     endScreen(){
         if (this.level.endBoss[0].gameOver === true) {            
             handleGameEnd('youWin');

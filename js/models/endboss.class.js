@@ -73,9 +73,9 @@ class Endboss extends MovableObject{
      * collisionbox is a box with offset. This is required for isColliding()
      */
     collisionBoxOffsetY = 70;
-    collisionBoxOffsetX = 30;
-    collisionBoxWidth = this.width - 40;
-    collisionBoxHeight = this.height - 90;
+    collisionBoxOffsetX = 60;
+    collisionBoxWidth = this.width - 80;
+    collisionBoxHeight = this.height - 120;
 
 
     /**
